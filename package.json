@@ -1,11 +1,12 @@
 {
-  "name": "hope-ui-vue",
-  "version": "1.1.0",
+  "name": "fireshop",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
     "@fullcalendar/bootstrap": "^5.5.0",
@@ -15,6 +16,7 @@
     "@fullcalendar/list": "^5.5.0",
     "@fullcalendar/timegrid": "^5.5.0",
     "@fullcalendar/vue3": "^5.9.0",
+    "@kyvg/vue3-notification": "^2.3.4",
     "@popperjs/core": "^2.9.3",
     "@vueform/slider": "^2.0.4",
     "apexcharts": "^3.22.2",
@@ -27,11 +29,11 @@
     "nouislider": "^15.4.0",
     "register-service-worker": "^1.7.1",
     "smooth-scrollbar": "^8.6.3",
-    "sweetalert2": "^11.1.7",
     "swiper": "^6.4.5",
     "veeno": "0.0.4",
     "vue": "^3.0.0",
     "vue-countup-v2": "^4.0.0",
+    "vue-i18n": "^9.2.0-beta.11",
     "vue-router": "^4.0.0-0",
     "vue3-autocounter": "^1.0.6",
     "vue3-datepicker": "^0.2.5",
@@ -40,6 +42,7 @@
     "waypoints": "^4.0.1"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
@@ -56,6 +59,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-i18n": "~2.3.1"
   }
 }

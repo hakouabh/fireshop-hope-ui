@@ -2,31 +2,239 @@
     <ul class="navbar-nav iq-main-menu" id="sidebar">
         <li class="nav-item static-item">
             <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                <span class="default-icon">Home</span>
+                <span class="default-icon">{{$t('verticalBare.home')}}</span>
                 <span class="mini-icon">-</span>
             </a>
         </li>
         <li class="nav-item">
             <router-link :class="`nav-link ${checkActive('default.dashboard') ? 'active' : ''}`" aria-current="page" :to="{name: 'default.dashboard'}">
                 <i class="icon">
-                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z" fill="currentColor"></path>
+                    <div v-html="dashboardicon"></div>
+                </i>
+                <span class="item-name">{{$t('verticalBare.dashboard')}}</span>
+            </router-link>
+        </li>
+        <li class="nav-item">
+            <router-link :class="`nav-link ${checkActive('default.counter') ? 'active' : ''}`" aria-current="page" :to="{name: 'default.counter'}">
+                <i class="icon">
+                    <div v-html="countericon"></div>
+                </i>
+                <span class="item-name">{{$t('verticalBare.counter')}}</span>
+            </router-link>
+        </li>
+        <li><hr class="hr-horizontal"></li>
+        <li class="nav-item static-item">
+            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                <span class="default-icon">Pages</span>
+                <span class="mini-icon">-</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a :class="`nav-link ${checkActive(specialpages) ? 'active' : ''}`"  data-bs-toggle="collapse" href="#sidebar-product" role="button" aria-expanded="false" aria-controls="sidebar-product">
+                <div v-html="producticon"></div>
+                <span class="item-name">{{$t('verticalBare.product.title')}}</span>
+                <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </i>
-                <span class="item-name">Dashboard</span>
-            </router-link>
+            </a>
+            <ul class="sub-nav collapse" id="sidebar-product" data-bs-parent="#sidebar">
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.list') ? 'active' : ''}`" :to="{name: 'product.list'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.product.list_product')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.add') ? 'active' : ''}`" :to="{name: 'product.add'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.product.add_product')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.search') ? 'active' : ''}`" :to="{name: 'product.search'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.product.search_product1')}}</span>
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a :class="`nav-link ${checkActive(customerpages) ? 'active' : ''}`"  data-bs-toggle="collapse" href="#sidebar-customer
+            " role="button" aria-expanded="false" aria-controls="sidebar-customer">
+                <div v-html="customericon"></div>
+                <span class="item-name">{{$t('verticalBare.customer.title')}}</span>
+                <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </i>
+            </a>
+            <ul class="sub-nav collapse" id="sidebar-customer" data-bs-parent="#sidebar">
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('customer.add') ? 'active' : ''}`" :to="{name: 'customer.add'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.customer.add_customer')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('customer.list') ? 'active' : ''}`" :to="{name: 'customer.list'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.customer.list_customer')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('customer.search') ? 'active' : ''}`" :to="{name: 'customer.search'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.customer.search_customer')}}</span>
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a :class="`nav-link ${checkActive(chargepages) ? 'active' : ''}`"  data-bs-toggle="collapse" href="#sidebar-charge
+            " role="button" aria-expanded="false" aria-controls="sidebar-charge">
+                <div v-html="chargeicon"></div>
+                <span class="item-name">{{$t('verticalBare.charge.title')}}</span>
+                <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </i>
+            </a>
+            <ul class="sub-nav collapse" id="sidebar-charge" data-bs-parent="#sidebar">
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('charge.add') ? 'active' : ''}`" :to="{name: 'charge.add'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.charge.add_charge')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('charge.list') ? 'active' : ''}`" :to="{name: 'charge.list'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.charge.list_charge')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('charge.search') ? 'active' : ''}`" :to="{name: 'charge.search'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.charge.search_charge')}}</span>
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a :class="`nav-link ${checkActive(orderspages) ? 'active' : ''}`"  data-bs-toggle="collapse" href="#sidebar-orders
+            " role="button" aria-expanded="false" aria-controls="sidebar-orders">
+                <div v-html="ordersicon"></div>
+                <span class="item-name">{{$t('verticalBare.orders.title')}}</span>
+                <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </i>
+            </a>
+            <ul class="sub-nav collapse" id="sidebar-orders" data-bs-parent="#sidebar">
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('operations.search') ? 'active' : ''}`" :to="{name: 'operations.search'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.orders.search_orders')}}</span>
+                    </router-link>
+                </li>
+            </ul>
         </li>
     </ul>
 </template>
 <script>
+import { Solidicons } from '@/icondata/iconsolid.js'
 export default {
   name: 'Verticalnav',
   data () {
     return {
+      customericon: Solidicons[1].svgicons,
+      chargeicon: Solidicons[47].svgicons,
+      producticon: Solidicons[34].svgicons,
+      dashboardicon: Solidicons[53].svgicons,
+      countericon: Solidicons[104].svgicons,
+      ordersicon: Solidicons[103].svgicons,
       authentication: ['auth.signin', 'auth.signup', 'auth.confirmMail', 'auth.lockScreen', 'auth.recoverPassword'],
       user: ['default.UserProfile', 'default.UserAdd', 'default.UserList'],
-      utilities: ['auth.error404', 'auth.error500', 'auth.maintenance']
+      utilities: ['auth.error404', 'auth.error500', 'auth.maintenance'],
+      specialpages: ['product.add', 'product.list', 'product.edit', 'product.search', 'rtl.dashboardrtl'],
+      customerpages: ['customer.add', 'customer.list', 'customer.edit', 'customer.search', 'rtl.dashboardrtl'],
+      chargepages: ['charge.add', 'charge.list', 'charge.edit', 'charge.search', 'rtl.dashboardrtl'],
+      orderspages: ['operations.search', 'operations.view', 'rtl.dashboardrtl']
     }
   },
   methods: {

@@ -1,0 +1,197 @@
+{
+  "app_name": "Fireshop",
+  "model_search_product":"Rechercher Un Produit",
+  "model_search_customer":"Rechercher Un Client",
+  "model_discount":"Ajouter une Remise",
+  "model_titel":"Créer une nouvelle catégorie",
+  "created":"Créé avec succès",
+  "validate_operation":"L'opération Valée avec succès",
+  "not_found": "N'existe pas !",
+  "added":"Ajoutée",
+  "sognInVue":{
+    "signin":"Se connecter",
+    "logintostay":"Connectez-vous pour rester connecté.",
+    "label":{
+      "email":"E-mail",
+      "password":"mot de passe"
+    },
+    "placeholder":{
+      "email":"Entrer votre Email",
+      "password":"Entrer votre mot de passe"
+    },
+    "remember_me":"Rester connecté",
+    "forget_password":"Le mot de passe oublié ?",
+    "dont_have_account":"Vous n'avez pas de compte ?",
+    "click_to_signup":"Cliquez ici pour S'inscrire",
+    "connecter":"connecté avec succès",
+    "invalid_credential":"E-mail ou mot de passe incorrect veuillez réessayer"
+  },
+  "signUpVue":{
+    "signup":"S'inscrire",
+    "created":"Votre compte a été créé avec succès",
+    "create_account":"Créez votre compte",
+    "required":"ce champ est obligatoire",
+    "agree":"je suis d'accord avec les termes et conditions",
+    "alredy_have_account":"Vous avez déjà un compte",
+    "signin":"Connectez-vous",
+    "placeholder":{
+      "email":"Entrer votre Email",
+      "name":"Entrer You name",
+      "password":"Entrer un mot de passe",
+      "password_confirmation":"Confirmez le mot de passe",
+      "company_category":"catégorie d'entreprise",
+      "company_name":"Nom de l'entreprise"
+    }
+  },
+  "counterVue":{
+    "feilds":{
+      "sku":"Code-barres",
+      "name":"Nom du Produits",
+      "unit_price":"Prix",
+      "quantity":"Qte",
+      "total":"Total",
+      "action":"Actions"
+    },
+    "button":{
+      "search_product":"Rechercher Produit",
+      "search_customer":"Rechercher Client",
+      "delete":"Supprimer Tout",
+      "validate":"Valider L'opération"
+    }
+  },
+  "verticalBare":{
+    "home":"home",
+    "dashboard":"Dashboard",
+    "counter":"Vente au Comptoir",
+    "product":{
+      "title":"Product",
+      "list_product":"Liste des Produits",
+      "add_product":"Ajouter un Produit",
+      "search_product1":"Recherche de produits"
+    },
+    "customer":{
+      "title":"Clients",
+      "list_customer":"Liste des Clients",
+      "add_customer":"Ajouter un Client",
+      "search_customer":"Recherche de Clients"
+    },
+    "orders":{
+      "title":"Operations",
+      "list_orders":"Liste des Operations",
+      "search_orders":"Recherche des Operations"
+    },
+    "charge":{
+      "title":"Prélèvement",
+      "list_charge":"Liste des Prélèvements",
+      "add_charge":"Ajouter un Prélèvement",
+      "search_charge":"Recherche de Prélèvements"
+    }
+  },
+  "operationVue":{
+    "no_client":"Client Divers",
+    "search_operation":"Recherche de Operations",
+    "table_name":"Table des Operations",
+    "searchOperation":{
+      "customer":"Nom du Client",
+      "phone":"Numéro de téléphone",
+      "date_to":"Date à",
+      "date_from":"Date de"
+    },
+    "feilds":{
+      "product_name":"Nom du Produit",
+      "customer":"Clients",
+      "discount":"Remise",
+      "total":"Total",
+      "payment":"Paiment",
+      "date":"Date et heure"
+    },
+    "button":{
+      "cancel":"Annuler",
+      "search_operation":"Rechercher"
+    }
+  },
+  "chargeVue":{
+    "search_charge":"Recherche de Prélèvement",
+    "edit_charge":"Modifier un Prélèvement",
+    "create_charge":"Ajouter un Prélèvement",
+    "table_name":"Table des Prélèvements",
+    "button":{
+      "new_charge":"Nouveau Prélèvement",
+      "save":"Sauvegarder",
+      "cancel":"Annuler",
+      "search_charge":"Rechercher"
+    },
+    "feilds":{
+      "amount":"Montant",
+      "type":"Categorie",
+      "description":"Description"
+    },
+    "searchCharge":{
+      "type":"Categorie",
+      "date_to":"Date à",
+      "date_from":"Date de"
+    }
+  },
+  "customerVue":{
+    "search_customer":"Recherche de clients",
+    "edit_customer":"Modifier un client",
+    "create_customer":"Créer un client",
+    "table_name":"Table des Client",
+    "button":{
+      "new_customer":"Nouveau Client",
+      "save":"Sauvegarder",
+      "cancel":"Annuler",
+      "search_customer":"Rechercher"
+    },
+    "feilds":{
+      "full_name":"Nom et Prénom",
+      "email":"E-mail",
+      "phone":"Numéro de Téléphone",
+      "city": "Ville",
+      "company_name":"Nom de l'entreprise",
+      "address":"Address"
+    },
+    "searchCustomer":{
+      "email":"E-mail",
+      "phone":"Numéro de Téléphone",
+      "full_name":"Nom et Prénom",
+      "company_name":"Nom de l'entreprise",
+      "date_to":"Date à",
+      "date_from":"Date de"
+    }
+  },
+  "productVue":{
+    "search_product1":"Recherche de produits",
+    "stock_out":"En Rupture",
+    "available":"Disponible",
+    "edit_product":"Modifier un produit",
+    "create_product":"Créer un produit",
+    "table_name":"Table des Produits",
+    "button":{
+      "new_product":"Nouveau Produit",
+      "save":"Sauvegarder",
+      "cancel":"Annuler",
+      "search_product":"Rechercher"
+    },
+    "feilds":{
+      "product_name":"Nom du Produit",
+      "name":"Nom",
+      "sku":"Code-barres",
+      "type":"Categorie",
+      "unit_price":"Prix Unitaire",
+      "stock":"Quantité",
+      "status":"Statut",
+      "price":"Prix",
+      "cost":"Prix d'achat",
+      "selling_price":"Prix de vente",
+      "description":"Description",
+      "category":"Entrer Categorie du Produit"
+    },
+    "searchProduct":{
+      "sku":"Code-barres",
+      "type":"Categorie",
+      "date_to":"Date à",
+      "date_from":"Date de"
+    }
+  }
+}

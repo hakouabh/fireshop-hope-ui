@@ -14,39 +14,39 @@
                                  <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
                                  <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
                               </svg>
-                              <h4 class="logo-title ms-3">Hope UI</h4>
+                              <h4 class="logo-title ms-3">{{ $t('app_name') }}</h4>
                            </router-link>
-                           <h2 class="mb-2 text-center">Sign In</h2>
-                           <p class="text-center">Login to stay connected.</p>
+                           <h2 class="mb-2 text-center">{{ $t('sognInVue.signin') }}</h2>
+                           <p class="text-center">{{ $t('sognInVue.logintostay') }}</p>
                            <form @submit.prevent="signIn">
                               <div class="row">
                                  <div class="col-lg-12">
                                     <div class="form-group">
-                                       <label for="email" class="form-label">Email</label>
-                                       <input type="email" v-model="form.email" class="form-control" id="email" aria-describedby="email" placeholder="Email">
+                                       <label for="email" class="form-label">{{ $t('sognInVue.label.email') }}</label>
+                                       <input type="email" v-model="form.email" class="form-control" id="email" aria-describedby="email" :placeholder="$t('sognInVue.placeholder.email')">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.email"> {{ errors.email[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-12">
                                     <div class="form-group">
-                                       <label for="password" class="form-label">Password</label>
-                                       <input type="password" v-model="form.password" class="form-control" id="password" aria-describedby="password" placeholder="Password">
+                                       <label for="password" class="form-label">{{ $t('sognInVue.label.password') }}</label>
+                                       <input type="password" v-model="form.password" class="form-control" id="password" aria-describedby="password" :placeholder="$t('sognInVue.placeholder.password')">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.password"> {{ errors.password[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-12 d-flex justify-content-between">
                                     <div class="form-check mb-3">
                                        <input type="checkbox" class="form-check-input" id="customCheck1">
-                                       <label class="form-check-label" for="customCheck1">Remember Me</label>
+                                       <label class="form-check-label" for="customCheck1">{{ $t('sognInVue.remember_me') }}</label>
                                     </div>
-                                     <router-link  :to="{name: 'auth.recoverPassword'}">Forgot Password?</router-link>
+                                     <router-link  :to="{name: 'auth.recoverPassword'}">{{ $t('sognInVue.forget_password') }}</router-link>
                                  </div>
                               </div>
                               <div class="d-flex justify-content-center">
-                                 <button type="submit" class="btn btn-primary">Sign In</button>
+                                 <button type="submit" class="btn btn-primary">{{ $t('sognInVue.signin') }}</button>
                               </div>
                               <p class="mt-3 text-center">
-                                 Don’t have an account? <router-link :to="{name: 'auth.signup'}">Click here to sign up.</router-link>
+                                 {{ $t('sognInVue.dont_have_account') }} <router-link :to="{name: 'auth.signup'}">{{ $t('sognInVue.click_to_signup') }}</router-link>
                               </p>
                            </form>
                         </div>
@@ -84,21 +84,35 @@ export default {
       errors: {}
     }
   },
+  created () {
+    console.log(User.loggedIn())
+  },
   methods: {
     signIn () {
       webServices.post('/auth/login', this.form)
         .then(res => {
-          console.log(res.data)
-          new Noty({
+          User.responseAfterLogin(res.data)
+          this.$notify({
             type: 'success',
-            layout: 'topRight',
-            text: 'Successfully Done !',
-            timeout: 1000
+            layout: 'topLeft',
+            text: this.$t('sognInVue.connecter'),
+            timeout: 1500
 
-          }).show()
+          })
+          this.$router.push({ name: 'default.dashboard' })
         })
         .catch(error => {
-          this.errors = error.response.data.errors
+          if (error.response.status === 401) {
+            this.$notify({
+              type: 'error',
+              layout: 'topLeft',
+              text: this.$t('sognInVue.invalid_credential'),
+              timeout: 1500
+
+            })
+          } else if (error.response.status === 422) {
+            this.errors = error.response.data.errors
+          }
         })
     }
   }

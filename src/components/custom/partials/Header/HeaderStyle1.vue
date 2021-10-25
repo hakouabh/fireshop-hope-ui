@@ -8,7 +8,7 @@
           <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
           <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
         </svg>
-        <h4 class="logo-title">Hope UI</h4>
+        <h4 class="logo-title">{{$t('app_name')}}</h4>
     </router-link>
     <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
         <i class="icon">
@@ -203,15 +203,15 @@
           <a class="nav-link py-0 d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="@/assets/images/avatars/01.png" alt="User-Profile" class="img-fluid avatar avatar-50 avatar-rounded">
             <div class="caption ms-3 d-none d-md-block ">
-                <h6 class="mb-0 caption-title">Austin Robertson</h6>
-                <p class="mb-0 caption-sub-title">Marketing Administrator</p>
+                <h6 class="mb-0 caption-title">{{user.username}}</h6>
+                <p class="mb-0 caption-sub-title">{{user.email}}</p>
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><router-link class="dropdown-item" :to="{name: 'default.UserProfile'}">Profile</router-link></li>
             <li><router-link class="dropdown-item" :to="{name: 'default.UserPrivacySetting'}">Privacy Setting</router-link></li>
             <li><hr class="dropdown-divider"></li>
-            <li><router-link class="dropdown-item" :to="{name: 'auth.signin'}">Logout</router-link></li>
+            <li><a class="dropdown-item" @click="logout">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -220,15 +220,26 @@
 </nav>
 </template>
 <script>
+/* eslint-disable no-undef */
 import { mapGetters, mapActions } from 'vuex'
+import AppStorage from '../../../../helpers/AppStorage'
 export default {
   name: 'HeaderStyle1',
   props: {
     fullsidebar: { type: Boolean, default: false }
   },
+  data () {
+    return {
+      user: {}
+    }
+  },
   mounted () {
     const navstyle = sessionStorage.getItem('navbarstyle')
     this.navbarstyleChange(navstyle)
+    this.user = {
+      username: User.username(),
+      email: User.email()
+    }
   },
   computed: {
     ...mapGetters({
@@ -241,6 +252,10 @@ export default {
     }),
     opensidebar () {
       this.$emit('makefullsidebar', !this.fullsidebar)
+    },
+    logout () {
+      AppStorage.clear()
+      this.$router.push({ name: 'auth.signin' })
     }
   }
 }

@@ -9,6 +9,12 @@ const defaultchildRoutes = (prop, mode = false) => [
     component: () => import('../views/main/dashboard')
   },
   {
+    path: '/counter',
+    name: prop + '.counter',
+    meta: { requiresAuthentication: true, name: 'counter' },
+    component: () => import('../views/main/counter')
+  },
+  {
     path: 'UserProfile',
     name: prop + '.UserProfile',
     meta: { auth: true, name: 'User Profile' },
@@ -19,6 +25,98 @@ const defaultchildRoutes = (prop, mode = false) => [
     name: prop + '.UserPrivacySetting',
     meta: { auth: true, name: 'UserPrivacySetting' },
     component: () => import('../views/Users/UserPrivacySetting')
+  }
+]
+const productchildRoutes = (prop, mode = false) => [
+  {
+    path: '',
+    name: prop + '.list',
+    meta: { requiresAuthentication: true, name: 'list' },
+    component: () => import('../views/main/product/listProduct')
+  },
+  {
+    path: 'new',
+    name: prop + '.add',
+    meta: { requiresAuthentication: true, name: 'add' },
+    component: () => import('../views/main/product/createProduct')
+  },
+  {
+    path: 'search',
+    name: prop + '.search',
+    meta: { requiresAuthentication: true, name: 'search' },
+    component: () => import('../views/main/product/searchProduct')
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { requiresAuthentication: true, name: 'edit' },
+    component: () => import('../views/main/product/editProduct')
+  }
+]
+const customerchildRoutes = (prop, mode = false) => [
+  {
+    path: 'add',
+    name: prop + '.add',
+    meta: { requiresAuthentication: true, name: 'add' },
+    component: () => import('../views/main/customer/createCustomer')
+  },
+  {
+    path: '',
+    name: prop + '.list',
+    meta: { requiresAuthentication: true, name: 'list' },
+    component: () => import('../views/main/customer/listCustomer')
+  },
+  {
+    path: 'search',
+    name: prop + '.search',
+    meta: { requiresAuthentication: true, name: 'search' },
+    component: () => import('../views/main/customer/searchCustomer')
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { requiresAuthentication: true, name: 'edit' },
+    component: () => import('../views/main/customer/editCustomer')
+  }
+]
+const orderschildRoutes = (prop, mode = false) => [
+  {
+    path: 'search',
+    name: prop + '.search',
+    meta: { requiresAuthentication: true, name: 'search' },
+    component: () => import('../views/main/orders/searchOperation')
+  },
+  {
+    path: 'view/:id',
+    name: prop + '.view',
+    meta: { requiresAuthentication: true, name: 'edit' },
+    component: () => import('../views/main/orders/viewOperation')
+  }
+]
+const chargeschildRoutes = (prop, mode = false) => [
+  {
+    path: 'add',
+    name: prop + '.add',
+    meta: { requiresAuthentication: true, name: 'add' },
+    component: () => import('../views/main/charge/createCharge')
+  },
+  {
+    path: '',
+    name: prop + '.list',
+    meta: { requiresAuthentication: true, name: 'list' },
+    component: () => import('../views/main/charge/listCharge')
+  },
+  {
+    path: 'search',
+    name: prop + '.search',
+    meta: { requiresAuthentication: true, name: 'search' },
+    component: () => import('../views/main/charge/searchCharge')
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { requiresAuthentication: true, name: 'edit' },
+    component: () => import('../views/main/charge/editCharge')
   }
 ]
 const authchildRoutes = (prop, mode = false) => [
@@ -62,6 +160,30 @@ const routes = [
     children: defaultchildRoutes('default')
   },
   {
+    path: '/product',
+    name: 'Product',
+    component: () => import('../layouts/default'),
+    children: productchildRoutes('product')
+  },
+  {
+    path: '/customer',
+    name: 'Customer',
+    component: () => import('../layouts/default'),
+    children: customerchildRoutes('customer')
+  },
+  {
+    path: '/operations',
+    name: 'Operation',
+    component: () => import('../layouts/default'),
+    children: orderschildRoutes('operations')
+  },
+  {
+    path: '/charges',
+    name: 'Charge',
+    component: () => import('../layouts/default'),
+    children: chargeschildRoutes('charge')
+  },
+  {
     path: '/auth',
     name: 'auth',
     component: () => import('../layouts/simple'),
@@ -83,19 +205,13 @@ router.beforeEach((to, from, next) => {
     } else {
       next({ name: 'auth.signin' })
     }
-  } else {
-    next()
-  }
-  /* if (to.matched.some(record => record.meta.isAuthenticated)) {
-    // eslint-disable-next-line no-constant-condition
-    if (true) {
+  } else if (to.matched.some(record => record.meta.isAuthenticated)) {
+    if (User.loggedIn()) {
       next({ name: 'default.dashboard' })
     } else {
       next()
     }
-  } else {
-    next()
-  } */
+  }
 })
 
 export default router

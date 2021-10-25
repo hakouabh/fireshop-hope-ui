@@ -6,33 +6,19 @@ import store from './store'
 import webServices from './webServices'
 import globalComponent from './plugins/global-components'
 import User from './helpers/User'
-import Swal from 'sweetalert2'
+import Notif from './helpers/Notification'
+import Notifications from '@kyvg/vue3-notification'
+import i18n from './i18n'
+
 require('waypoints/lib/noframework.waypoints.min')
 window.User = User
+window.Notif = Notif
 window.webServices = webServices
 
-// Sweet Alert start
-
-window.Swal = Swal
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  onOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
-window.Toast = Toast
-
-// Sweet Alert End
-
-const app = createApp(App)
+const app = createApp(App).use(i18n)
 app.use(store)
 app.use(router)
+app.use(Notifications)
 app.use(globalComponent)
 app.mount('#app')
 export { app }

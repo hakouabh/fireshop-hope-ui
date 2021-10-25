@@ -3,7 +3,7 @@
         <div class="sidebar-header d-flex align-items-center justify-content-start">
             <router-link :to="{ name: 'default.dashboard'}" class="navbar-brand">
                 <logo />
-                <h4 class="logo-title">Hope UI</h4>
+                <h4 class="logo-title">{{$t('app_name')}}</h4>
             </router-link>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                 <i class="icon">

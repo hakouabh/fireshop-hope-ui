@@ -5,10 +5,14 @@ module.exports = {
 
   pluginOptions: {
     i18n: {
-      locale: 'en',
-      fallbackLocale: 'en',
+      locale: 'fr',
+      fallbackLocale: 'fr',
       localeDir: 'locales',
-      enableInSFC: false
+      enableInSFC: false,
+      enableLegacy: true,
+      runtimeOnly: false,
+      compositionOnly: true,
+      fullInstall: true
     }
   }
 }

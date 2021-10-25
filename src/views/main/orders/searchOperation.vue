@@ -1,0 +1,147 @@
+<template>
+    <div>
+      <div class="row">
+         <div class="col-sm-12 col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                     <div class="header-title">
+                        <h4 class="card-title">{{$t('operationVue.search_operation')}}</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                    <form @submit.prevent="searchOperations" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                           <label for="formOperation02" class="form-label">{{$t('operationVue.searchOperation.customer')}}</label>
+                           <input type="text" :class="`${errors.customer ? 'is-invalid' : ''}`" class="form-control" id="formOperation07" v-model="form.customer">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                           <label for="formOperation02" class="form-label">{{$t('operationVue.searchOperation.phone')}}</label>
+                           <input type="text" :class="`${errors.phone ? 'is-invalid' : ''}`" class="form-control" id="formOperation02" v-model="form.phone">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                           <label for="formOperation05" class="form-label">{{$t('operationVue.searchOperation.date_from')}}</label>
+                           <input type="date" :class="`${errors.date_from ? 'is-invalid' : ''}`" class="form-control" id="formOperation05" v-model="form.date_range.from">
+                        </div>
+                        <div class="col-md-6 mb-5">
+                           <label for="formOperation06" class="form-label">{{$t('operationVue.searchOperation.date_to')}}</label>
+                           <input type="date" :class="`${errors.date_to ? 'is-invalid' : ''}`" class="form-control" id="formOperation06" v-model="form.date_range.to">
+                        </div>
+                       <div class="row d-flex">
+                       <div class="col-lg-3 col-md-6">
+                           <button class="btn btn-success" type="submit">{{$t('operationVue.button.search_operation')}}</button>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                           <a class="btn btn-danger" href="">{{$t('operationVue.button.cancel')}}</a>
+                        </div>
+                     </div>
+                    </div>
+                    </form>
+                  </div>
+            </div>
+        </div>
+      </div>
+       <div class="row">
+      <div class="col-sm-12">
+         <div class="card">
+            <div class="card-header d-flex justify-content-between">
+               <div class="header-title">
+                  <h4 class="card-title">{{$t('operationVue.table_name')}}</h4>
+               </div>
+            </div>
+            <div class="card-body p-0">
+               <div class="table-responsive mt-4">
+                  <table id="basic-table" class="table table-striped mb-0" role="grid">
+                     <thead>
+                        <tr>
+                           <th>{{$t('operationVue.feilds.customer')}}</th>
+                           <th>{{$t('operationVue.feilds.discount')}}</th>
+                           <th>{{$t('operationVue.feilds.total')}}</th>
+                           <th>{{$t('operationVue.feilds.payment')}}</th>
+                           <th>{{$t('operationVue.feilds.date')}}</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr v-for="operation in operations" :key="operation.id" @click="viewOperation(operation.id)">
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6 v-if="operation.customer"> {{operation.customer.full_name}} </h6>
+                                 <h6 v-else> {{$t('operationVue.no_client')}} </h6>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{operation.discount}} </h6>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{operation.total}} </h6>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{operation.payment}} </h6>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{operation.created_at}} </h6>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+    </div>
+</template>
+
+<script>
+/* eslint-disable no-undef */
+export default {
+  name: 'searchOperation',
+  data () {
+    return {
+      form: {
+        customer: null,
+        phone: null,
+        date_range: {
+          from: null,
+          to: null
+        }
+      },
+      errors: {},
+      operations: {}
+    }
+  },
+  created () {
+    this.searchOperations()
+  },
+  methods: {
+    viewOperation (id) {
+      this.$router.push({ name: 'operations.view', params: { id: id } })
+    },
+    searchOperations () {
+      webServices.get('/operations', {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        },
+        params: {
+          filter: this.form
+        }
+      })
+        .then(res => {
+          this.operations = res.data.data
+        })
+        .catch()
+    }
+  }
+
+}
+</script>

@@ -17,48 +17,48 @@
                                  <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
                                  <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
                               </svg>
-                              <h4 class="logo-title ms-3">Hope UI</h4>
+                              <h4 class="logo-title ms-3">{{ $t('app_name') }}</h4>
                           </router-link>
-                           <h2 class="mb-2 text-center">Sign Up</h2>
-                           <p class="text-center">Create your account.</p>
+                           <h2 class="mb-2 text-center">{{ $t('signUpVue.signup') }}</h2>
+                           <p class="text-center">{{ $t('signUpVue.create_account') }}</p>
                            <form  @submit.prevent="signUp">
                               <div class="row">
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="full-name" v-model="form.name" placeholder="Full Name">
+                                       <input type="text" class="form-control" id="full-name" v-model="form.name" :placeholder="$t('signUpVue.placeholder.name') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.name"> {{ errors.name[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="company-name" v-model="companyName" placeholder="Company name">
+                                       <input type="text" class="form-control" id="company-name" v-model="companyName" :placeholder="$t('signUpVue.placeholder.company_name') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{ errors.company[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-12">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="last-name" v-model="form.email" placeholder="Email">
+                                       <input type="text" class="form-control" id="last-name" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.email"> {{ errors.email[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="password" class="form-control" id="password" v-model="form.password" placeholder="Password">
+                                       <input type="password" class="form-control" id="password" v-model="form.password" :placeholder="$t('signUpVue.placeholder.password') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.password"> {{ errors.password[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="confirm-password" v-model="form.password_confirmation" placeholder="Confirm Password">
+                                       <input type="text" class="form-control" id="confirm-password" v-model="form.password_confirmation" :placeholder="$t('signUpVue.placeholder.password_confirmation') ">
                                     </div>
                                  </div>
                                  <div class="col-lg-8">
                                     <div class="form-group">
                                        <select class="form-select" id="SelectCategory" v-model="category_id">
-                                       <option selected="" disabled="">Company Category</option>
+                                       <option selected disabled >{{$t('signUpVue.placeholder.company_category')}}</option>
                                        <option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
                                        </select>
-                                       <small class="text-danger" id="Company-category-errors" v-if="errors.category"> required</small>
+                                       <small class="text-danger" id="Company-category-errors" v-if="errors.category"> {{$t('signUpVue.required')}}</small>
                                     </div>
                                  </div>
                                  <div class="col-lg-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
@@ -75,15 +75,15 @@
                                  <div class="col-lg-12 d-flex justify-content-center">
                                     <div class="form-check mb-3">
                                        <input type="checkbox" class="form-check-input" id="customCheck1">
-                                       <label class="form-check-label" for="customCheck1">I agree with the terms of use</label>
+                                       <label class="form-check-label" for="customCheck1">{{$t('signUpVue.agree')}}</label>
                                     </div>
                                  </div>
                               </div>
                               <div class="d-flex justify-content-center">
-                                 <button type="submit" class="btn btn-primary">Sign Up</button>
+                                 <button type="submit" class="btn btn-primary">{{$t('signUpVue.signup')}}</button>
                               </div>
                               <p class="mt-3 text-center">
-                                 Already have an Account <router-link :to="{name: 'auth.signin'}">Sign In</router-link>
+                                 {{$t('signUpVue.alredy_have_account')}} <router-link :to="{name: 'auth.signin'}">{{$t('signUpVue.signin')}}</router-link>
                               </p>
                            </form>
                         </div>
@@ -106,7 +106,7 @@
                   </model-body>
                   <model-footer>
                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     <button type="button" class="btn btn-primary" @click="CreateCategory" :data-bs-dismiss="myModal">Save changes</button>
+                     <button type="button" class="btn btn-primary" @click="CreateCategory">Save changes</button>
                   </model-footer>
                </modal>
                <div class="sign-bg sign-bg-right">
@@ -144,8 +144,7 @@ export default {
       category_id: null,
       createdCompany: '',
       categories: {},
-      errors: {},
-      myModal: null
+      errors: {}
     }
   },
   created () {
@@ -180,14 +179,16 @@ export default {
             this.form.company.name = this.companyName
             webServices.post('auth/register', this.form)
               .then(result => {
+                User.responseAfterLogin(result.data)
                 console.log(result.data)
-                new Noty({
+                this.$notify({
                   type: 'success',
-                  layout: 'topRight',
-                  text: 'Successfully Done !',
-                  timeout: 1000
+                  layout: 'topLeft',
+                  text: this.$t('signUpVue.created'),
+                  timeout: 1500
 
-                }).show()
+                })
+                this.$router.push({ name: 'default.dashboard' })
               })
               .catch(error => {
                 this.errors = error.response.data.errors
