@@ -11,8 +11,9 @@ class User {
     const email = res.email
     const token_type = res.token_type
     const expires_in = res.expires_in
+    const company = res.company
     if (Token.isValid(access_token)) {
-      AppStorage.store(access_token, username, email, token_type, expires_in)
+      AppStorage.store(access_token, username, email, token_type, expires_in, company)
     }
   }
 
@@ -35,6 +36,12 @@ class User {
   username () {
     if (this.loggedIn()) {
       return localStorage.getItem('username')
+    }
+  }
+
+  company () {
+    if (this.loggedIn()) {
+      return localStorage.getItem('company')
     }
   }
 

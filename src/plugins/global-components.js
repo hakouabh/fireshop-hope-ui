@@ -54,6 +54,7 @@ export default {
     app.component('scrollspy-nav', require('@/components/bootstrap/ScrollSpy/scrollspy-nav').default)
     app.component('scrollspy-navitem', require('@/components/bootstrap/ScrollSpy/scrollspy-navitem').default)
     app.component('scrollspy', require('@/components/bootstrap/ScrollSpy/scrollspy').default)
+    app.component('custompagination', require('@/components/custom/slider/CustomPagination').default)
     // app.component('scrollspy-navitem-content', require('@/components/bootstrap/ScrollSpy/scrollspy-navitem-content').default)
   }
 }

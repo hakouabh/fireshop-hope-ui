@@ -5,6 +5,11 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
+                        <router-link :to="{ name: 'product.list'}" class="icon">
+                          <svg width="50px" stroke="blue" height="40px" viewBox="0 0 24 24">
+                              <path d="M11.739,13.962c-0.087,0.086-0.199,0.131-0.312,0.131c-0.112,0-0.226-0.045-0.312-0.131l-3.738-3.736c-0.173-0.173-0.173-0.454,0-0.626l3.559-3.562c0.173-0.175,0.454-0.173,0.626,0c0.173,0.172,0.173,0.451,0,0.624l-3.248,3.25l3.425,3.426C11.911,13.511,11.911,13.789,11.739,13.962 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.148,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.148,17.521,10"></path>
+                          </svg>
+                        </router-link>
                         <h4 class="card-title">{{$t('productVue.search_product1')}}</h4>
                      </div>
                   </div>
@@ -81,7 +86,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products" :key="product.id" @click="goToedit(product.id)">
+                        <tr v-for="product in products.data" :key="product.id" @click="goToedit(product.id)">
                             <td v-if="!product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
@@ -110,12 +115,12 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.cost}} </h6>
+                                 <h6> {{product.cost}} {{$t('currency')}}</h6>
                               </div>
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.selling_price}} </h6>
+                                 <h6> {{product.selling_price}} {{$t('currency')}}</h6>
                               </div>
                            </td>
                            <td>
@@ -129,6 +134,7 @@
                      </tbody>
                   </table>
                </div>
+               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchProduct(val2)}" @Paginate="searchProduct"/>
             </div>
          </div>
       </div>
@@ -142,6 +148,8 @@ export default {
   name: 'searchProduct',
   data () {
     return {
+      totalpage: 0,
+      perpage: 15,
       form: {
         name: null,
         type: null,
@@ -163,21 +171,21 @@ export default {
     goToedit (id) {
       this.$router.push({ name: 'product.edit', params: { id: id } })
     },
-    searchProduct () {
-      webServices.get('/products/', {
+    searchProduct (page = 1) {
+      webServices.get('/products?page=' + page, {
         headers: {
           'Content-Type': 'multipart/form-data',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
         },
         params: {
-          filter: this.form
+          filter: this.form,
+          perpage: this.perpage
         }
       })
         .then(res => {
-          console.log(res.data.data)
           this.products = res.data.data
-          //  this.form = null
+          this.totalpage = res.data.data.last_page
         })
     },
     productCategory () {

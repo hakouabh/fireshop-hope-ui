@@ -12,7 +12,7 @@ const defaultchildRoutes = (prop, mode = false) => [
     path: '/counter',
     name: prop + '.counter',
     meta: { requiresAuthentication: true, name: 'counter' },
-    component: () => import('../views/main/counter')
+    component: () => import('../views/main/orders/counter')
   },
   {
     path: 'UserProfile',
@@ -39,6 +39,18 @@ const productchildRoutes = (prop, mode = false) => [
     name: prop + '.add',
     meta: { requiresAuthentication: true, name: 'add' },
     component: () => import('../views/main/product/createProduct')
+  },
+  {
+    path: 'listStock',
+    name: prop + '.listStock',
+    meta: { requiresAuthentication: true, name: 'listStock' },
+    component: () => import('../views/main/product/listStock')
+  },
+  {
+    path: 'stock',
+    name: prop + '.stock',
+    meta: { requiresAuthentication: true, name: 'stock' },
+    component: () => import('../views/main/product/stock')
   },
   {
     path: 'search',
@@ -85,6 +97,12 @@ const orderschildRoutes = (prop, mode = false) => [
     name: prop + '.search',
     meta: { requiresAuthentication: true, name: 'search' },
     component: () => import('../views/main/orders/searchOperation')
+  },
+  {
+    path: 'synthesis',
+    name: prop + '.synthesis',
+    meta: { requiresAuthentication: true, name: 'synthesis' },
+    component: () => import('../views/main/orders/Synthesis')
   },
   {
     path: 'view/:id',

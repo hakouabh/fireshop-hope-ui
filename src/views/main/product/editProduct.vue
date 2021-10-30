@@ -5,6 +5,11 @@
             <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
+                        <router-link :to="{ name: 'product.list'}" class="icon">
+                          <svg width="50px" stroke="blue" height="40px" viewBox="0 0 24 24">
+                              <path d="M11.739,13.962c-0.087,0.086-0.199,0.131-0.312,0.131c-0.112,0-0.226-0.045-0.312-0.131l-3.738-3.736c-0.173-0.173-0.173-0.454,0-0.626l3.559-3.562c0.173-0.175,0.454-0.173,0.626,0c0.173,0.172,0.173,0.451,0,0.624l-3.248,3.25l3.425,3.426C11.911,13.511,11.911,13.789,11.739,13.962 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.148,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.148,17.521,10"></path>
+                          </svg>
+                        </router-link>
                         <h4 class="card-title">{{$t('productVue.edit_product')}}</h4>
                      </div>
                   </div>
@@ -42,17 +47,17 @@
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.stock')}}</label>
-                           <input type="text" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
+                           <input disabled type="text" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.cost')}}</label>
-                           <input type="text" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
+                           <input disabled type="text" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('productVue.feilds.selling_price')}}</label>
-                           <input type="text" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
+                           <input disabled type="text" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-12 mb-5">

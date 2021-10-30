@@ -62,7 +62,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="operation in operations" :key="operation.id" @click="viewOperation(operation.id)">
+                        <tr v-for="operation in operations.data" :key="operation.id" @click="viewOperation(operation.id)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6 v-if="operation.customer"> {{operation.customer.full_name}} </h6>
@@ -93,6 +93,7 @@
                      </tbody>
                   </table>
                </div>
+               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchOperations(val2)}" @Paginate="searchOperations"/>
             </div>
          </div>
       </div>
@@ -106,6 +107,8 @@ export default {
   name: 'searchOperation',
   data () {
     return {
+      perpage: 15,
+      totalpage: 0,
       form: {
         customer: null,
         phone: null,
@@ -125,19 +128,21 @@ export default {
     viewOperation (id) {
       this.$router.push({ name: 'operations.view', params: { id: id } })
     },
-    searchOperations () {
-      webServices.get('/operations', {
+    searchOperations (page = 1) {
+      webServices.get('/operations?page=' + page, {
         headers: {
           'Content-Type': 'multipart/form-data',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
         },
         params: {
-          filter: this.form
+          filter: this.form,
+          perpage: this.perpage
         }
       })
         .then(res => {
-          this.operations = res.data.data
+          this.operations = res.data.data.operations
+          this.totalpage = res.data.data.operations.last_page
         })
         .catch()
     }

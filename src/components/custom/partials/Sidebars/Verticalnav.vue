@@ -22,6 +22,14 @@
                 <span class="item-name">{{$t('verticalBare.counter')}}</span>
             </router-link>
         </li>
+        <li class="nav-item">
+            <router-link :class="`nav-link ${checkActive('operations.synthesis') ? 'active' : ''}`" aria-current="page" :to="{name: 'operations.synthesis'}">
+                <i class="icon">
+                    <div v-html="synthesisicon"></div>
+                </i>
+                <span class="item-name">{{$t('verticalBare.synthesis')}}</span>
+            </router-link>
+        </li>
         <li><hr class="hr-horizontal"></li>
         <li class="nav-item static-item">
             <a class="nav-link static-item disabled" href="#" tabindex="-1">
@@ -77,6 +85,32 @@
                         </i>
                     <i class="sidenav-mini-icon"></i>
                     <span class="item-name">{{$t('verticalBare.product.search_product1')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.stock') ? 'active' : ''}`" :to="{name: 'product.stock'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.product.stock')}}</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.listStock') ? 'active' : ''}`" :to="{name: 'product.listStock'}">
+                    <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                    <i class="sidenav-mini-icon"></i>
+                    <span class="item-name">{{$t('verticalBare.product.listStock')}}</span>
                     </router-link>
                 </li>
             </ul>
@@ -228,10 +262,11 @@ export default {
       dashboardicon: Solidicons[53].svgicons,
       countericon: Solidicons[104].svgicons,
       ordersicon: Solidicons[103].svgicons,
+      synthesisicon: Solidicons[105].svgicons,
       authentication: ['auth.signin', 'auth.signup', 'auth.confirmMail', 'auth.lockScreen', 'auth.recoverPassword'],
       user: ['default.UserProfile', 'default.UserAdd', 'default.UserList'],
       utilities: ['auth.error404', 'auth.error500', 'auth.maintenance'],
-      specialpages: ['product.add', 'product.list', 'product.edit', 'product.search', 'rtl.dashboardrtl'],
+      specialpages: ['product.add', 'product.list', 'product.edit', 'product.search', 'product.stock', 'rtl.dashboardrtl'],
       customerpages: ['customer.add', 'customer.list', 'customer.edit', 'customer.search', 'rtl.dashboardrtl'],
       chargepages: ['charge.add', 'charge.list', 'charge.edit', 'charge.search', 'rtl.dashboardrtl'],
       orderspages: ['operations.search', 'operations.view', 'rtl.dashboardrtl']

@@ -1,47 +1,12 @@
 <template>
 <br><br>
- <div class="row d-flex">
-   <div class="col-lg-3 col-md-6">
-      <router-link :to="{name: 'product.add'}">
-            <div class="card bg-soft-success">
-                  <div class="card-body">
-                     <div class="d-flex justify-content-between align-items-center">
-                        <div v-html="createicon"></div>
-                        <div>
-                        {{$t('productVue.button.new_product')}}
-                        </div>
-                     </div>
-                  </div>
-         </div>
-      </router-link>
-   </div>
-   <div class="col-lg-3 col-md-6">
-      <router-link :to="{name: 'product.search'}">
-            <div class="card bg-soft-primary">
-                  <div class="card-body">
-                     <div class="d-flex justify-content-between align-items-center">
-                        <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                        </svg>
-                        <div>
-                        {{$t('productVue.button.search_product')}}
-                        </div>
-                     </div>
-            </div>
-         </div>
-      </router-link>
-   </div>
-</div>
 <div>
  <div class="row">
       <div class="col-sm-12">
          <div class="card">
             <div class="card-header d-flex justify-content-between">
                <div class="header-title">
-                  <h4 class="card-title">{{$t('productVue.table_name')}}</h4>
+                  <h4 class="card-title">{{$t('stockVue.table_name')}}</h4>
                </div>
             </div>
             <div class="card-body p-0">
@@ -60,17 +25,18 @@
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                            </th>
-                           <th>{{$t('productVue.feilds.name')}}</th>
-                           <th>{{$t('productVue.feilds.sku')}}</th>
-                           <th>{{$t('productVue.feilds.type')}}</th>
-                           <th>{{$t('productVue.feilds.unit_price')}}</th>
-                           <th>{{$t('productVue.feilds.stock')}}</th>
-                           <th>{{$t('productVue.feilds.status')}}</th>
+                           <th>{{$t('stockVue.feilds.product')}}</th>
+                           <th>{{$t('stockVue.feilds.sku')}}</th>
+                           <th>{{$t('stockVue.feilds.type')}}</th>
+                           <th>{{$t('stockVue.feilds.cost')}}</th>
+                           <th>{{$t('stockVue.feilds.selling_price')}}</th>
+                           <th>{{$t('stockVue.feilds.stock')}}</th>
+                           <th>{{$t('stockVue.feilds.date')}}</th>
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products.data" :key="product.id" @click="goToedit(product.id)">
-                            <td v-if="!product.image">
+                        <tr v-for="product in products.data" :key="product.id">
+                            <td v-if="!product.product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
                                           stroke-linecap="round" stroke-linejoin="round" />
@@ -83,17 +49,22 @@
                             </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.name}} </h6>
+                                 <h6> {{product.product.name}} </h6>
                               </div>
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.sku}} </h6>
+                                 <h6> {{product.product.sku}} </h6>
                               </div>
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.type.name}} </h6>
+                                 <h6> {{product.product.type.name}} </h6>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{product.cost}} {{$t('currency')}}</h6>
                               </div>
                            </td>
                            <td>
@@ -103,16 +74,21 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.stock}} </h6>
+                                 <h6> {{product.quantity}} </h6>
                               </div>
                            </td>
-                           <td v-if="product.stock > 0"><div class="text-success">{{$t('productVue.available')}}</div></td>
-                           <td v-if="product.stock <= 0"><div class="text-danger">{{$t('productVue.stock_out')}}</div></td>
+                           <td v-if="product.stock > 0"><div class="text-success">{{$t('stockVue.available')}}</div></td>
+                           <td v-if="product.stock <= 0"><div class="text-danger">{{$t('stockVue.stock_out')}}</div></td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <h6> {{product.created_at}} </h6>
+                              </div>
+                           </td>
                         </tr>
                      </tbody>
                   </table>
+                  <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
             </div>
          </div>
       </div>
@@ -126,22 +102,19 @@ export default {
   name: 'BootstrapTable',
   data () {
     return {
+      totalpage: 10,
+      perpage: 15,
       createicon: Solidicons[74].svgicons,
       searchicon: Solidicons[77].svgicons,
-      products: {},
-      totalpage: 10,
-      perpage: 15
+      products: {}
     }
   },
   created () {
     this.getProducts()
   },
   methods: {
-    goToedit (id) {
-      this.$router.push({ name: 'product.edit', params: { id: id } })
-    },
     getProducts (page = 1) {
-      webServices.get('/products?page=' + page, {
+      webServices.get('/products/stock/get?page=' + page, {
         headers: {
           'Content-Type': 'application/json',
           // eslint-disable-next-line quote-props
@@ -152,8 +125,8 @@ export default {
         }
       })
         .then(res => {
-          this.products = res.data.data
-          this.totalpage = res.data.data.last_page
+          this.products = res.data
+          this.totalpage = res.data.last_page
         })
     }
   }

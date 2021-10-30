@@ -1,16 +1,12 @@
 {
   "weeks":{
-    "dimanche":"Dimanche",
-    "lundi":"Lundi",
-    "mardi":"Mardi",
-    "mercredi":"Mercredi",
-    "jeudi":"Jeudi",
-    "vendredi":"Vendredi",
-    "samedi":"Samedi"
-  },
-  "language":{
-    "ar":"Arabe",
-    "fr":"Français"
+    "dimanche":"الأحد",
+    "lundi":"الاثنين",
+    "mardi":"الثلاثاء",
+    "mercredi":"الأربعاء",
+    "jeudi":"الخميس",
+    "vendredi":"الجمعة",
+    "samedi":"السبت"
   },
   "app_name": "Fireshop",
   "currency":"DA",
@@ -27,12 +23,8 @@
   "not_found": "N'existe pas !",
   "added":"Ajoutée",
   "dashboardVue":{
-    "operations":"Opérations",
-    "gross_salle":"Plus grosse vente",
     "this_week":"Cette Semaine",
     "last_week":"Semaine Passée",
-    "this_week_operation":"Operations de la Semaine",
-    "last_week_operation":"Operations du Semaine Passée",
     "total_customer":"Total des Clients",
     "total_product":"Total des Produits",
     "total_operation":"Total des Operations",

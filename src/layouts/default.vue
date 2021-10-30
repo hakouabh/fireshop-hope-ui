@@ -9,7 +9,7 @@
       <div class="position-relative">
         <!--Nav Start-->
         <HeaderStyle1 :fullsidebar="sidebarmini" @makefullsidebar="onfullsidebar"/>
-        <SubHeader :statesubNavbarStyle="stateNavbarStyle"/>
+        <SubHeader v-if="!checkActive(specialpages)" :statesubNavbarStyle="stateNavbarStyle"/>
         <!--Nav End-->
       </div>
       <div class="conatiner-fluid content-inner mt-n5 py-0">
@@ -46,7 +46,8 @@ export default {
     return {
       sidebarmini: false,
       onshowoffcanvas: false,
-      direction: ''
+      direction: '',
+      specialpages: ['default.counter', 'operations.synthesis']
     }
   },
   mounted () {
@@ -87,6 +88,14 @@ export default {
     },
     onCloseOffcanvas (e) {
       this.onshowoffcanvas = e
+    },
+    checkActive (route) {
+      if (this.$route.name === route) {
+        return true
+      }
+      if (route.includes(this.$route.name)) {
+        return true
+      }
     },
     onChangeMode (change) {
       switch (change) {

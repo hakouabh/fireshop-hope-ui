@@ -57,7 +57,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="customer in customers" :key="customer.id" @click="goToedit(customer.id)">
+                        <tr v-for="customer in customers.data" :key="customer.id" @click="goToedit(customer.id)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{customer.full_name}} </h6>
@@ -86,6 +86,7 @@
                         </tr>
                      </tbody>
                   </table>
+               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getCustomers(val2)}" @Paginate="getCustomers"/>
                </div>
             </div>
          </div>
@@ -100,6 +101,8 @@ export default {
   name: 'ClientTable',
   data () {
     return {
+      totalpage: 0,
+      perpage: 15,
       createicon: Solidicons[74].svgicons,
       searchicon: Solidicons[77].svgicons,
       customers: {}
@@ -112,16 +115,20 @@ export default {
     goToedit (id) {
       this.$router.push({ name: 'customer.edit', params: { id: id } })
     },
-    getCustomers () {
-      webServices.get('/customers', {
+    getCustomers (page = 1) {
+      webServices.get('/customers?page=' + page, {
         headers: {
           'Content-Type': 'application/json',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
+        },
+        params: {
+          perpage: this.perpage
         }
       })
         .then(res => {
           this.customers = res.data.data
+          this.totalpage = res.data.data.last_page
         })
     }
   }

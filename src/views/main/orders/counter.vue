@@ -1,5 +1,7 @@
 <template>
+<br><br>
     <div>
+      <SubHeader :total="total" :customer="full_name" :oldtotal="oldtotal" :statesubNavbarStyle="stateNavbarStyle"/>
       <div class="row">
          <div class="col-sm-12 col-lg-12">
             <div class="card">
@@ -76,7 +78,7 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{order.order_detail.product.selling_price}} </h6>
+                                 <h6> {{order.order_detail.product.selling_price}} {{$t('currency')}} </h6>
                               </div>
                            </td>
                            <td>
@@ -86,12 +88,12 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{order.order_detail.total_order}} </h6>
+                                 <h6> {{order.order_detail.total_order}} {{$t('currency')}} </h6>
                               </div>
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <div class="btn btn-icon btn-soft-light me-2 " @click="deleteProduct(order.id)">
+                                 <div class="btn btn-icon btn-soft-light me-2 " @click="deleteProduct(order.id,order.order_detail.product.selling_price)">
                                     <div class="btn-inner">
                                        <svg class="svg-icon" viewBox="0 0 20 20">
                                           <path d="M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z"></path>
@@ -125,10 +127,10 @@
       <div class="col-lg-12">
          <div class="row">
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-product-sku" v-on:keyup.enter="findProduct()" v-model.lazy="formProduct.sku" :placeholder="$t('productVue.feilds.sku')">
+               <input type="text" class="form-control" id="model-product-sku" v-model="formProduct.sku" :placeholder="$t('productVue.feilds.sku')">
             </div>
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-product_name" v-on:keyup.enter="findProduct()" v-model.lazy="formProduct.name" :placeholder="$t('productVue.feilds.product_name')">
+               <input type="text" class="form-control" id="model-product_name" v-model="formProduct.name" :placeholder="$t('productVue.feilds.product_name')">
             </div>
          </div>
          <div class="table-responsive mt-4">
@@ -184,10 +186,10 @@
       <div class="col-lg-12">
          <div class="row">
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-name" v-model.lazy="formCustomer.name" v-on:keyup.enter="findCustomer()" :placeholder="$t('customerVue.searchCustomer.full_name')">
+               <input type="text" class="form-control" id="model-name" v-model="formCustomer.name" :placeholder="$t('customerVue.searchCustomer.full_name')">
             </div>
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-phone" v-model.lazy="formCustomer.phone" v-on:keyup.enter="findCustomer()" :placeholder="$t('customerVue.searchCustomer.phone')">
+               <input type="text" class="form-control" id="model-phone" v-model="formCustomer.phone" :placeholder="$t('customerVue.searchCustomer.phone')">
             </div>
          </div>
             <div class="table-responsive mt-4">
@@ -200,7 +202,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="customer in customers" :key="customer.id" data-bs-dismiss="modal" @click="selectClient(customer.id)">
+                        <tr v-for="customer in customers" :key="customer.id" data-bs-dismiss="modal" @click="selectClient(customer)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{customer.full_name}} </h6>
@@ -254,15 +256,29 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import SubHeader from './SubHeader'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Counter',
+  components: {
+    SubHeader
+  },
+  computed: {
+    ...mapGetters({
+      stateNavbarStyle: 'subnavbarstyle'
+    })
+  },
   data () {
     return {
+      total: 0,
+      oldtotal: 0,
       order_id: null,
       discount_percent: null,
       product_price: null,
       discount: null,
       sku: null,
+      full_name: null,
+      customer: null,
       errors: false,
       success: false,
       orders: {},
@@ -298,6 +314,21 @@ export default {
     },
     discount_percent (val) {
       this.discount = (val * this.product_price) / 100
+    },
+    total (val) {
+      console.log(val)
+    },
+    formProduct: {
+      handler: function () {
+        return this.findProduct()
+      },
+      deep: true
+    },
+    formCustomer: {
+      handler: function () {
+        return this.findCustomer()
+      },
+      deep: true
     }
   },
   methods: {
@@ -320,16 +351,21 @@ export default {
           'Content-Type': 'application/json',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
+        },
+        params: {
+          customer: this.customer
         }
       })
         .then(() => {
+          this.total = 0
+          this.oldtotal = 0
           this.$notify({
             type: 'success',
             layout: 'topLeft',
             text: this.$t('validate_operation'),
             timeout: 1500
           })
-          this.getOrders()
+          this.$router.go({ name: 'default.counter' })
         })
         .catch()
     },
@@ -354,33 +390,35 @@ export default {
       }
     },
     findProduct () {
-      webServices.get('/products/', {
+      webServices.get('/products?page=1', {
         headers: {
           'Content-Type': 'multipart/form-data',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
         },
         params: {
-          filter: this.formProduct
+          filter: this.formProduct,
+          perpage: 10
         }
       })
         .then(res => {
-          this.products = res.data.data
+          this.products = res.data.data.data
         })
     },
     findCustomer () {
-      webServices.get('/customers/', {
+      webServices.get('/customers?page=1', {
         headers: {
           'Content-Type': 'multipart/form-data',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
         },
         params: {
-          filter: this.formCustomer
+          filter: this.formCustomer,
+          perpage: 10
         }
       })
         .then(res => {
-          this.customers = res.data.data
+          this.customers = res.data.data.data
         })
     },
     selectProduct (sku) {
@@ -389,9 +427,10 @@ export default {
     },
     selectClient (customer) {
       this.customer = customer
-      this.addProduct()
+      this.full_name = customer.full_name
     },
-    deleteProduct (id) {
+    deleteProduct (id, price) {
+      this.oldtotal = price
       webServices.get('/ordersV2/delete/' + id, {
         headers: {
           'Content-Type': 'application/json',
@@ -413,6 +452,9 @@ export default {
       })
         .then(res => {
           this.orders = res.data
+          if (this.orders) {
+            this.total = this.orders.reduce((a, b) => a + b.order_detail.total_order, 0)
+          }
         })
         .catch()
     },
@@ -427,6 +469,7 @@ export default {
         })
           .then(res => {
             this.getOrders()
+            this.oldtotal = res.data.selling_price
             this.$notify({
               type: 'success',
               layout: 'topLeft',
@@ -437,7 +480,7 @@ export default {
             setTimeout(() => {
               this.sku = null
               this.success = false
-            }, 500)
+            }, 50)
           })
           .catch(() => {
             this.$notify({

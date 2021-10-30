@@ -9,7 +9,6 @@ import User from './helpers/User'
 import Notif from './helpers/Notification'
 import Notifications from '@kyvg/vue3-notification'
 import i18n from './i18n'
-
 require('waypoints/lib/noframework.waypoints.min')
 window.User = User
 window.Notif = Notif
