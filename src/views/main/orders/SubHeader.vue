@@ -1,5 +1,5 @@
 <template>
-    <div :class="`iq-navbar-header ${statesubNavbarStyle}`" style="height: 215px;">
+    <div :class="`iq-navbar-header ${statesubNavbarStyle}`">
     <div class="container-fluid iq-container">
         <div class="row">
             <div class="col-md-12">

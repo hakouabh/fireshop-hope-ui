@@ -125,7 +125,7 @@
 <script>
 /* eslint-disable no-undef */
 export default {
-  name: 'createProduct',
+  name: 'createStock',
   data () {
     return {
       form: {

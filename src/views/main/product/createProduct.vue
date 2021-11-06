@@ -16,19 +16,23 @@
                   <div class="card-body">
                     <form @submit.prevent="CreateProduct" enctype="multipart/form-data">
                     <div class="row">
+                        <div class="col-lg-12 mb-2 col-md-6">
+                           <label for="customFile" class="form-label custom-file-input">{{$t('customerVue.feilds.import_file')}}</label>
+                           <input class="form-control" @change="onFileSelected" type="file" id="customFile">
+                        </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom01" class="form-label">{{$t('productVue.feilds.product_name')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :class="`${errors.name ? 'is-invalid' : ''}`" class="form-control" id="validationCustom01" v-model="form.name">
+                           <input type="text" :disabled="import_file != null" :class="`${errors.name ? 'is-invalid' : ''}`" class="form-control" id="validationCustom01" v-model="form.name">
                            <small class="text-danger" v-if="errors.name" > {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-3 mb-2">
                            <label for="validationCustom02" class="form-label">{{$t('productVue.feilds.sku')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :class="`${errors.sku ? 'is-invalid' : ''}`" class="form-control" id="validationCustom02" v-model="form.sku">
+                           <input type="text" :disabled="import_file != null" :class="`${errors.sku ? 'is-invalid' : ''}`" class="form-control" id="validationCustom02" v-model="form.sku">
                            <small class="text-danger" v-if="errors.sku"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom04" class="form-label">{{$t('productVue.feilds.type')}} <small class="text-danger"> *</small></label>
-                           <select class="form-select" :class="`${errors.type ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.type" >
+                           <select class="form-select" :disabled="import_file != null" :class="`${errors.type ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.type" >
                               <option v-for="type in productsTypes" :value="type" :key="type.id">{{type.name}}</option>
                            </select>
                            <small class="text-danger" v-if="errors.type"> {{$t('signUpVue.required')}} </small>
@@ -47,22 +51,22 @@
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.stock')}} <small class="text-danger"> *</small></label>
-                           <input type="text" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
+                           <input type="text" :disabled="import_file != null" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.cost')}} <small class="text-danger"> *</small></label>
-                           <input type="text" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
+                           <input type="text" :disabled="import_file != null" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('productVue.feilds.selling_price')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
+                           <input type="text" :disabled="import_file != null" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-12 mb-5">
                             <label for="validationTextarea" class="form-label">{{$t('productVue.feilds.description')}}</label>
-                            <textarea class="form-control" id="validationTextarea" v-model="form.description" :placeholder="$t('productVue.feilds.description')"></textarea>
+                            <textarea class="form-control" :disabled="import_file != null" id="validationTextarea" v-model="form.description" :placeholder="$t('productVue.feilds.description')"></textarea>
                         </div>
                          <div class="row d-flex">
                            <div class="col-lg-3 col-md-6">
@@ -105,6 +109,7 @@ export default {
   name: 'createProduct',
   data () {
     return {
+      import_file: null,
       form: {
         name: null,
         sku: null,
@@ -123,6 +128,9 @@ export default {
     this.productCategory()
   },
   methods: {
+    onFileSelected (e) {
+      this.import_file = e.target.files[0]
+    },
     CreateCategory () {
       webServices.post('/products/types/store', { name: this.createdCompany }, {
         headers: {
@@ -147,25 +155,49 @@ export default {
         })
     },
     CreateProduct () {
-      webServices.post('/products/add', this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
+      if (this.import_file) {
+        const formData = new FormData()
+        formData.append('import_file', this.import_file)
+        webServices.post('/products/addProduct', formData, {
+          headers: {
+            'Content-Type': 'application/json',
+            // eslint-disable-next-line quote-props
+            'Authorization': User.ApiToken()
+          }
+        })
+          .then(() => {
+            this.$notify({
+              type: 'success',
+              layout: 'topLeft',
+              text: this.$t('created'),
+              timeout: 1500
+            })
+            this.$router.go({ name: 'product.add' })
           })
-          this.$router.go({ name: 'product.add' })
+          .catch(error => {
+            this.errors = error.response.data.errors
+          })
+      } else {
+        webServices.post('/products/add', this.form, {
+          headers: {
+            'Content-Type': 'application/json',
+            // eslint-disable-next-line quote-props
+            'Authorization': User.ApiToken()
+          }
         })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+          .then(() => {
+            this.$notify({
+              type: 'success',
+              layout: 'topLeft',
+              text: this.$t('created'),
+              timeout: 1500
+            })
+            this.$router.go({ name: 'product.add' })
+          })
+          .catch(error => {
+            this.errors = error.response.data.errors
+          })
+      }
     },
     productCategory () {
       webServices.get('/products/types', {

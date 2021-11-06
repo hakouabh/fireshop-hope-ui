@@ -53,6 +53,16 @@
                <div class="header-title">
                   <h4 class="card-title">{{$t('chargeVue.table_name')}}</h4>
                </div>
+               <div class="d-flex align-items-center">
+                     <div>
+                        <h6 class="card-title">{{$t('export_as')}}</h6>
+                     </div>
+                  <div class="btn btn-icon" @click="exportExcel()">
+                     <div class="btn-inner">
+                        <img src="https://img.icons8.com/color/48/000000/ms-excel.png"/>
+                     </div>
+                  </div>
+               </div>
             </div>
             <div class="card-body p-0">
                <div class="table-responsive mt-4">
@@ -115,8 +125,31 @@ export default {
   },
   created () {
     this.chargeCategory()
+    this.searchCharge()
   },
   methods: {
+    exportExcel () {
+      webServices.get('/charges/export',
+        {
+          responseType: 'arraybuffer',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            // eslint-disable-next-line quote-props
+            'Authorization': User.ApiToken()
+          },
+          params: {
+            filter: this.form
+          }
+        })
+        .then(response => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+          var fileLink = document.createElement('a')
+          fileLink.href = fileURL
+          fileLink.setAttribute('download', `${this.$t('verticalBare.charge.title')}.xlsx`)
+          document.body.appendChild(fileLink)
+          fileLink.click()
+        })
+    },
     goToedit (id) {
       this.$router.push({ name: 'charge.edit', params: { id: id } })
     },

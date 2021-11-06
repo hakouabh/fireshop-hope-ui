@@ -43,7 +43,7 @@
                                  {{$t('counterVue.button.delete')}}</button>
                            </div>
                            <div class="col-md-4 mb-2 mt-2">
-                              <button type="button" @click="validateOperation()" class="btn btn-light">
+                              <button type="button" data-bs-toggle="modal" data-bs-target="#ValidateOperationModel" class="btn btn-light">
                                  <span class="btn-inner">
                                     <svg class="svg-icon" stroke="currentColor" viewBox="0 0 20 20">
                                        <path d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"></path>
@@ -83,7 +83,9 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{order.order_detail.amount}} </h6>
+                                 <h6> {{order.order_detail.amount}}&nbsp;&nbsp;</h6>
+                                    <badge tag="p" badgeClass="h5"><innercontent @click="updateQuantity(order.id, 'increment')" innerClass="badge btn btn-icon bg-soft-success">+</innercontent></badge>&nbsp;
+                                    <badge tag="p" v-if="order.order_detail.amount > 1" badgeClass="h5"><innercontent @click="updateQuantity(order.id, 'decrement')" innerClass="badge btn btn-icon bg-soft-danger">- </innercontent></badge>
                               </div>
                            </td>
                            <td>
@@ -104,6 +106,13 @@
                                     <div class="btn-inner">
                                        <svg class="svg-icon" viewBox="0 0 20 20">
                                           <path d="M17.35,2.219h-5.934c-0.115,0-0.225,0.045-0.307,0.128l-8.762,8.762c-0.171,0.168-0.171,0.443,0,0.611l5.933,5.934c0.167,0.171,0.443,0.169,0.612,0l8.762-8.763c0.083-0.083,0.128-0.192,0.128-0.307V2.651C17.781,2.414,17.587,2.219,17.35,2.219M16.916,8.405l-8.332,8.332l-5.321-5.321l8.333-8.332h5.32V8.405z M13.891,4.367c-0.957,0-1.729,0.772-1.729,1.729c0,0.957,0.771,1.729,1.729,1.729s1.729-0.772,1.729-1.729C15.619,5.14,14.848,4.367,13.891,4.367 M14.502,6.708c-0.326,0.326-0.896,0.326-1.223,0c-0.338-0.342-0.338-0.882,0-1.224c0.342-0.337,0.881-0.337,1.223,0C14.84,5.826,14.84,6.366,14.502,6.708"></path>
+                                       </svg>
+                                    </div>
+                                 </div>
+                                 <div v-if="order.type == 1" class="btn btn-icon btn-soft-light me-2 " @click="returnProduct(order.id)">
+                                    <div  class="btn-inner">
+                                       <svg class="svg-icon" viewBox="0 0 20 20">
+                                          <path d="M3.254,6.572c0.008,0.072,0.048,0.123,0.082,0.187c0.036,0.07,0.06,0.137,0.12,0.187C3.47,6.957,3.47,6.978,3.484,6.988c0.048,0.034,0.108,0.018,0.162,0.035c0.057,0.019,0.1,0.066,0.164,0.066c0.004,0,0.01,0,0.015,0l2.934-0.074c0.317-0.007,0.568-0.271,0.56-0.589C7.311,6.113,7.055,5.865,6.744,5.865c-0.005,0-0.01,0-0.015,0L5.074,5.907c2.146-2.118,5.604-2.634,7.971-1.007c2.775,1.912,3.48,5.726,1.57,8.501c-1.912,2.781-5.729,3.486-8.507,1.572c-0.259-0.18-0.618-0.119-0.799,0.146c-0.18,0.262-0.114,0.621,0.148,0.801c1.254,0.863,2.687,1.279,4.106,1.279c2.313,0,4.591-1.1,6.001-3.146c2.268-3.297,1.432-7.829-1.867-10.101c-2.781-1.913-6.816-1.36-9.351,1.058L4.309,3.567C4.303,3.252,4.036,3.069,3.72,3.007C3.402,3.015,3.151,3.279,3.16,3.597l0.075,2.932C3.234,6.547,3.251,6.556,3.254,6.572z"></path>
                                        </svg>
                                     </div>
                                  </div>
@@ -253,6 +262,34 @@
    <button type="button" class="btn btn-primary" @click="Discount()">{{$t('productVue.button.save')}}</button>
 </model-footer>
 </modal>
+
+<modal mainClass="fade" :tabindex="-1" id="ValidateOperationModel" ariaLabelled="exampleModalLabel" :ariaHidden="true" style="display: none;">
+<model-header :dismissable="true">
+   <h5 class="modal-title" id="exampleModalLabel">{{$t('model_operation')}}</h5>
+</model-header>
+<model-body>
+   <form>
+      <div class="col-lg-12">
+         <div class="row d-flex justify-content-center">
+            <div class="col-lg-8">
+               <input type="number" class="form-control" :class="`${payement < total ? 'is-invalid text-danger' : payement >= total ? 'text-success': ''}`" id="model-discount" v-model="payement">
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
+         <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 mt-3">
+               <input type="number" readonly class="form-control" id="model-discount" v-model="reste">
+            </div>
+         </div>
+      </div>
+   </form>
+</model-body>
+<model-footer>
+<button type="button" class="btn btn-secondary" id="closeOperation" data-bs-dismiss="modal">{{$t('productVue.button.cancel')}}</button>
+<button type="button" class="btn btn-primary" @click="validateOperation()">{{$t('productVue.button.save')}}</button>
+</model-footer>
+</modal>
 </template>
 <script>
 /* eslint-disable no-undef */
@@ -270,6 +307,8 @@ export default {
   },
   data () {
     return {
+      payement: null,
+      reste: 0,
       total: 0,
       oldtotal: 0,
       order_id: null,
@@ -277,6 +316,7 @@ export default {
       product_price: null,
       discount: null,
       sku: null,
+      type: 0,
       full_name: null,
       customer: null,
       errors: false,
@@ -316,7 +356,10 @@ export default {
       this.discount = (val * this.product_price) / 100
     },
     total (val) {
-      console.log(val)
+      this.reste = -val
+    },
+    payement (val) {
+      this.reste = val - this.total
     },
     formProduct: {
       handler: function () {
@@ -332,6 +375,22 @@ export default {
     }
   },
   methods: {
+    updateQuantity (id, update) {
+      webServices.get('/ordersV2/quantity', {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        },
+        params: {
+          order_id: id,
+          update: update
+        }
+      })
+        .then(() => {
+          this.getOrders()
+        })
+    },
     DeleteAll () {
       webServices.get('/ordersV2/deleteAll', {
         headers: {
@@ -346,28 +405,39 @@ export default {
         .catch()
     },
     validateOperation () {
-      webServices.get('/operations/validateOperation', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          customer: this.customer
-        }
-      })
-        .then(() => {
-          this.total = 0
-          this.oldtotal = 0
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('validate_operation'),
-            timeout: 1500
-          })
-          this.$router.go({ name: 'default.counter' })
+      if (this.payement >= this.total) {
+        webServices.get('/operations/validateOperation', {
+          headers: {
+            'Content-Type': 'application/json',
+            // eslint-disable-next-line quote-props
+            'Authorization': User.ApiToken()
+          },
+          params: {
+            customer: this.customer,
+            payement: this.payement,
+            type: this.type
+          }
         })
-        .catch()
+          .then(() => {
+            this.total = 0
+            this.oldtotal = 0
+            this.$notify({
+              type: 'success',
+              layout: 'topLeft',
+              text: this.$t('validate_operation'),
+              timeout: 1500
+            })
+            this.$router.go({ name: 'default.counter' })
+          })
+          .catch()
+      } else {
+        this.$notify({
+          type: 'error',
+          layout: 'topLeft',
+          text: this.$t('insufficient_amount'),
+          timeout: 1500
+        })
+      }
     },
     Discount () {
       if (this.discount > 0) {
@@ -442,6 +512,18 @@ export default {
           this.getOrders()
         })
     },
+    returnProduct (id) {
+      webServices.get('/ordersV2/return/' + id, {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(() => {
+          this.getOrders()
+        })
+    },
     getOrders () {
       webServices.get('/ordersV2/get', {
         headers: {
@@ -502,5 +584,4 @@ export default {
 </script>
 
 <style>
-
 </style>

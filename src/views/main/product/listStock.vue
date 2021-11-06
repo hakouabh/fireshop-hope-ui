@@ -35,7 +35,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products.data" :key="product.id">
+                        <tr v-for="product in products.data" :key="product.product_id" @click="goToedit(product.id)" >
                             <td v-if="!product.product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
@@ -113,6 +113,9 @@ export default {
     this.getProducts()
   },
   methods: {
+    goToedit (id) {
+      this.$router.push({ name: 'product.editStock', params: { id: id } })
+    },
     getProducts (page = 1) {
       webServices.get('/products/stock/get?page=' + page, {
         headers: {
@@ -125,6 +128,7 @@ export default {
         }
       })
         .then(res => {
+          console.log(res)
           this.products = res.data
           this.totalpage = res.data.last_page
         })

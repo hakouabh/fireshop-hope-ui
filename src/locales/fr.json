@@ -14,13 +14,16 @@
   },
   "app_name": "Fireshop",
   "currency":"DA",
+  "export_as":"Exporter :",
   "top_product":"les Produits les plus vendus",
   "currency1":"da",
   "hello":"Bonjour",
   "refresh":"Actualiser",
+  "insufficient_amount":"Le Montant est insuffisant",
   "model_search_product":"Rechercher Un Produit",
   "model_search_customer":"Rechercher Un Client",
   "model_discount":"Ajouter une Remise",
+  "model_operation":"Enter le Montant",
   "model_titel":"Créer une nouvelle catégorie",
   "created":"Créé avec succès",
   "validate_operation":"L'opération Valée avec succès",
@@ -28,6 +31,7 @@
   "added":"Ajoutée",
   "dashboardVue":{
     "operations":"Opérations",
+    "products":"Produits",
     "gross_salle":"Plus grosse vente",
     "this_week":"Cette Semaine",
     "last_week":"Semaine Passée",
@@ -210,6 +214,7 @@
       "search_customer":"Rechercher"
     },
     "feilds":{
+      "import_file":"Choisir le fichier",
       "full_name":"Nom et Prénom",
       "email":"E-mail",
       "phone":"Numéro de Téléphone",
@@ -224,6 +229,20 @@
       "company_name":"Nom de l'entreprise",
       "date_to":"Date à",
       "date_from":"Date de"
+    }
+  },
+  "editStockVue":{
+    "create_stock":"Modifier un Stock",
+    "button":{
+      "save":"Sauvegarder",
+      "cancel":"Annuler"
+    },
+    "feilds":{
+      "product":"Nom du Produit",
+      "sku":"Code-barres",
+      "stock":"Quantité",
+      "cost":"Prix d'achat",
+      "selling_price":"Prix de vente"
     }
   },
   "stockVue":{
