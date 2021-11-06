@@ -26,7 +26,7 @@
   "model_operation":"Enter le Montant",
   "model_titel":"Créer une nouvelle catégorie",
   "created":"Créé avec succès",
-  "validate_operation":"L'opération Valée avec succès",
+  "validate_operation":"L'opération Validée avec succès",
   "not_found": "N'existe pas !",
   "added":"Ajoutée",
   "dashboardVue":{
@@ -78,7 +78,7 @@
     "print":"Imprimer le Bon",
     "total":"Total",
     "discount":"Remise",
-    "payment":"Paiment",
+    "payment":"Paiement",
     "feilds":{
       "product_name":"Les Produits",
       "quantity":"Quantités",
@@ -97,7 +97,7 @@
     "signin":"Connectez-vous",
     "placeholder":{
       "email":"Entrer votre Email",
-      "name":"Entrer You name",
+      "name":"Entrez votre nom",
       "password":"Entrer un mot de passe",
       "password_confirmation":"Confirmez le mot de passe",
       "company_category":"catégorie d'entreprise",
@@ -172,7 +172,7 @@
       "customer":"Clients",
       "discount":"Remise",
       "total":"Total",
-      "payment":"Paiment",
+      "payment":"Paiement",
       "date":"Date et heure"
     },
     "button":{

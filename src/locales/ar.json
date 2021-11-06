@@ -4,274 +4,301 @@
     "lundi":"الاثنين",
     "mardi":"الثلاثاء",
     "mercredi":"الأربعاء",
-    "jeudi":"الخميس",
     "vendredi":"الجمعة",
-    "samedi":"السبت"
+    "samedi":"السبت",
+    "jeudi":"الخميس"
+  },
+  "language":{
+    "ar":"عربي",
+    "fr":"فرنسي"
   },
   "app_name": "Fireshop",
-  "currency":"DA",
-  "top_product":"les Produits les plus vendus",
-  "currency1":"da",
-  "hello":"Bonjour",
-  "refresh":"Actualiser",
-  "model_search_product":"Rechercher Un Produit",
-  "model_search_customer":"Rechercher Un Client",
-  "model_discount":"Ajouter une Remise",
-  "model_titel":"Créer une nouvelle catégorie",
-  "created":"Créé avec succès",
-  "validate_operation":"L'opération Valée avec succès",
-  "not_found": "N'existe pas !",
-  "added":"Ajoutée",
+  "currency":"دج",
+  "export_as":"حفظ :",
+  "top_product":"المنتجات الأكثر مبيعًا",
+  "currency1":"دج",
+  "hello":"صباح الخير",
+  "refresh":"تحديث",
+  "insufficient_amount":"المبلغ غير كاف",
+  "model_search_product":"ابحث عن منتج",
+  "model_search_customer":"ابحث عن عميل",
+  "model_discount":"أضف الخصم",
+  "model_operation":"أدخل المبلغ",
+  "model_titel":"قم بإنشاء فئة جديدة",
+  "created":"تم إنشاؤه بنجاح",
+  "validate_operation":"تم التحقق من صحة العملية بنجاح",
+  "not_found": "غير موجود !",
+  "added":"مضاف",
   "dashboardVue":{
-    "this_week":"Cette Semaine",
-    "last_week":"Semaine Passée",
-    "total_customer":"Total des Clients",
-    "total_product":"Total des Produits",
-    "total_operation":"Total des Operations",
-    "cost":"Coût par opération",
-    "revenus":"Les Ventes",
-    "profit":"Revenues des Ventes",
-    "total_charge":"Total des charges",
-    "discount":"Remises",
-    "cost_stock":"Coût de stock",
-    "total_cost":"Coût Total",
-    "total_profit":"Chiffres D'affaires",
+    "operations":"عمليات",
+    "products":"منتجات",
+    "gross_salle":"أكبر بيع",
+    "this_week":"هذا الأسبوع",
+    "last_week":"الأسبوع الماضي",
+    "this_week_operation":"عمليات الأسبوع",
+    "last_week_operation":"عمليات الأسبوع الماضي",
+    "total_customer":"إجمالي العملاء",
+    "total_product":"إجمالي المنتجات",
+    "total_operation":"إجمالي العمليات",
+    "cost":"التكلفة لكل عملية",
+    "revenus":"مبيعات",
+    "profit":"ايرادات المبيعات",
+    "total_charge":"الكلفة الاجماليه",
+    "discount":"الخصومات",
+    "cost_stock":"تكلفة المخزون",
+    "total_cost":"التكلفة الإجمالية",
+    "total_profit":"أرقام المبيعات",
     "feilds":{
-      "product_name":"Nom du Produit",
-      "operation":"Opérations",
-      "sold":"Quantité vendue",
-      "stock":"Stock"
+      "product_name":"إسم المنتوج",
+      "operation":"عمليات",
+      "sold":"الكمية المباعة",
+      "stock":"المخزون"
     }
   },
   "sognInVue":{
-    "signin":"Se connecter",
-    "logout":"Déconnexion",
-    "logintostay":"Connectez-vous pour rester connecté.",
+    "signin":"تسجيل الدخول",
+    "logout":"تسجيل خروج",
+    "logintostay":"تسجيل الدخول للبقاء مسجلا.",
     "label":{
-      "email":"E-mail",
-      "password":"mot de passe"
+      "email":"بريد الالكتروني",
+      "password":"كلمة السر"
     },
     "placeholder":{
-      "email":"Entrer votre Email",
-      "password":"Entrer votre mot de passe"
+      "email":"أدخل بريدك الإلكتروني",
+      "password":"ادخل رقمك السري"
     },
-    "remember_me":"Rester connecté",
-    "forget_password":"Le mot de passe oublié ?",
-    "dont_have_account":"Vous n'avez pas de compte ?",
-    "click_to_signup":"Cliquez ici pour S'inscrire",
-    "connecter":"connecté avec succès",
-    "invalid_credential":"E-mail ou mot de passe incorrect veuillez réessayer"
+    "remember_me":"ابق على اتصال",
+    "forget_password":"هل نسيت كلمة السر ؟",
+    "dont_have_account":"لا يوجد لديك حساب ؟",
+    "click_to_signup":"اضغط هنا للتسجيل",
+    "connecter":"تم تسجيل الدخول بنجاح",
+    "invalid_credential":"البريد الإلكتروني أو كلمة المرور غير صحيحة يرجى المحاولة مرة أخرى"
   },
   "viewOperation":{
     "print":"Imprimer le Bon",
-    "total":"Total",
-    "discount":"Remise",
-    "payment":"Paiment",
+    "total":"المجموع",
+    "discount":"تخفيض",
+    "payment":"دفع",
     "feilds":{
-      "product_name":"Les Produits",
-      "quantity":"Quantités",
-      "selling_price":"Prix de vente",
-      "total":"Totals",
-      "discount":"Remises"
+      "product_name":"المنتجات",
+      "quantity":"الكميات",
+      "selling_price":"ثمن البيع",
+      "total":"المجاميع",
+      "discount":"الخصومات"
     }
   },
   "signUpVue":{
-    "signup":"S'inscrire",
-    "created":"Votre compte a été créé avec succès",
-    "create_account":"Créez votre compte",
-    "required":"ce champ est obligatoire",
-    "agree":"je suis d'accord avec les termes et conditions",
-    "alredy_have_account":"Vous avez déjà un compte",
-    "signin":"Connectez-vous",
+    "signup":"سجل الان",
+    "created":"تم إنشاء حسابك بنجاح",
+    "create_account":"إنشاء حساب",
+    "required":"هده الخانه إجبارية",
+    "agree":"اني اوافق على الشروط والظروف",
+    "alredy_have_account":"هل لديك حساب",
+    "signin":"تسجيل دخول",
     "placeholder":{
-      "email":"Entrer votre Email",
-      "name":"Entrer You name",
-      "password":"Entrer un mot de passe",
-      "password_confirmation":"Confirmez le mot de passe",
-      "company_category":"catégorie d'entreprise",
-      "company_name":"Nom de l'entreprise"
+      "email":"أدخل بريدك الإلكتروني",
+      "name":"أدخل أسمك",
+      "password":"أدخل كلمة المرور",
+      "password_confirmation":"تأكيد كلمة السر",
+      "company_category":"نوع الشركة",
+      "company_name":"اسم الشركة"
     }
   },
   "counterVue":{
     "feilds":{
-      "sku":"Code-barres",
-      "name":"Nom du Produits",
-      "unit_price":"Prix",
-      "quantity":"Qte",
-      "total":"Total",
-      "action":"Actions"
+      "sku":"الرمز الشريطي",
+      "name":"اسم المنتج",
+      "unit_price":"سعر",
+      "quantity":"الكمية",
+      "total":"مجموع",
+      "action":"أجراءات"
     },
     "button":{
-      "search_product":"Rechercher Produit",
-      "search_customer":"Rechercher Client",
-      "delete":"Supprimer Tout",
-      "validate":"Valider L'opération"
+      "search_product":"البحث عن المنتج",
+      "search_customer":"البحث عن العميل",
+      "delete":"حذف الكل",
+      "validate":"تحقق من صحة العملية"
     }
   },
   "SynthesisVue":{
-    "total":"Les Ventes",
-    "discount":"Remise",
-    "benefit":"Bénéfice",
-    "box":"En caisse"
+    "total":"مبيعات",
+    "discount":"توصيل",
+    "benefit":"ربح",
+    "box":"في صندوق"
   },
   "verticalBare":{
-    "home":"home",
-    "dashboard":"Dashboard",
-    "counter":"Vente au Comptoir",
-    "synthesis":"Synthèse",
+    "home":"الصفحة الرئيسية",
+    "dashboard":"لوحة القيادة",
+    "counter":"العداد",
+    "synthesis":"المبيعات",
     "product":{
-      "title":"Produits",
-      "stock":"Nouveau Stock",
-      "listStock":"Liste Stock",
-      "list_product":"Liste des Produits",
-      "add_product":"Ajouter un Produit",
-      "search_product1":"Recherche de produits"
+      "title":"منتجات",
+      "stock":"المخزون",
+      "listStock":"قائمة المخزون",
+      "list_product":"قائمة المنتجات",
+      "add_product":"أضف منتجًا",
+      "search_product1":"بحث منتوج"
     },
     "customer":{
-      "title":"Clients",
-      "list_customer":"Liste des Clients",
-      "add_customer":"Ajouter un Client",
-      "search_customer":"Recherche de Clients"
+      "title":"عملاء",
+      "list_customer":"قائمة العملاء",
+      "add_customer":"إضافة عميل",
+      "search_customer":"البحث عن العملاء"
     },
     "orders":{
-      "title":"Operations",
-      "list_orders":"Liste des Operations",
-      "search_orders":"Recherche des Operations"
+      "title":"العمليات",
+      "list_orders":"قائمة العمليات",
+      "search_orders":"البحث في المعاملات"
     },
     "charge":{
-      "title":"Prélèvement",
-      "list_charge":"Liste des Prélèvements",
-      "add_charge":"Ajouter un Prélèvement",
-      "search_charge":"Recherche de Prélèvements"
+      "title":"نفقات",
+      "list_charge":"قائمة المصاريف",
+      "add_charge":"أضف المصاريف",
+      "search_charge":"البحث في النفقات"
     }
   },
   "operationVue":{
-    "no_client":"Client Divers",
-    "search_operation":"Recherche de Operations",
-    "table_name":"Table des Operations",
+    "no_client":"زبون غير معروف",
+    "search_operation":"ابحث عن العمليات",
+    "table_name":"جدول العمليات",
     "searchOperation":{
-      "customer":"Nom du Client",
-      "phone":"Numéro de téléphone",
-      "date_to":"Date à",
-      "date_from":"Date de"
+      "customer":"اسم الزبون",
+      "phone":"رقم الهاتف",
+      "date_to":"تاريخ إلى",
+      "date_from":"تاريخ من "
     },
     "feilds":{
-      "product_name":"Nom du Produit",
-      "customer":"Clients",
-      "discount":"Remise",
-      "total":"Total",
-      "payment":"Paiment",
-      "date":"Date et heure"
+      "product_name":"إسم المنتوج",
+      "customer":"عملاء",
+      "discount":"توصيل",
+      "total":"مجموع",
+      "payment":"دفع",
+      "date":"التاريخ و الساعة"
     },
     "button":{
-      "cancel":"Annuler",
-      "search_operation":"Rechercher"
+      "cancel":"الغاء",
+      "search_operation":"ابحث عن العمليات"
     }
   },
   "chargeVue":{
-    "search_charge":"Recherche de Prélèvement",
-    "edit_charge":"Modifier un Prélèvement",
-    "create_charge":"Ajouter un Prélèvement",
-    "table_name":"Table des Prélèvements",
+    "search_charge":"البحث عن المصاريف",
+    "edit_charge":"تعديل  ",
+    "create_charge":"أضف المصاريف",
+    "table_name":"جدول المصاريف",
     "button":{
-      "new_charge":"Nouveau Prélèvement",
-      "save":"Sauvegarder",
-      "cancel":"Annuler",
-      "search_charge":"Rechercher"
+      "new_charge":"أضف المصاريف",
+      "save":"حفظ",
+      "cancel":"إلغاء",
+      "search_charge":"بحث"
     },
     "feilds":{
-      "amount":"Montant",
-      "type":"Categorie",
-      "description":"Description"
+      "amount":"مبلغ",
+      "type":"نوع",
+      "description":"وصف"
     },
     "searchCharge":{
-      "type":"Categorie",
-      "date_to":"Date à",
-      "date_from":"Date de"
+      "type":"فئة",
+      "date_to":"تاريخ إلى",
+      "date_from":"تاريخ من "
     }
   },
   "customerVue":{
-    "search_customer":"Recherche de clients",
-    "edit_customer":"Modifier un client",
-    "create_customer":"Créer un client",
-    "table_name":"Table des Client",
+    "search_customer":"ابحث عن العملاء",
+    "edit_customer":"تعديل الزبون",
+    "create_customer":"قم بإنشاء عميل",
+    "table_name":"جدول العملاء",
     "button":{
-      "new_customer":"Nouveau Client",
-      "save":"Sauvegarder",
-      "cancel":"Annuler",
-      "search_customer":"Rechercher"
+      "new_customer":"زبون جديد",
+      "save":"حفظ",
+      "cancel":"إلغاء",
+      "search_customer":"بحث"
     },
     "feilds":{
-      "full_name":"Nom et Prénom",
-      "email":"E-mail",
-      "phone":"Numéro de Téléphone",
-      "city": "Ville",
-      "company_name":"Nom de l'entreprise",
-      "address":"Address"
+      "import_file":"اختر ملف",
+      "full_name":"الإسم واللقب",
+      "email":"بريد الالكتروني",
+      "phone":"رقم الهاتف",
+      "city": "مدينة",
+      "company_name":"اسم الشركة",
+      "address":"عنوان"
     },
     "searchCustomer":{
-      "email":"E-mail",
-      "phone":"Numéro de Téléphone",
-      "full_name":"Nom et Prénom",
-      "company_name":"Nom de l'entreprise",
-      "date_to":"Date à",
-      "date_from":"Date de"
+      "email":"بريد الالكتروني",
+      "phone":"رقم الهاتف",
+      "full_name":"الإسم واللقب",
+      "company_name":"اسم الشركة",
+      "date_to":"تاريخ إلى",
+      "date_from":"تاريخ من "
+    }
+  },
+  "editStockVue":{
+    "create_stock":"تعديل مخزون",
+    "button":{
+      "save":"حفظ",
+      "cancel":"إلغاء"
+    },
+    "feilds":{
+      "product":"إسم المنتوج",
+      "sku":"الرمز الشريطي",
+      "stock":"كمية",
+      "cost":"سعر الشراء",
+      "selling_price":"ثمن البيع"
     }
   },
   "stockVue":{
-    "stock_out":"En Rupture",
-    "available":"Disponible",
-    "edit_product":"Modifier un produit",
-    "create_stock":"Créer un Stock",
-    "table_name":"Table des Produits",
+    "stock_out":"إنتهى من المخزن",
+    "available":"متوفرة",
+    "edit_product":"تعديل منتج",
+    "create_stock":"إنشاء مخزون",
+    "table_name":"جدول المنتج",
     "button":{
-      "new_product":"Nouveau Produit",
-      "save":"Sauvegarder",
-      "cancel":"Annuler",
-      "search_product":"Rechercher"
+      "new_product":"منتج جديد",
+      "save":"حفظ",
+      "cancel":"إلغاء",
+      "search_product":"بحث"
     },
     "feilds":{
-      "product":"Nom du Produit",
-      "sku":"Code-barres",
-      "stock":"Quantité",
-      "cost":"Prix d'achat",
-      "selling_price":"Prix de vente",
-      "type":"Categorie",
-      "date":"Date et heure"
+      "product":"إسم المنتوج",
+      "sku":"الرمز الشريطي",
+      "stock":"كمية",
+      "cost":"سعر الشراء",
+      "selling_price":"ثمن البيع",
+      "type":"فئة",
+      "date":"التاريخ و الساعة"
     }
   },
   "productVue":{
-    "search_product1":"Recherche de produits",
-    "stock_out":"En Rupture",
-    "available":"Disponible",
-    "edit_product":"Modifier un produit",
-    "create_product":"Créer un produit",
-    "table_name":"Table des Produits",
+    "search_product1":"بحث منتوج",
+    "stock_out":"إنتهى من المخزن",
+    "available":"متوفرة",
+    "edit_product":"تعديل منتج",
+    "create_product":"قم بإنشاء منتج",
+    "table_name":"جدول المنتج",
     "button":{
-      "new_product":"Nouveau Produit",
-      "save":"Sauvegarder",
-      "cancel":"Annuler",
-      "search_product":"Rechercher"
+      "new_product":"منتج جديد",
+      "save":"حفظ",
+      "cancel":"إلغاء",
+      "search_product":"بحث"
     },
     "feilds":{
-      "product_name":"Nom du Produit",
-      "name":"Nom",
-      "sku":"Code-barres",
-      "type":"Categorie",
-      "unit_price":"Prix Unitaire",
-      "stock":"Quantité",
-      "status":"Statut",
-      "price":"Prix",
-      "cost":"Prix d'achat",
-      "selling_price":"Prix de vente",
-      "description":"Description",
-      "category":"Entrer Categorie du Produit"
+      "product_name":"إسم المنتوج",
+      "name":"اسم",
+      "sku":"الرمز الشريطي",
+      "type":"فئة",
+      "unit_price":"سعر الوحدة",
+      "stock":"كمية",
+      "status":"حالة",
+      "price":"سعر",
+      "cost":"سعر الشراء",
+      "selling_price":"ثمن البيع",
+      "description":"وصف",
+      "category":"أدخل فئة المنتج"
     },
     "searchProduct":{
-      "sku":"Code-barres",
-      "type":"Categorie",
-      "date_to":"Date à",
-      "date_from":"Date de"
+      "sku":"الرمز الشريطي",
+      "type":"فئة",
+      "date_to":"تاريخ إلى",
+      "date_from":"تاريخ من "
     }
   }
 }
