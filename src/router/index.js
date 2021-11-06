@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import User from '../helpers/User'
 
 const defaultchildRoutes = (prop, mode = false) => [
@@ -216,7 +216,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: process.env.IS_ELECTRON ? createWebHashHistory(process.env.BASE_URL) : createWebHistory(process.env.BASE_URL),
+  // history: createWebHistory(process.env.BASE_URL),
   base: process.env.BASE_URL,
   routes
 

@@ -26,7 +26,7 @@
   "model_operation":"أدخل المبلغ",
   "model_titel":"قم بإنشاء فئة جديدة",
   "created":"تم إنشاؤه بنجاح",
-  "validate_operation":"تم التحقق من صحة العملية بنجاح",
+  "validate_operation":"تمت العملية بنجاح",
   "not_found": "غير موجود !",
   "added":"مضاف",
   "dashboardVue":{
@@ -117,7 +117,7 @@
       "search_product":"البحث عن المنتج",
       "search_customer":"البحث عن العميل",
       "delete":"حذف الكل",
-      "validate":"تحقق من صحة العملية"
+      "validate":"تأكيد العملية"
     }
   },
   "SynthesisVue":{
