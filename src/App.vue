@@ -4,9 +4,26 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import 'nouislider/dist/nouislider.css'
+import 'offline-js/themes/offline-theme-dark.css'
+import 'offline-js/themes/offline-language-french.css'
+import 'offline-js'
+import jQuery from 'jquery'
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    console.log(Offline)
+    Offline.options = { checks: { xhr: { url: 'http://fireshop.test/api' } } }
+    Offline.check()
+    const overlay = jQuery('.uk-overlay-default')
+    Offline.on('confirmed-up', () => {
+      overlay.fadeOut('slow')
+    })
+    Offline.on('confirmed-down', () => {
+      overlay.fadeIn('slow')
+    })
+  }
 }
 </script>
 <style lang="scss">

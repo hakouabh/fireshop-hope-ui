@@ -5,7 +5,7 @@
             <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <router-link :to="{ name: 'product.listStock'}" class="icon">
+                        <router-link :to="{ name: 'product.list'}" class="icon">
                           <svg width="50px" stroke="blue" height="40px" viewBox="0 0 24 24">
                               <path d="M11.739,13.962c-0.087,0.086-0.199,0.131-0.312,0.131c-0.112,0-0.226-0.045-0.312-0.131l-3.738-3.736c-0.173-0.173-0.173-0.454,0-0.626l3.559-3.562c0.173-0.175,0.454-0.173,0.626,0c0.173,0.172,0.173,0.451,0,0.624l-3.248,3.25l3.425,3.426C11.911,13.511,11.911,13.789,11.739,13.962 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.148,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.148,17.521,10"></path>
                           </svg>
@@ -23,7 +23,7 @@
                            </select>
                            <small class="text-danger" v-if="errors.product"> {{$t('signUpVue.required')}} </small>
                         </div>
-                        <div class="col-md-4 mb-2 mt-2">
+                        <div class="col-md-6 mb-2 mt-2">
                               <br>
                               <button type="button" data-bs-toggle="modal" data-bs-target="#findProduct" @click="findProduct()" class="btn btn-info">
                                  <span class="btn-inner">
@@ -33,20 +33,27 @@
                                  </span>
                                  {{$t('counterVue.button.search_product')}}</button>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-2 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('stockVue.feilds.stock')}} <small class="text-danger"> *</small></label>
                            <input type="text" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.quantity" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('stockVue.feilds.cost')}} <small class="text-danger"> *</small></label>
                            <input type="text" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('stockVue.feilds.selling_price')}} <small class="text-danger"> *</small></label>
                            <input type="text" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                           <br>
+                           <div class="form-check form-switch mt-2">
+                              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" v-model="form.is_defect">
+                              <label class="form-check-label" for="flexSwitchCheckDefault">{{$t('stockVue.feilds.is_defect')}}</label>
+                           </div>
                         </div>
                          <div class="row d-flex">
                            <div class="col-lg-3 col-md-6">
@@ -132,7 +139,8 @@ export default {
         product: {},
         quantity: null,
         cost: null,
-        selling_price: null
+        selling_price: null,
+        is_defect: false
       },
       products: {},
       errors: {},

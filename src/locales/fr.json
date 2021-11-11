@@ -235,7 +235,8 @@
     "create_stock":"Modifier un Stock",
     "button":{
       "save":"Sauvegarder",
-      "cancel":"Annuler"
+      "cancel":"Annuler",
+      "delete":"Supprimer"
     },
     "feilds":{
       "product":"Nom du Produit",
@@ -250,7 +251,7 @@
     "available":"Disponible",
     "edit_product":"Modifier un produit",
     "create_stock":"Créer un Stock",
-    "table_name":"Table des Produits",
+    "table_name":"Historique de Stock",
     "button":{
       "new_product":"Nouveau Produit",
       "save":"Sauvegarder",
@@ -264,7 +265,8 @@
       "cost":"Prix d'achat",
       "selling_price":"Prix de vente",
       "type":"Categorie",
-      "date":"Date et heure"
+      "date":"Date et heure",
+      "is_defect":"Produits défectueux ?"
     }
   },
   "productVue":{
@@ -300,5 +302,12 @@
       "date_to":"Date à",
       "date_from":"Date de"
     }
+  },
+  "swal":{
+    "sure":"Es-tu sûr?",
+    "sure2":"Vous ne pourrez pas revenir en arrière !",
+    "yes":"Oui, supprimez-le !",
+    "deleted-success":"Votre fichier a été supprimé.",
+    "deleted":"Supprimé !"
   }
 }

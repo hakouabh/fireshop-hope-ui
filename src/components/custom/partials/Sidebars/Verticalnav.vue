@@ -100,19 +100,6 @@
                     <span class="item-name">{{$t('verticalBare.product.stock')}}</span>
                     </router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link :class="`nav-link ${checkActive('product.listStock') ? 'active' : ''}`" :to="{name: 'product.listStock'}">
-                    <i class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                <g>
-                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                </g>
-                            </svg>
-                        </i>
-                    <i class="sidenav-mini-icon"></i>
-                    <span class="item-name">{{$t('verticalBare.product.listStock')}}</span>
-                    </router-link>
-                </li>
             </ul>
         </li>
         <li class="nav-item">

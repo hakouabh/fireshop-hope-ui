@@ -41,19 +41,13 @@ const productchildRoutes = (prop, mode = false) => [
     component: () => import('../views/main/product/createProduct')
   },
   {
-    path: 'listStock',
-    name: prop + '.listStock',
-    meta: { requiresAuthentication: true, name: 'listStock' },
-    component: () => import('../views/main/product/listStock')
-  },
-  {
     path: 'stock',
     name: prop + '.stock',
     meta: { requiresAuthentication: true, name: 'stock' },
     component: () => import('../views/main/product/stock')
   },
   {
-    path: 'editStock/:id',
+    path: 'editStock/:id/:product_id',
     name: prop + '.editStock',
     meta: { requiresAuthentication: true, name: 'editStock' },
     component: () => import('../views/main/product/editStock')

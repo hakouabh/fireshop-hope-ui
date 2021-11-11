@@ -1,6 +1,71 @@
 <template>
     <div>
       <div class="row">
+         <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column text-center align-items-center justify-content-between ">
+                                    <div class="fs-italic">
+                                        <h1> {{form.name}}</h1>
+                                        <div class="text-black-50 mb-1">
+                                            <small>{{form.type.name}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="text-black-50 text-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" fill="orange">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" fill="orange">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" fill="orange">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" fill="gary">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" fill="gary">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    </div>
+                                    <div v-if="productTotal" class="card-profile-progress">
+                                        <CircleProgress :value="productTotal" color="primary" />
+                                        <img v-if="form.image"  :src="form.image" class="img-fluid rounded-circle card-img" alt="image">
+                                    </div>
+                                    <div class="mt-3 text-center text-black-50">
+                                        <p>{{form.description}}</p>
+                                    </div>
+                                    <div class="d-flex icon-pill">
+                                        <a @click="DeleteProduct()" class="btn btn-sm rounded-pill px-2 py-2  ms-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="text-danger" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306" />
+                                            </svg>
+                                        </a>
+                                           <input type="file" v-show="false" class="custom-file-input" id="customFile" @change="onFileSelected">
+                                        <a @click="AddImage" class="btn btn-sm rounded-pill px-2 py-2  ms-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="text-primary" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M18.555,15.354V4.592c0-0.248-0.202-0.451-0.45-0.451H1.888c-0.248,0-0.451,0.203-0.451,0.451v10.808c0,0.559,0.751,0.451,0.451,0.451h16.217h0.005C18.793,15.851,18.478,14.814,18.555,15.354 M2.8,14.949l4.944-6.464l4.144,5.419c0.003,0.003,0.003,0.003,0.003,0.005l0.797,1.04H2.8z M13.822,14.949l-1.006-1.317l1.689-2.218l2.688,3.535H13.822z M17.654,14.064l-2.791-3.666c-0.181-0.237-0.535-0.237-0.716,0l-1.899,2.493l-4.146-5.42c-0.18-0.237-0.536-0.237-0.716,0l-5.047,6.598V5.042h15.316V14.064z M12.474,6.393c-0.869,0-1.577,0.707-1.577,1.576s0.708,1.576,1.577,1.576s1.577-0.707,1.577-1.576S13.343,6.393,12.474,6.393 M12.474,8.645c-0.371,0-0.676-0.304-0.676-0.676s0.305-0.676,0.676-0.676c0.372,0,0.676,0.304,0.676,0.676S12.846,8.645,12.474,8.645" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                              <div>
+                                 <h2 class="mb-0"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='form.stock'/></h2>
+                                    <!-- <h2 class="mb-0 counter">4500</h2> -->
+                                 <div>{{$t('productVue.feilds.stock')}}</div>
+                              </div>
+                              <div>
+                                 <h2 class="mb-0"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='sold'/></h2>
+                                    <!-- <h2 class="mb-0">3.9</h2> -->
+                                 <div>{{$t('dashboardVue.feilds.sold')}}</div>
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+        </div>
          <div class="col-sm-12 col-lg-12">
             <div class="card">
                   <div class="card-header d-flex justify-content-between">
@@ -77,6 +142,7 @@
                   </div>
                </div>
          </div>
+         <ListStock :product_id="$route.params.id" />
       </div>
     </div>
 <modal mainClass="fade" :tabindex="-1" id="exampleModal1" ariaLabelled="exampleModalLabel" :ariaHidden="true" style="display: none;">
@@ -101,11 +167,21 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import Vue3autocounter from 'vue3-autocounter'
+import ListStock from './listStock'
+import CircleProgress from '@/components/custom/progressbar/Circleprogressbar'
 export default {
+  components: {
+    ListStock,
+    CircleProgress,
+    Vue3autocounter
+  },
   name: 'editProduct',
   data () {
     return {
+      sold: 0,
       form: {
+        image: '',
         name: '',
         sku: '',
         type: {
@@ -122,22 +198,83 @@ export default {
       createdCompany: ''
     }
   },
+  computed: {
+    productTotal () {
+      const sum = 0
+      if (this.sold > 0) {
+        if (this.form.stock <= 0) {
+          return 100
+        }
+        return (this.sold * 100 / this.form.stock)
+      }
+      return sum
+    }
+  },
   created () {
     this.productCategory()
-    const id = this.$route.params.id
-    webServices.get('products/' + id, {
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line quote-props
-        'Authorization': User.ApiToken()
-      }
-    })
-      .then(res => {
-        this.form = res.data.data
-        this.category_id = res.data.data.type.id
-      })
+    this.getProduct()
   },
   methods: {
+    onFileSelected (e) {
+      const formData = new FormData()
+      formData.append('image', e.target.files[0])
+      webServices.post(`/products/${this.$route.params.id}/storeImage`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2),
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+    },
+    AddImage () {
+      document.getElementById('customFile').click()
+    },
+    DeleteProduct () {
+      Swal.fire({
+        title: this.$t('swal.sure'),
+        text: this.$t('swal.sure2'),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: this.$t('swal.yes')
+      }).then((result) => {
+        if (result.isConfirmed) {
+          webServices.delete(`/products/${this.$route.params.id}/delete`, {
+            headers: {
+              'Content-Type': 'application/json',
+              // eslint-disable-next-line quote-props
+              'Authorization': User.ApiToken()
+            }
+          })
+            .then(() => {
+              Swal.fire(
+                this.$t('swal.deleted'),
+                this.$t('swal.deleted-success'),
+                'success'
+              )
+              this.$router.push({ name: 'product.list' })
+            })
+        }
+      })
+    },
+    getProduct () {
+      const id = this.$route.params.id
+      webServices.get('products/' + id, {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(res => {
+          if (res.data.data.sold != null) {
+            this.sold = res.data.data.sold.amount
+          }
+          this.form = res.data.data
+          this.category_id = res.data.data.type.id
+        })
+    },
     EditProduct () {
       webServices.put(`/products/${this.$route.params.id}/update`, this.form, {
         headers: {

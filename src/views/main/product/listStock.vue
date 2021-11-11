@@ -99,7 +99,10 @@
 /* eslint-disable no-undef */
 import { Solidicons } from '@/icondata/iconsolid.js'
 export default {
-  name: 'BootstrapTable',
+  name: 'ListStock',
+  props: {
+    product_id: { type: String, default: null }
+  },
   data () {
     return {
       totalpage: 10,
@@ -114,7 +117,7 @@ export default {
   },
   methods: {
     goToedit (id) {
-      this.$router.push({ name: 'product.editStock', params: { id: id } })
+      this.$router.push({ name: 'product.editStock', params: { id: id, product_id: this.product_id } })
     },
     getProducts (page = 1) {
       webServices.get('/products/stock/get?page=' + page, {
@@ -124,11 +127,11 @@ export default {
           'Authorization': User.ApiToken()
         },
         params: {
-          perpage: this.perpage
+          perpage: this.perpage,
+          product_id: this.product_id
         }
       })
         .then(res => {
-          console.log(res)
           this.products = res.data
           this.totalpage = res.data.last_page
         })

@@ -84,9 +84,6 @@ export default {
       errors: {}
     }
   },
-  created () {
-    console.log(User.loggedIn())
-  },
   methods: {
     signIn () {
       webServices.post('/auth/login', this.form)

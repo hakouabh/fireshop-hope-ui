@@ -235,7 +235,8 @@
     "create_stock":"تعديل مخزون",
     "button":{
       "save":"حفظ",
-      "cancel":"إلغاء"
+      "cancel":"إلغاء",
+      "delete":"حذف"
     },
     "feilds":{
       "product":"إسم المنتوج",
@@ -250,7 +251,7 @@
     "available":"متوفرة",
     "edit_product":"تعديل منتج",
     "create_stock":"إنشاء مخزون",
-    "table_name":"جدول المنتج",
+    "table_name":"تاريخ المخزن",
     "button":{
       "new_product":"منتج جديد",
       "save":"حفظ",
@@ -300,5 +301,12 @@
       "date_to":"تاريخ إلى",
       "date_from":"تاريخ من "
     }
+  },
+  "swal":{
+    "sure":"هل أنت متأكد؟",
+    "sure2":"لن تتمكن من التراجع عن هذا!",
+    "yes":"نعم ، احذفها!",
+    "deleted-success":"تم حذف ملفك.",
+    "deleted":"تم الحذف!"
   }
 }
