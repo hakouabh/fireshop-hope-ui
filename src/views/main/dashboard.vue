@@ -301,6 +301,7 @@ import Swiper from '@/components/custom/slider/Swiper'
 import Vue3autocounter from 'vue3-autocounter'
 import SwiperSlide from '@/components/custom/slider/SwiperSlide'
 import AOS from '@/plugins/aos/dist/aos.js'
+import AppStorage from '../../helpers/AppStorage'
 export default {
   name: 'dashboard',
   components: {
@@ -544,6 +545,12 @@ export default {
           this.dmain.series[1].data = res.data.data.graph.last
           this.dactivity1.series[0].data = res.data.data.graphoperation.current
           this.dactivity1.series[1].data = res.data.data.graphoperation.last
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            AppStorage.clear()
+            this.$router.push({ name: 'auth.signin' })
+          }
         })
     }
   }

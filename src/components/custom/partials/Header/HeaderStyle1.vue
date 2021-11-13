@@ -60,8 +60,7 @@
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><router-link class="dropdown-item" :to="{name: 'default.UserProfile'}">Profile</router-link></li>
-            <li><router-link class="dropdown-item" :to="{name: 'default.UserPrivacySetting'}">Privacy Setting</router-link></li>
+            <li><router-link class="dropdown-item" :to="{name: 'user.UserProfile', params: { id: user.id }}">Profile</router-link></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" @click="logout"> {{$t('sognInVue.logout')}} </a></li>
           </ul>
@@ -87,6 +86,11 @@ export default {
     }
   },
   created () {
+    this.user = {
+      username: User.username(),
+      email: User.email(),
+      id: User.id()
+    }
     if (localStorage.getItem('language') != null) {
       this.schemediractive(localStorage.getItem('language'))
       this.$i18n.locale = localStorage.getItem('language')
@@ -100,10 +104,6 @@ export default {
   mounted () {
     const navstyle = sessionStorage.getItem('navbarstyle')
     this.navbarstyleChange(navstyle)
-    this.user = {
-      username: User.username(),
-      email: User.email()
-    }
   },
   computed: {
     ...mapGetters({

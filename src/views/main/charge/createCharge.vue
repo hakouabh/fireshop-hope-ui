@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-2">
                            <label for="charge01" class="form-label">{{$t('chargeVue.feilds.amount')}} <small class="text-danger"> *</small></label>
-                           <input type="number" :class="`${errors.amount ? 'is-invalid' : ''}`" class="form-control" id="charge01" v-model="form.amount">
+                           <input type="number" step="0.01" min="0" :class="`${errors.amount ? 'is-invalid' : ''}`" class="form-control" id="charge01" v-model="form.amount">
                            <small class="text-danger" v-if="errors.amount" > {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-5 mb-2">

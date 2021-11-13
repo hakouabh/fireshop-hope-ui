@@ -309,5 +309,23 @@
     "yes":"Oui, supprimez-le !",
     "deleted-success":"Votre fichier a été supprimé.",
     "deleted":"Supprimé !"
+  },
+  "usersVue":{
+    "add_user_title":"Informations Sur le nouvel Utilisateur",
+    "add_button":"Ajouter",
+    "list":"Liste des Utilisateurs",
+    "feilds":{
+      "name":"Nom",
+      "email":"Email",
+      "status":"role",
+      "date":"date d'inscription",
+      "actions":"Actions"
+    },
+    "role":{
+      "title":"Rôle d'Utilisateur:",
+      "admin":"Administrateur",
+      "seller":"Vendeur",
+      "commis":"Commis"
+    }
   }
 }

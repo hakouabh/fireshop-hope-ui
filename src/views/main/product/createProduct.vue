@@ -51,17 +51,17 @@
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.stock')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :disabled="import_file != null" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
+                           <input type="number" min="0" :disabled="import_file != null" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.cost')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :disabled="import_file != null" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
+                           <input type="number" step="0.01" min="0" :disabled="import_file != null" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('productVue.feilds.selling_price')}} <small class="text-danger"> *</small></label>
-                           <input type="text" :disabled="import_file != null" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
+                           <input type="number" step="0.01" min="0" :disabled="import_file != null" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-12 mb-5">

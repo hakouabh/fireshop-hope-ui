@@ -25,13 +25,18 @@ class AppStorage {
     localStorage.setItem('company', company)
   }
 
-  store (token, username, email, token_type, expires_in, company) {
+  storId (id) {
+    localStorage.setItem('id', id)
+  }
+
+  store (token, username, email, token_type, expires_in, company, id) {
     this.storeToken(token)
     this.storeUsername(username)
     this.storeEmail(email)
     this.storeTokenType(token_type)
     this.storeExpiresIn(expires_in)
     this.storecompany(company)
+    this.storId(id)
   }
 
   clear () {
@@ -41,6 +46,7 @@ class AppStorage {
     localStorage.removeItem('token_type')
     localStorage.removeItem('expires_in')
     localStorage.removeItem('company')
+    // localStorage.removeItem('id')
   }
 }
 export default AppStorage = new AppStorage()

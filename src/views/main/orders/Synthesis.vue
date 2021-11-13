@@ -268,7 +268,7 @@ export default {
         .then(res => {
           this.charges = res.data.data.charges
           this.stats.totalCharge = res.data.data.total_charge
-          this.stats.box = this.stats.total - this.stats.totalCharge
+          this.stats.box = this.stats.total - this.stats.totalCharge + 1
           this.totalcharges = res.data.data.charges.last_page
         })
     }

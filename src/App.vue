@@ -10,10 +10,11 @@ import 'offline-js/themes/offline-theme-dark.css'
 import 'offline-js/themes/offline-language-french.css'
 import 'offline-js'
 import jQuery from 'jquery'
+import AppStorage from './helpers/AppStorage'
+
 export default {
   name: 'App',
   created () {
-    console.log(Offline)
     Offline.options = { checks: { xhr: { url: 'http://fireshop.test/api' } } }
     Offline.check()
     const overlay = jQuery('.uk-overlay-default')
@@ -22,6 +23,8 @@ export default {
     })
     Offline.on('confirmed-down', () => {
       overlay.fadeIn('slow')
+      AppStorage.clear()
+      this.$router.push({ name: 'auth.signin' })
     })
   }
 }

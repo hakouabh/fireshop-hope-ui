@@ -105,7 +105,7 @@
                      </form>
                   </model-body>
                   <model-footer>
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="button" id="close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                      <button type="button" class="btn btn-primary" @click="CreateCategory">Save changes</button>
                   </model-footer>
                </modal>
@@ -164,6 +164,13 @@ export default {
       webServices.post('/companies/types/store', { name: this.createdCompany })
         .then(() => {
           this.getCompanies()
+          this.$notify({
+            type: 'success',
+            layout: 'topLeft',
+            text: this.$t('created'),
+            timeout: 1500
+          })
+          document.getElementById('close').click()
           document.querySelector('#Company-category').value = ''
           document.querySelector('#Company-category-errors').value = ''
         })

@@ -9,11 +9,12 @@ class User {
     const access_token = res.access_token
     const username = res.name
     const email = res.email
+    const id = res.id
     const token_type = res.token_type
     const expires_in = res.expires_in
     const company = res.company
     if (Token.isValid(access_token)) {
-      AppStorage.store(access_token, username, email, token_type, expires_in, company)
+      AppStorage.store(access_token, username, email, token_type, expires_in, company, id)
     }
   }
 
@@ -53,10 +54,8 @@ class User {
 
   id () {
     if (this.loggedIn()) {
-      const payload = Token.payload(localStorage.getItem('token'))
-      return payload.sub
+      return localStorage.getItem('id')
     }
-    return false
   }
 }
 export default User = new User()

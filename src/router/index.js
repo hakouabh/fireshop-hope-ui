@@ -13,18 +13,6 @@ const defaultchildRoutes = (prop, mode = false) => [
     name: prop + '.counter',
     meta: { requiresAuthentication: true, name: 'counter' },
     component: () => import('../views/main/orders/counter')
-  },
-  {
-    path: 'UserProfile',
-    name: prop + '.UserProfile',
-    meta: { auth: true, name: 'User Profile' },
-    component: () => import('../views/Users/UserProfile')
-  },
-  {
-    path: 'UserPrivacySetting',
-    name: prop + '.UserPrivacySetting',
-    meta: { auth: true, name: 'UserPrivacySetting' },
-    component: () => import('../views/Users/UserPrivacySetting')
   }
 ]
 const productchildRoutes = (prop, mode = false) => [
@@ -89,6 +77,27 @@ const customerchildRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { requiresAuthentication: true, name: 'edit' },
     component: () => import('../views/main/customer/editCustomer')
+  }
+]
+const userchildRoutes = (prop, mode = false) => [
+  // User Pages
+  {
+    path: 'UserAdd',
+    name: prop + '.UserAdd',
+    meta: { requiresAuthentication: true, name: 'UserAdd' },
+    component: () => import('../views/main/Users/UserAdd')
+  },
+  {
+    path: 'UserList',
+    name: prop + '.UserList',
+    meta: { requiresAuthentication: true, name: 'UserList' },
+    component: () => import('../views/main/Users/UserList')
+  },
+  {
+    path: 'UserProfile/:id',
+    name: prop + '.UserProfile',
+    meta: { requiresAuthentication: true, name: 'User Profile' },
+    component: () => import('../views/main/Users/UserProfile')
   }
 ]
 const orderschildRoutes = (prop, mode = false) => [
@@ -176,6 +185,12 @@ const routes = [
     name: 'Home',
     component: () => import('../layouts/default'),
     children: defaultchildRoutes('default')
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import('../layouts/default'),
+    children: userchildRoutes('user')
   },
   {
     path: '/product',

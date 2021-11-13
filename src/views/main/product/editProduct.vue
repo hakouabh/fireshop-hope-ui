@@ -112,17 +112,17 @@
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.stock')}}</label>
-                           <input disabled type="text" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
+                           <input disabled type="number" min="0" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.stock" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('productVue.feilds.cost')}}</label>
-                           <input disabled type="text" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
+                           <input disabled  type="number" step="0.01" min="0" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('productVue.feilds.selling_price')}}</label>
-                           <input disabled type="text" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
+                           <input disabled type="number" step="0.01" min="0" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
                         </div>
                         <div class="col-md-12 mb-5">
