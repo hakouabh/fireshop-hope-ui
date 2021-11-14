@@ -1,47 +1,12 @@
 <template>
 <br><br>
- <div class="row d-flex">
-   <div class="col-lg-3 col-md-6">
-      <router-link :to="{name: 'product.add'}">
-            <div class="card bg-soft-success">
-                  <div class="card-body">
-                     <div class="d-flex justify-content-between align-items-center">
-                        <div v-html="createicon"></div>
-                        <div>
-                        {{$t('productVue.button.new_product')}}
-                        </div>
-                     </div>
-                  </div>
-         </div>
-      </router-link>
-   </div>
-   <div class="col-lg-3 col-md-6">
-      <router-link :to="{name: 'product.search'}">
-            <div class="card bg-soft-primary">
-                  <div class="card-body">
-                     <div class="d-flex justify-content-between align-items-center">
-                        <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                        </svg>
-                        <div>
-                        {{$t('productVue.button.search_product')}}
-                        </div>
-                     </div>
-            </div>
-         </div>
-      </router-link>
-   </div>
-</div>
 <div>
  <div class="row">
       <div class="col-sm-12">
          <div class="card">
             <div class="card-header d-flex justify-content-between">
                <div class="header-title">
-                  <h4 class="card-title">{{$t('productVue.table_name')}}</h4>
+                  <h4 class="card-title">{{$t('productVue.table_name_deleted')}}</h4>
                </div>
             </div>
             <div class="card-body p-0">
@@ -65,11 +30,12 @@
                            <th>{{$t('productVue.feilds.type')}}</th>
                            <th>{{$t('productVue.feilds.unit_price')}}</th>
                            <th>{{$t('productVue.feilds.stock')}}</th>
-                           <th>{{$t('productVue.feilds.status')}}</th>
+                           <th>{{$t('productVue.feilds.date')}}</th>
+                           <th>{{$t('productVue.feilds.actions')}}</th>
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products.data" :key="product.id" @click="goToedit(product.id)">
+                        <tr v-for="product in products.data" :key="product.id">
                             <td v-if="!product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
@@ -106,8 +72,26 @@
                                  <h6> {{product.stock}} </h6>
                               </div>
                            </td>
-                           <td v-if="product.stock > 0"><div class="text-success">{{$t('productVue.available')}}</div></td>
-                           <td v-if="product.stock <= 0"><div class="text-danger">{{$t('productVue.stock_out')}}</div></td>
+                           <td ><div class="text-danger">{{product.deleted_at}}</div></td>
+                           <td @click="restore(product.id)">
+                                    <div class="flex align-items-center list-user-action">
+                                       <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add" href="#">
+                                          <span class="btn-inner">
+                                             <svg width="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                                                <path fill="none" d="M19.305,9.61c-0.235-0.235-0.615-0.235-0.85,0l-1.339,1.339c0.045-0.311,0.073-0.626,0.073-0.949
+                                                   c0-3.812-3.09-6.901-6.901-6.901c-2.213,0-4.177,1.045-5.44,2.664l0.897,0.719c1.053-1.356,2.693-2.232,4.543-2.232
+                                                   c3.176,0,5.751,2.574,5.751,5.751c0,0.342-0.037,0.675-0.095,1l-1.746-1.39c-0.234-0.235-0.614-0.235-0.849,0
+                                                   c-0.235,0.235-0.235,0.615,0,0.85l2.823,2.25c0.122,0.121,0.282,0.177,0.441,0.172c0.159,0.005,0.32-0.051,0.44-0.172l2.25-2.25
+                                                   C19.539,10.225,19.539,9.845,19.305,9.61z M10.288,15.752c-3.177,0-5.751-2.575-5.751-5.752c0-0.276,0.025-0.547,0.062-0.813
+                                                   l1.203,1.203c0.235,0.234,0.615,0.234,0.85,0c0.234-0.235,0.234-0.615,0-0.85l-2.25-2.25C4.281,7.169,4.121,7.114,3.961,7.118
+                                                   C3.802,7.114,3.642,7.169,3.52,7.291l-2.824,2.25c-0.234,0.235-0.234,0.615,0,0.85c0.235,0.234,0.615,0.234,0.85,0l1.957-1.559
+                                                   C3.435,9.212,3.386,9.6,3.386,10c0,3.812,3.09,6.901,6.902,6.901c2.083,0,3.946-0.927,5.212-2.387l-0.898-0.719
+                                                   C13.547,14.992,12.008,15.752,10.288,15.752z"></path>
+                                             </svg>
+                                          </span>
+                                       </a>
+                                    </div>
+                              </td>
                         </tr>
                      </tbody>
                   </table>
@@ -121,13 +105,10 @@
 </template>
 <script>
 /* eslint-disable no-undef */
-import { Solidicons } from '@/icondata/iconsolid.js'
 export default {
   name: 'BootstrapTable',
   data () {
     return {
-      createicon: Solidicons[74].svgicons,
-      searchicon: Solidicons[77].svgicons,
       products: {},
       totalpage: 10,
       perpage: 15
@@ -137,11 +118,25 @@ export default {
     this.getProducts()
   },
   methods: {
-    goToedit (id) {
-      this.$router.push({ name: 'product.edit', params: { id: id } })
+    restore (id) {
+      webServices.get('/products/restore/' + id, {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      }).then(() => {
+        this.$notify({
+          type: 'success',
+          layout: 'topLeft',
+          text: this.$t('restored'),
+          timeout: 1500
+        })
+        this.getProducts()
+      })
     },
     getProducts (page = 1) {
-      webServices.get('/products?page=' + page, {
+      webServices.get('/products/deleted?page=' + page, {
         headers: {
           'Content-Type': 'application/json',
           // eslint-disable-next-line quote-props
@@ -152,8 +147,8 @@ export default {
         }
       })
         .then(res => {
-          this.products = res.data.data
-          this.totalpage = res.data.data.last_page
+          this.products = res.data
+          this.totalpage = res.data.last_page
         })
     }
   }

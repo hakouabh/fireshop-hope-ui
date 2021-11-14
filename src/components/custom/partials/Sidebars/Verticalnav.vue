@@ -235,7 +235,7 @@
                 </li>
             </ul>
         </li>
-                <li class="nav-item">
+        <li class="nav-item">
             <a :class="`nav-link ${checkActive(user) ? 'active' : ''}`" data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false" aria-controls="sidebar-user">
                 <i class="icon">
                     <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -247,7 +247,7 @@
                         <path d="M3.32156 13.5127C2.21752 13.7297 1.49225 14.1719 1.19139 14.8167C0.936203 15.3453 0.936203 15.9586 1.19139 16.4872C1.65163 17.4851 3.13531 17.8066 3.71195 17.8885C3.83104 17.9065 3.92595 17.8038 3.91342 17.6832C3.61883 14.9167 5.9621 13.6046 6.56918 13.3029C6.59425 13.2885 6.59962 13.2677 6.59694 13.2542C6.59515 13.2452 6.5853 13.2317 6.5656 13.2299C5.25294 13.2047 3.84358 13.3848 3.32156 13.5127Z" fill="currentColor"></path>
                     </svg>
                 </i>
-                <span class="item-name">Users</span>
+                <span class="item-name">{{$t('verticalBare.users.title')}}</span>
                 <i class="right-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -264,8 +264,7 @@
                                 </g>
                             </svg>
                         </i>
-                        <i class="sidenav-mini-icon"> E </i>
-                        <span class="item-name">Add User</span>
+                        <span class="item-name">{{$t('verticalBare.users.add_users')}}</span>
                     </router-link>
                 </li>
                 <li class="nav-item">
@@ -278,7 +277,36 @@
                             </svg>
                         </i>
                         <i class="sidenav-mini-icon"> U </i>
-                        <span class="item-name">User List</span>
+                        <span class="item-name">{{$t('verticalBare.users.list_users')}}</span>
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a :class="`nav-link ${checkActive(corbeille) ? 'active' : ''}`" data-bs-toggle="collapse" href="#sidebar-corbeille" role="button" aria-expanded="false" aria-controls="sidebar-corbeille">
+                <i class="icon">
+                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                        <path d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"></path>
+                    </svg>
+                </i>
+                <span class="item-name">{{$t('verticalBare.corbeille.title')}}</span>
+                <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </i>
+            </a>
+            <ul class="sub-nav collapse" id="sidebar-corbeille" data-bs-parent="#sidebar">
+                <li class="nav-item">
+                    <router-link :class="`nav-link ${checkActive('product.deleted') ? 'active' : ''}`" :to="{name: 'product.deleted'}">
+                        <i class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                <g>
+                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </g>
+                            </svg>
+                        </i>
+                        <span class="item-name">{{$t('verticalBare.corbeille.list_product')}}</span>
                     </router-link>
                 </li>
             </ul>
@@ -301,6 +329,7 @@ export default {
       synthesisicon: Solidicons[105].svgicons,
       authentication: ['auth.signin', 'auth.signup', 'auth.confirmMail', 'auth.lockScreen', 'auth.recoverPassword'],
       user: ['user.UserProfile', 'user.UserAdd', 'user.UserList'],
+      corbeille: ['product.deleted'],
       utilities: ['auth.error404', 'auth.error500', 'auth.maintenance'],
       specialpages: ['product.add', 'product.list', 'product.edit', 'product.search', 'product.stock', 'rtl.dashboardrtl'],
       customerpages: ['customer.add', 'customer.list', 'customer.edit', 'customer.search', 'rtl.dashboardrtl'],

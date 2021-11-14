@@ -26,6 +26,7 @@
   "model_operation":"أدخل المبلغ",
   "model_titel":"قم بإنشاء فئة جديدة",
   "created":"تم إنشاؤه بنجاح",
+  "restored":"تم الاسترداد بنجاح",
   "validate_operation":"تمت العملية بنجاح",
   "not_found": "غير موجود !",
   "added":"مضاف",
@@ -155,6 +156,15 @@
       "list_charge":"قائمة المصاريف",
       "add_charge":"أضف المصاريف",
       "search_charge":"البحث في النفقات"
+    },
+    "users":{
+      "title":"المستخدمون",
+      "list_users":"قائمة المستخدمين",
+      "add_users":"إضافة مستخدم"
+    },
+    "corbeille":{
+      "title":"السلة",
+      "list_product":"المنتجات المحذوفة"
     }
   },
   "operationVue":{
@@ -265,7 +275,9 @@
       "cost":"سعر الشراء",
       "selling_price":"ثمن البيع",
       "type":"فئة",
-      "date":"التاريخ و الساعة"
+      "date":"التاريخ و الساعة",
+      "is_defect":"هذه المنتجات معيبة",
+      "update_price":"تطبيق السعر للجميع"
     }
   },
   "productVue":{
@@ -274,7 +286,8 @@
     "available":"متوفرة",
     "edit_product":"تعديل منتج",
     "create_product":"قم بإنشاء منتج",
-    "table_name":"جدول المنتج",
+    "table_name":"جدول المنتجات",
+    "table_name_deleted":"جدول المنتجات المحذوفة",
     "button":{
       "new_product":"منتج جديد",
       "save":"حفظ",
@@ -293,7 +306,9 @@
       "cost":"سعر الشراء",
       "selling_price":"ثمن البيع",
       "description":"وصف",
-      "category":"أدخل فئة المنتج"
+      "category":"أدخل فئة المنتج",
+      "date":"تم الحذف في",
+      "actions":"أجراءات"
     },
     "searchProduct":{
       "sku":"الرمز الشريطي",

@@ -29,6 +29,12 @@ const productchildRoutes = (prop, mode = false) => [
     component: () => import('../views/main/product/createProduct')
   },
   {
+    path: 'deleted',
+    name: prop + '.deleted',
+    meta: { requiresAuthentication: true, name: 'deleted' },
+    component: () => import('../views/main/product/DeletedProduct')
+  },
+  {
     path: 'stock',
     name: prop + '.stock',
     meta: { requiresAuthentication: true, name: 'stock' },

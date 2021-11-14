@@ -33,26 +33,33 @@
                                  </span>
                                  {{$t('counterVue.button.search_product')}}</button>
                         </div>
-                        <div class="col-md-2 mb-2">
+                        <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('stockVue.feilds.stock')}} <small class="text-danger"> *</small></label>
                            <input type="number" min="0" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.quantity" >
                            <small class="text-danger" v-if="errors.stock"> {{$t('signUpVue.required')}}</small>
                         </div>
-                        <div class="col-md-3 mb-2">
+                        <div class="col-md-4 mb-2">
                            <label for="validationCustom03" class="form-label">{{$t('stockVue.feilds.cost')}} <small class="text-danger"> *</small></label>
                            <input type="number" step="0.01" min="0" class="form-control" :class="`${errors.cost ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.cost">
                            <small class="text-danger" v-if="errors.cost"> {{$t('signUpVue.required')}}</small>
                         </div>
-                        <div class="col-md-3 mb-2">
+                        <div class="col-md-4 mb-2">
                            <label for="validationCustom05" class="form-label">{{$t('stockVue.feilds.selling_price')}} <small class="text-danger"> *</small></label>
                            <input type="number" step="0.01" min="0" :class="`${errors.selling_price ? 'is-invalid' : ''}`" class="form-control" id="validationCustom05" v-model="form.selling_price">
                            <small class="text-danger" v-if="errors.selling_price"> {{$t('signUpVue.required')}}</small>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-6 mb-4">
                            <br>
                            <div class="form-check form-switch mt-2">
                               <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" v-model="form.is_defect">
                               <label class="form-check-label" for="flexSwitchCheckDefault">{{$t('stockVue.feilds.is_defect')}}</label>
+                           </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                           <br>
+                           <div class="form-check form-switch mt-2">
+                              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" v-model="form.update_price">
+                              <label class="form-check-label" for="flexSwitchCheckDefault">{{$t('stockVue.feilds.update_price')}}</label>
                            </div>
                         </div>
                          <div class="row d-flex">
@@ -85,7 +92,7 @@
             </div>
          </div>
          <div class="table-responsive mt-4">
-                  <table id="basic-table" class="table table-striped mb-0" role="grid">
+                  <table id="basic-table" class="table table-striped  table-hover mb-0" role="grid">
                      <thead>
                         <tr>
                            <th>{{$t('productVue.feilds.name')}}</th>
@@ -140,7 +147,8 @@ export default {
         quantity: null,
         cost: null,
         selling_price: null,
-        is_defect: false
+        is_defect: false,
+        update_price: false
       },
       products: {},
       errors: {},

@@ -26,6 +26,7 @@
   "model_operation":"Enter le Montant",
   "model_titel":"Créer une nouvelle catégorie",
   "created":"Créé avec succès",
+  "restored":"Récuperé avec succès",
   "validate_operation":"L'opération Validée avec succès",
   "not_found": "N'existe pas !",
   "added":"Ajoutée",
@@ -155,6 +156,15 @@
       "list_charge":"Liste des Prélèvements",
       "add_charge":"Ajouter un Prélèvement",
       "search_charge":"Recherche de Prélèvements"
+    },
+    "users":{
+      "title":"Utilisateurs",
+      "list_users":"Liste des Utilisateurs",
+      "add_users":"Ajouter un Utilisateur"
+    },
+    "corbeille":{
+      "title":"Corbeille",
+      "list_product":"Produits supprimés"
     }
   },
   "operationVue":{
@@ -266,7 +276,8 @@
       "selling_price":"Prix de vente",
       "type":"Categorie",
       "date":"Date et heure",
-      "is_defect":"Produits défectueux ?"
+      "is_defect":"Produits défectueux ?",
+      "update_price":"Appliquer le prix pour toutes"
     }
   },
   "productVue":{
@@ -276,6 +287,7 @@
     "edit_product":"Modifier un produit",
     "create_product":"Créer un produit",
     "table_name":"Table des Produits",
+    "table_name_deleted":"Table des Produits Supprimés",
     "button":{
       "new_product":"Nouveau Produit",
       "save":"Sauvegarder",
@@ -294,7 +306,9 @@
       "cost":"Prix d'achat",
       "selling_price":"Prix de vente",
       "description":"Description",
-      "category":"Entrer Categorie du Produit"
+      "category":"Entrer Categorie du Produit",
+      "date":"Supprimé le",
+      "actions":"Actions"
     },
     "searchProduct":{
       "sku":"Code-barres",

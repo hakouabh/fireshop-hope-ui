@@ -153,8 +153,10 @@
                                  </div>
                               </div>
                               <div>
-                                 <h2 class="text-primary counter" style="visibility: visible;"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='(total_customer)'/></h2>
-                              <p class="text-primary mb-0">{{$t('dashboardVue.total_customer')}}</p>
+                                 <router-link :to="{name: 'customer.list'}">
+                                    <h2 class="text-primary counter" style="visibility: visible;"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='(total_customer)'/></h2>
+                                    <p class="text-primary mb-0">{{$t('dashboardVue.total_customer')}}</p>
+                                 </router-link>
                               </div>
                            </div>
                         </div>
@@ -184,8 +186,10 @@
                                  </svg>
                               </div>
                               <div>
-                                 <h2 class="text-info counter" style="visibility: visible;"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='(total_products)'/></h2>
-                                 <p class="text-info mb-0">{{$t('dashboardVue.total_product')}}</p>
+                                 <router-link :to="{name: 'product.list'}">
+                                    <h2 class="text-info counter" style="visibility: visible;"><Vue3autocounter  ref='counter' :startAmount='0' :endAmount='(total_products)'/></h2>
+                                    <p class="text-info mb-0">{{$t('dashboardVue.total_product')}}</p>
+                                 </router-link>
                               </div>
                            </div>
                         </div>
@@ -251,7 +255,7 @@
                   </template>
                   <template v-slot:body>
                      <div class="table-responsive mt-4">
-                        <table id="basic-table" class="table table-striped mb-0" role="grid">
+                        <table id="basic-table" class="table table-striped  table-hover mb-0" role="grid">
                            <thead>
                               <tr>
                                  <th>{{$t('dashboardVue.feilds.product_name')}}</th>
