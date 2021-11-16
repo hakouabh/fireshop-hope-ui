@@ -54,6 +54,59 @@
                   </div>
                </div>
          </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h5 class="card-title">{{$t('operationVue.table_name')}}</h5>
+                    </div>
+                    </div>
+                    <div class="card-body p-0">
+                    <div class="table-responsive mt-4">
+                        <table id="basic-table" class="table table-striped  table-hover mb-0" role="grid">
+                            <thead>
+                                <tr>
+                                <th>{{$t('operationVue.feilds.customer')}}</th>
+                                <th>{{$t('operationVue.feilds.discount')}}</th>
+                                <th>{{$t('operationVue.feilds.total')}}</th>
+                                <th>{{$t('operationVue.feilds.payment')}}</th>
+                                <th>{{$t('operationVue.feilds.date')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="operation in operations" :key="operation.id" @click="viewOperation(operation.id)">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6> {{form.full_name}} </h6>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6> {{operation.discount}} {{$t('currency')}} </h6>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6> {{operation.total}} {{$t('currency')}} </h6>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6> {{operation.payment}} {{$t('currency')}} </h6>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6> {{operation.created_at}} </h6>
+                                    </div>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
       </div>
     </div>
 </template>
@@ -71,6 +124,7 @@ export default {
         company_name: null,
         city: null
       },
+      operations: {},
       errors: {}
     }
   },
@@ -85,9 +139,13 @@ export default {
     })
       .then(res => {
         this.form = res.data.data
+        this.operations = res.data.data.operations
       })
   },
   methods: {
+    viewOperation (id) {
+      this.$router.push({ name: 'operations.view', params: { id: id } })
+    },
     EditCustomer () {
       webServices.put(`/customers/${this.$route.params.id}/update`, this.form, {
         headers: {

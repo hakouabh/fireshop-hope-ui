@@ -44,6 +44,9 @@
                                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                  </td>
+                                 <td v-else>
+                                    <img :src="user.image" alt="user-img" class="rounded-pill avatar-40">
+                                 </td>
                                  <td>{{user.name}}</td>
                                  <td>{{user.email}}</td>
                                  <td><span :class="`badge ${ user.role == 0 ? ' bg-success' : user.role == 1 ? ' bg-primary': ' bg-danger' }`" >{{Role(user.role)}}</span></td>

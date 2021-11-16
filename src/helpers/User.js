@@ -4,6 +4,9 @@
 /* eslint-disable no-class-assign */
 import Token from './Token'
 import AppStorage from './AppStorage'
+import i18n from '../i18n'
+
+const { t } = i18n.global
 class User {
   responseAfterLogin (res) {
     const access_token = res.access_token
@@ -55,6 +58,17 @@ class User {
   id () {
     if (this.loggedIn()) {
       return localStorage.getItem('id')
+    }
+  }
+
+  Role (role) {
+    switch (role) {
+      case 0:
+        return t('usersVue.role.admin')
+      case 1:
+        return t('usersVue.role.seller')
+      case 2:
+        return t('usersVue.role.commis')
     }
   }
 }

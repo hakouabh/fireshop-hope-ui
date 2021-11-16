@@ -327,6 +327,8 @@
   "usersVue":{
     "add_user_title":"Informations Sur le nouvel Utilisateur",
     "add_button":"Ajouter",
+    "autorisation":"Autorisation",
+    "profile":"Profile",
     "list":"Liste des Utilisateurs",
     "feilds":{
       "name":"Nom",
@@ -335,11 +337,43 @@
       "date":"date d'inscription",
       "actions":"Actions"
     },
+    "feilds1":{
+      "email":"Email:",
+      "revenue":"Totale des Ventes:",
+      "profit":"Benifice Net:"
+    },
     "role":{
       "title":"Rôle d'Utilisateur:",
       "admin":"Administrateur",
       "seller":"Vendeur",
       "commis":"Commis"
     }
+  },
+  "settings":{
+    "title":"Paramètres",
+    "theme":"thème",
+    "auto":"Auto",
+    "dark":"Sombre",
+    "light":"Clair",
+    "direction":"Direction du schéma",
+    "ltr":"de gauche à droite",
+    "rtl":"de droite à gauche",
+    "sidebar_color":"Couleur de la barre latérale",
+    "color":"Couleur",
+    "white":"blanche",
+    "transparent":"Transparent",
+    "sidebar_types":"Types de barres latérales",
+    "mini":"Mini",
+    "hover":"Flotter",
+    "boxed":"En boîte",
+    "sidebar_active_style":"Style actif de la barre latérale",
+    "rounded_one_side":"Arrondi d'un côté",
+    "rounded_all":"Tout arrondi",
+    "pill_one_side":"Pilule d'un côté",
+    "pill_all":"Pilule Tout",
+    "navbar_style":"Style de la barre de navigation",
+    "glass":"Un verre",
+    "sticky":"Collant",
+    "default":"Défaut"
   }
 }
