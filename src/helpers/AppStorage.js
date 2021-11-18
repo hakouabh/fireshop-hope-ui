@@ -39,7 +39,7 @@ class AppStorage {
     this.storeEmail(user.email)
     this.storeTokenType(token_type)
     this.storeExpiresIn(expires_in)
-    this.storecompany(user.company)
+    this.storecompany(user.company.name)
     this.storId(user.id)
     this.storeRole(user.role)
   }
