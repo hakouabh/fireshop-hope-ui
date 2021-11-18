@@ -29,14 +29,19 @@ class AppStorage {
     localStorage.setItem('id', id)
   }
 
-  store (token, username, email, token_type, expires_in, company, id) {
+  storeRole (role) {
+    localStorage.setItem('role', role)
+  }
+
+  store (user, token, token_type, expires_in) {
     this.storeToken(token)
-    this.storeUsername(username)
-    this.storeEmail(email)
+    this.storeUsername(user.name)
+    this.storeEmail(user.email)
     this.storeTokenType(token_type)
     this.storeExpiresIn(expires_in)
-    this.storecompany(company)
-    this.storId(id)
+    this.storecompany(user.company)
+    this.storId(user.id)
+    this.storeRole(user.role)
   }
 
   clear () {
@@ -46,7 +51,8 @@ class AppStorage {
     localStorage.removeItem('token_type')
     localStorage.removeItem('expires_in')
     localStorage.removeItem('company')
-    // localStorage.removeItem('id')
+    localStorage.removeItem('id')
+    localStorage.removeItem('role')
   }
 }
 export default AppStorage = new AppStorage()

@@ -73,11 +73,17 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body row justify-content-between">
-                        <div class="col-md-5 mb-2">
+                        <div class="col-md-3 mb-2">
                             <input type="date" :class="`${errors.date_from ? 'is-invalid' : ''}`" class="form-control" id="formOperation05" v-model="form.date_range.from">
                         </div>
-                        <div class="col-md-5 mb-2">
+                        <div class="col-md-3 mb-2">
                           <input type="date" :class="`${errors.date_to ? 'is-invalid' : ''}`" class="form-control" id="formOperation06" v-model="form.date_range.to">
+                        </div>
+                        <div class="col-md-3 mb-2">
+                          <select class="form-select" :class="`${errors.user ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.user" >
+                              <option :value="null">{{$t('all_users')}}</option>
+                              <option v-for="user in users" :value="user" :key="user.id">{{user.name}}</option>
+                           </select>
                         </div>
                         <div class="col-md-2 d-flex align-items-center" @click="refresh()">
                             <div class="p-2 rounded bg-info disabled">
@@ -215,17 +221,32 @@ export default {
         date_range: {
           from: null,
           to: null
-        }
-      }
+        },
+        user: null
+      },
+      users: {}
     }
   },
   created () {
     const today = new Date()
+    this.getUsers()
     this.form.date_range.from = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     this.form.date_range.to = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     this.searchOperations()
   },
   methods: {
+    getUsers () {
+      webServices.get('/auth/users', {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(res => {
+          this.users = res.data
+        })
+    },
     refresh () {
       this.searchOperations()
     },

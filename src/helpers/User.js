@@ -10,14 +10,15 @@ const { t } = i18n.global
 class User {
   responseAfterLogin (res) {
     const access_token = res.access_token
-    const username = res.name
-    const email = res.email
-    const id = res.id
+    // const username = res.name
+    // const email = res.email
+    // const id = res.id
+    const user = res.user
     const token_type = res.token_type
     const expires_in = res.expires_in
-    const company = res.company
+    // const company = res.company
     if (Token.isValid(access_token)) {
-      AppStorage.store(access_token, username, email, token_type, expires_in, company, id)
+      AppStorage.store(user, access_token, token_type, expires_in)
     }
   }
 
@@ -69,6 +70,12 @@ class User {
         return t('usersVue.role.seller')
       case 2:
         return t('usersVue.role.commis')
+    }
+  }
+
+  role () {
+    if (this.loggedIn()) {
+      return Number(localStorage.getItem('role'))
     }
   }
 }

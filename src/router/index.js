@@ -1,5 +1,10 @@
+/* eslint-disable no-undef */
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import User from '../helpers/User'
+import { notify } from '@kyvg/vue3-notification'
+import i18n from '../i18n'
+
+const { t } = i18n.global
 
 const defaultchildRoutes = (prop, mode = false) => [
   {
@@ -90,19 +95,19 @@ const userchildRoutes = (prop, mode = false) => [
   {
     path: 'UserAdd',
     name: prop + '.UserAdd',
-    meta: { requiresAuthentication: true, name: 'UserAdd' },
+    meta: { requiresAdmin: true, name: 'UserAdd' },
     component: () => import('../views/main/Users/UserAdd')
   },
   {
     path: 'UserList',
     name: prop + '.UserList',
-    meta: { requiresAuthentication: true, name: 'UserList' },
+    meta: { requiresAdmin: true, name: 'UserList' },
     component: () => import('../views/main/Users/UserList')
   },
   {
     path: 'UserProfile/:id',
     name: prop + '.UserProfile',
-    meta: { requiresAuthentication: true, name: 'User Profile' },
+    meta: { requiresAdmin: true, name: 'User Profile' },
     component: () => import('../views/main/Users/UserProfile')
   }
 ]
@@ -250,6 +255,19 @@ router.beforeEach((to, from, next) => {
       next({ name: 'default.dashboard' })
     } else {
       next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresAdmin)) {
+  // eslint-disable-next-line no-constant-condition
+    if (User.loggedIn() && User.role() === 0) {
+      console.log(User.role())
+      next()
+    } else {
+      notify({
+        type: 'error',
+        layout: 'topLeft',
+        text: t('no_access'),
+        timeout: 1500
+      })
     }
   }
 })

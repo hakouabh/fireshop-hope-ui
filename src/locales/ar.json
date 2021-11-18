@@ -14,6 +14,8 @@
   },
   "app_name": "Fireshop",
   "currency":"دج",
+  "all_users":"جميع الحسابات",
+  "no_access":"ليس لديك حق الوصول",
   "export_as":"حفظ :",
   "top_product":"المنتجات الأكثر مبيعًا",
   "currency1":"دج",

@@ -19,13 +19,20 @@
                            <label for="formOperation02" class="form-label">{{$t('operationVue.searchOperation.phone')}}</label>
                            <input type="text" :class="`${errors.phone ? 'is-invalid' : ''}`" class="form-control" id="formOperation02" v-model="form.phone">
                         </div>
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                            <label for="formOperation05" class="form-label">{{$t('operationVue.searchOperation.date_from')}}</label>
                            <input type="date" :class="`${errors.date_from ? 'is-invalid' : ''}`" class="form-control" id="formOperation05" v-model="form.date_range.from">
                         </div>
-                        <div class="col-md-6 mb-5">
+                        <div class="col-md-4 mb-5">
                            <label for="formOperation06" class="form-label">{{$t('operationVue.searchOperation.date_to')}}</label>
                            <input type="date" :class="`${errors.date_to ? 'is-invalid' : ''}`" class="form-control" id="formOperation06" v-model="form.date_range.to">
+                        </div>
+                        <div class="col-md-4 mb-5">
+                           <label for="formOperation06" class="form-label">{{$t('verticalBare.users.title')}}</label>
+                           <select class="form-select" :class="`${errors.user ? 'is-invalid' : ''}`" id="validationCustom044" v-model="form.user" >
+                              <option :value="null">{{$t('all_users')}}</option>
+                              <option v-for="user in users" :value="user" :key="user.id">{{user.name}}</option>
+                           </select>
                         </div>
                        <div class="row d-flex">
                        <div class="col-lg-3 col-md-6">
@@ -125,16 +132,31 @@ export default {
         date_range: {
           from: null,
           to: null
-        }
+        },
+        user: null
       },
+      users: {},
       errors: {},
       operations: {}
     }
   },
   created () {
+    this.getUsers()
     this.searchOperations()
   },
   methods: {
+    getUsers () {
+      webServices.get('/auth/users', {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(res => {
+          this.users = res.data
+        })
+    },
     exportExcel () {
       webServices.get('/operations/export',
         {

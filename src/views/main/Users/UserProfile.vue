@@ -45,56 +45,138 @@
                         </div>
                      </div>
                      <div class="card-body">
-                        <ul class="list-inline m-0 p-0">
-                           <li class="d-flex mb-4 align-items-center">
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 1 </h6>
+                        <form @submit.prevent="EditAutorisation">
+                           <ul class="list-inline m-0 p-0">
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.product.access_product')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault1" v-model="autorisation.access_product">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.product.list')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault2" v-model="autorisation.product_list">
+                                 </div>
+                              </li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.product.add')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault3" v-model="autorisation.product_add">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.product.update')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault4" v-model="autorisation.product_update">
+                                 </div>
+                              </li>
+                              <li><hr class="hr-horizontal mb-3"></li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.stock.add')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" v-model="autorisation.stock_add">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.stock.update')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault12" v-model="autorisation.stock_update">
+                                 </div>
+                              </li>
+                              <li><hr class="hr-horizontal mb-3"></li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.operations.list')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault21" v-model="autorisation.operations_list">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.operations.view')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.operations_view">
+                                 </div>
+                              </li>
+                              <li><hr class="hr-horizontal mb-3"></li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.charge.list')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault21" v-model="autorisation.charge_list">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.charge.add')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.charge_add">
+                                 </div>
+                              </li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.charge.update')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.charge_update">
+                                 </div>
+                              </li>
+                              <li><hr class="hr-horizontal mb-3"></li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.counter.discount')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault21" v-model="autorisation.counter_discount">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.counter.return')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.counter_return">
+                                 </div>
+                              </li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.counter.synthesis')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.counter_synthesis">
+                                 </div>
+                              </li>
+                              <li><hr class="hr-horizontal mb-3"></li>
+                              <li class="d-flex mb-4 align-items-center">
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.corbeille')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault21" v-model="autorisation.corbeille">
+                                 </div>
+                                 <div class="ms-3 col-md-4">
+                                    <h6>{{$t('autorisation.dashboard')}}</h6>
+                                 </div>
+                                 <div class="col-md-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault22" v-model="autorisation.dashboard">
+                                 </div>
+                              </li>
+                           </ul>
+                           <br><br>
+                           <div class="row d-flex justify-content-center">
+                              <div class="col-lg-3 col-md-6">
+                                 <button class="btn btn-success" type="submit">{{$t('productVue.button.save')}}</button>
                               </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                              <div class="col-lg-3 col-md-6">
+                                 <a class="btn btn-danger" href="">{{$t('productVue.button.cancel')}}</a>
                               </div>
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 2 </h6>
-                              </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                              </div>
-                           </li>
-                           <li class="d-flex mb-4 align-items-center">
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 1 </h6>
-                              </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                              </div>
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 2 </h6>
-                              </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                              </div>
-                           </li>
-                           <li class="d-flex mb-4 align-items-center">
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 1 </h6>
-                              </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                              </div>
-                              <img src="@/assets/images/avatars/01.png" alt="story-img" class="rounded-pill avatar-40">
-                              <div class="ms-3 col-md-3">
-                                 <h6>Autorisation 2 </h6>
-                              </div>
-                              <div class="col-md-3 form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                              </div>
-                           </li>
-                        </ul>
+                           </div>
+                        </form>
                      </div>
                   </div>
                </tab-content-item>
@@ -121,11 +203,11 @@
                               </div>
                               <div class="d-flex col-md-4 justify-content-between">
                                  <h5 class="d-inline-block">{{$t('usersVue.feilds1.revenue')}}</h5>
-                                 <p class="d-inline-block ">{{user.revenue}}   {{$t('currency')}}</p>
+                                 <p class="d-inline-block ">{{user.revenue || 0}}   {{$t('currency')}}</p>
                               </div>
                               <div class="d-flex col-md-4 justify-content-between">
                                  <h5 class="d-inline-block">{{$t('usersVue.feilds1.profit')}}</h5>
-                                 <p class="d-inline-block ">{{user.profit }}  {{$t('currency')}}</p>
+                                 <p class="d-inline-block ">{{user.profit || 0 }}  {{$t('currency')}}</p>
                               </div>
                            </div>
                         </div>
@@ -147,7 +229,8 @@ export default {
     return {
       slidetab: {},
       user_id: this.$route.params.id,
-      user: {}
+      user: {},
+      autorisation: {}
     }
   },
   mounted () {
@@ -157,19 +240,41 @@ export default {
     })
   },
   created () {
-    webServices.get('/auth/user/' + this.user_id, {
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line quote-props
-        'Authorization': User.ApiToken()
-      }
-    })
-      .then(res => {
-        this.user = res.data
-        this.user.role = User.Role(this.user.role)
-      })
+    this.getUser()
   },
   methods: {
+    getUser () {
+      webServices.get('/auth/user/' + this.user_id, {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(res => {
+          this.user = res.data
+          this.user.role = User.Role(this.user.role)
+          this.autorisation = this.user.autorisation
+        })
+    },
+    EditAutorisation () {
+      webServices.post('/auth/autorisation', this.autorisation, {
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          'Authorization': User.ApiToken()
+        }
+      })
+        .then(() => {
+          this.$notify({
+            type: 'success',
+            layout: 'topLeft',
+            text: this.$t('created'),
+            timeout: 1500
+          })
+          this.getUser()
+        })
+    },
     getImage (path) {
       if (path != null) {
         return path

@@ -23,4 +23,17 @@ app.use(router)
 app.use(Notifications)
 app.use(globalComponent)
 app.mount('#app')
+app.mixin({
+  methods: {
+    failedNotification (self) {
+      return self.$notify({
+        type: 'success',
+        layout: 'topLeft',
+        text: 'created',
+        timeout: 1500
+      })
+    }
+  }
+})
+
 export { app }

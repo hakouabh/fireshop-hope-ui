@@ -14,6 +14,8 @@
   },
   "app_name": "Fireshop",
   "currency":"DA",
+  "all_users":"Tous Les Comptes",
+  "no_access":"Vous n'avez pas accès",
   "export_as":"Exporter :",
   "top_product":"les Produits les plus vendus",
   "currency1":"da",
@@ -360,7 +362,7 @@
     "rtl":"de droite à gauche",
     "sidebar_color":"Couleur de la barre latérale",
     "color":"Couleur",
-    "white":"blanche",
+    "white":"Blanche",
     "transparent":"Transparent",
     "sidebar_types":"Types de barres latérales",
     "mini":"Mini",
@@ -375,5 +377,33 @@
     "glass":"Un verre",
     "sticky":"Collant",
     "default":"Défaut"
+  },
+  "autorisation":{
+    "product":{
+      "access_product":"Accéder au Produits",
+      "list":"Accès à la liste",
+      "add":"Création d'un Produits",
+      "update":"Modifier un Produits"
+    },
+    "stock":{
+      "add":"Créer un stock",
+      "update":"Modifier le Stock" 
+    },
+    "operations":{
+      "list":"Accès à la Liste d'opérations",
+      "view":"Accès au Détails d'opérations" 
+    },
+    "charge":{
+      "list":"Accès à la Liste de Prélèvement",
+      "add":"Créer un Prélèvement",
+      "update":"Modifier le Prélèvement" 
+    },
+    "counter":{
+      "discount":"Faire des Remises",
+      "return":"Faire des Retour",
+      "synthesis":"Accès au Synthèse"
+    },
+    "corbeille":"Accès au Corbeille",
+    "dashboard":"Accès au Dashboard"
   }
 }

@@ -549,7 +549,6 @@ export default {
           this.dmain.series[1].data = res.data.data.graph.last
           this.dactivity1.series[0].data = res.data.data.graphoperation.current
           this.dactivity1.series[1].data = res.data.data.graphoperation.last
-          console.log(res.data.data.graph)
         })
         .catch(error => {
           if (error.response.status === 401) {
