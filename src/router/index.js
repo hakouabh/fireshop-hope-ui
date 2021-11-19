@@ -244,22 +244,28 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuthentication)) {
-    // eslint-disable-next-line no-constant-condition
     if (User.loggedIn()) {
-      next()
+      if (User.hasAccess(to.name)) {
+        next()
+      } else {
+        notify({
+          type: 'error',
+          layout: 'topLeft',
+          text: t('no_access'),
+          timeout: 1500
+        })
+      }
     } else {
       next({ name: 'auth.signin' })
     }
   } else if (to.matched.some(record => record.meta.isAuthenticated)) {
     if (User.loggedIn()) {
-      next({ name: 'default.dashboard' })
+      next({ name: 'default.counter' })
     } else {
       next()
     }
   } else if (to.matched.some(record => record.meta.requiresAdmin)) {
-  // eslint-disable-next-line no-constant-condition
     if (User.loggedIn() && User.role() === 0) {
-      console.log(User.role())
       next()
     } else {
       notify({

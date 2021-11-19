@@ -33,6 +33,10 @@ class AppStorage {
     localStorage.setItem('role', role)
   }
 
+  storeAutorisation (autorisation) {
+    localStorage.setItem('autorisation', JSON.stringify(autorisation))
+  }
+
   store (user, token, token_type, expires_in) {
     this.storeToken(token)
     this.storeUsername(user.name)
@@ -42,6 +46,7 @@ class AppStorage {
     this.storecompany(user.company.name)
     this.storId(user.id)
     this.storeRole(user.role)
+    this.storeAutorisation(user.autorisation)
   }
 
   clear () {
@@ -53,6 +58,7 @@ class AppStorage {
     localStorage.removeItem('company')
     localStorage.removeItem('id')
     localStorage.removeItem('role')
+    localStorage.removeItem('autorisation')
   }
 }
 export default AppStorage = new AppStorage()

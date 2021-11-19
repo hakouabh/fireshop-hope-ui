@@ -266,7 +266,6 @@ export default {
         }
       })
         .then(res => {
-          console.log(res.data.data)
           this.stats = res.data.data.stats
           this.operations = res.data.data.operations
           this.totalpage1 = res.data.data.operations.last_page

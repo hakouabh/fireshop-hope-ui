@@ -10,13 +10,9 @@ const { t } = i18n.global
 class User {
   responseAfterLogin (res) {
     const access_token = res.access_token
-    // const username = res.name
-    // const email = res.email
-    // const id = res.id
     const user = res.user
     const token_type = res.token_type
     const expires_in = res.expires_in
-    // const company = res.company
     if (Token.isValid(access_token)) {
       AppStorage.store(user, access_token, token_type, expires_in)
     }
@@ -62,6 +58,12 @@ class User {
     }
   }
 
+  autorisation () {
+    if (this.loggedIn()) {
+      return localStorage.getItem('autorisation')
+    }
+  }
+
   Role (role) {
     switch (role) {
       case 0:
@@ -76,6 +78,52 @@ class User {
   role () {
     if (this.loggedIn()) {
       return Number(localStorage.getItem('role'))
+    }
+  }
+
+  hasAccess (path) {
+    const autorisation = JSON.parse(this.autorisation())
+    switch (path) {
+      case 'default.counter':
+        return true
+      case 'default.dashboard':
+        return autorisation.dashboard
+      case 'product.list':
+        return autorisation.product_list
+      case 'product.add':
+        return autorisation.product_add
+      case 'product.deleted':
+        return autorisation.corbeille
+      case 'product.stock':
+        return autorisation.stock_add
+      case 'product.editStock':
+        return autorisation.stock_update
+      case 'product.search':
+        return autorisation.product_list
+      case 'product.edit':
+        return autorisation.product_update
+      case 'customer.add':
+        return true
+      case 'customer.list':
+        return true
+      case 'customer.search':
+        return true
+      case 'customer.edit':
+        return true
+      case 'operations.search':
+        return autorisation.operations_list
+      case 'operations.synthesis':
+        return autorisation.counter_synthesis
+      case 'operations.view':
+        return autorisation.operations_view
+      case 'charge.add':
+        return autorisation.charge_add
+      case 'charge.list':
+        return autorisation.charge_list
+      case 'charge.search':
+        return autorisation.charge_list
+      case 'charge.edit':
+        return autorisation.charge_update
     }
   }
 }

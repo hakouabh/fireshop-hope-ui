@@ -187,7 +187,6 @@ export default {
             webServices.post('auth/register', this.form)
               .then(result => {
                 User.responseAfterLogin(result.data)
-                console.log(result.data)
                 this.$notify({
                   type: 'success',
                   layout: 'topLeft',
@@ -195,7 +194,7 @@ export default {
                   timeout: 1500
 
                 })
-                this.$router.push({ name: 'default.dashboard' })
+                this.$router.push({ name: 'default.counter' })
               })
               .catch(error => {
                 this.errors = error.response.data.errors

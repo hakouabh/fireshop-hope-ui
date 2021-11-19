@@ -128,7 +128,6 @@ export default {
         .then(res => {
           this.operation = res.data
           this.orders = this.operation.order
-          console.log(this.operation.customer)
         })
     }
   }
