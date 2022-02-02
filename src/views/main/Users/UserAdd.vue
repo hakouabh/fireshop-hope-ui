@@ -12,7 +12,7 @@
                               <svg class="upload-button" width="14" height="14" viewBox="0 0 24 24">
                                  <path fill="#ffffff" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
                               </svg>
-                              <input class="file-upload" type="file" accept="image/*">
+                              <input class="file-upload" @change="onFileSelected" type="file">
                            </div>
                         </div>
                      </div>
@@ -82,6 +82,7 @@ export default {
         role: 1,
         name: null,
         email: null,
+        image: null,
         password: null,
         password_confirmation: null
       },
@@ -89,6 +90,9 @@ export default {
     }
   },
   methods: {
+    onFileSelected (e) {
+      this.form.image = e.target.files[0]
+    },
     AddUser () {
       webServices.post('/auth/addUser', this.form, {
         headers: {

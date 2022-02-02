@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    appName: 'Hope UI',
+    appName: 'Fireshop',
     settings: {
       scheme: 'light',
       schemeDir: 'ltr',

@@ -136,10 +136,10 @@
       <div class="col-lg-12">
          <div class="row">
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-product-sku" v-model="formProduct.sku" :placeholder="$t('productVue.feilds.sku')">
+               <input type="text" class="form-control" id="model-product_name" v-model="formProduct.name" :placeholder="$t('productVue.feilds.product_name')">
             </div>
             <div class="col-lg-6">
-               <input type="text" class="form-control" id="model-product_name" v-model="formProduct.name" :placeholder="$t('productVue.feilds.product_name')">
+               <input type="text" class="form-control" id="model-product-sku" v-model="formProduct.sku" :placeholder="$t('productVue.feilds.sku')">
             </div>
          </div>
          <div class="table-responsive mt-4">
@@ -153,7 +153,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products" :key="product.id" @click="selectProduct(product.sku)">
+                        <tr v-for="product in products" :key="product.id" data-bs-dismiss="modal" @click="selectProduct(product.sku)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.name}} </h6>
@@ -267,28 +267,28 @@
 <model-header :dismissable="true">
    <h5 class="modal-title" id="exampleModalLabel">{{$t('model_operation')}}</h5>
 </model-header>
-<model-body>
-   <form>
-      <div class="col-lg-12">
-         <div class="row d-flex justify-content-center">
-            <div class="col-lg-8">
-               <input type="number" class="form-control" :class="`${payement < total ? 'is-invalid text-danger' : payement >= total ? 'text-success': ''}`" id="model-discount" v-model="payement">
+<form @submit.prevent="validateOperation()">
+   <model-body>
+         <div class="col-lg-12">
+            <div class="row d-flex justify-content-center">
+               <div class="col-lg-8">
+                  <input type="number" class="form-control" :class="`${payement < total ? 'is-invalid text-danger' : payement >= total ? 'text-success': ''}`" id="model-discount" v-model="payement">
+               </div>
             </div>
          </div>
-      </div>
-      <div class="col-lg-12">
-         <div class="row d-flex justify-content-center">
-            <div class="col-lg-8 mt-3">
-               <input type="number" readonly class="form-control" id="model-discount" v-model="reste">
+         <div class="col-lg-12">
+            <div class="row d-flex justify-content-center">
+               <div class="col-lg-8 mt-3">
+                  <input type="number" readonly class="form-control" id="model-discount" v-model="reste">
+               </div>
             </div>
          </div>
-      </div>
-   </form>
-</model-body>
-<model-footer>
-<button type="button" class="btn btn-secondary" id="closeOperation" data-bs-dismiss="modal">{{$t('productVue.button.cancel')}}</button>
-<button type="button" class="btn btn-primary" @click="validateOperation()">{{$t('productVue.button.save')}}</button>
-</model-footer>
+   </model-body>
+   <model-footer>
+   <button type="button" class="btn btn-secondary" id="closeOperation" data-bs-dismiss="modal">{{$t('productVue.button.cancel')}}</button>
+   <button type="submit" class="btn btn-primary">{{$t('productVue.button.save')}}</button>
+   </model-footer>
+</form>
 </modal>
 </template>
 <script>
