@@ -352,6 +352,7 @@
     }
   },
   "settings":{
+    "autoUpdate":"Rechercher une mise à jour...",
     "title":"Paramètres",
     "theme":"thème",
     "auto":"Auto",
@@ -382,8 +383,8 @@
     "product":{
       "access_product":"Accéder au Produits",
       "list":"Accès à la liste",
-      "add":"Création d'un Produits",
-      "update":"Modifier un Produits"
+      "add":"Création d'un Produit",
+      "update":"Modifier un Produit"
     },
     "stock":{
       "add":"Créer un stock",

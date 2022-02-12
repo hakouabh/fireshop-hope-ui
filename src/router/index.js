@@ -187,6 +187,11 @@ const authchildRoutes = (prop, mode = false) => [
     name: prop + '.recoverPassword',
     meta: { isAuthenticated: true, name: 'Recover password' },
     component: () => import('../views/Auth/RecoverPassword')
+  },
+  {
+    path: 'maintenance',
+    name: prop + '.maintenance',
+    component: () => import('../views/Auth/Maintenance')
   }
 ]
 
@@ -274,6 +279,8 @@ router.beforeEach((to, from, next) => {
         timeout: 1500
       })
     }
+  } else {
+    next()
   }
 })
 

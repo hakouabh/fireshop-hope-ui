@@ -177,6 +177,10 @@ export default {
           fileLink.setAttribute('download', `${this.$t('dashboardVue.operations')}.xlsx`)
           document.body.appendChild(fileLink)
           fileLink.click()
+        }).catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
         })
     },
     viewOperation (id) {
@@ -198,7 +202,11 @@ export default {
           this.operations = res.data.data.operations
           this.totalpage = res.data.data.operations.last_page
         })
-        .catch()
+        .catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
+        })
     }
   }
 

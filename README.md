@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://hopeui.iqonic.design/?utm_source=github&utm_medium=github-description&utm_campaign=open_source_github" target="__blank" title="Hope UI">
+  <a href="https://hopeui.iqonic.design/?utm_source=github&utm_medium=github-description&utm_campaign=open_source_github" target="__blank" title="Fireshop">
     <img src="https://assets.iqonic.design/hope-ui/github/logo.png" />
   </a>
 </p>

@@ -529,6 +529,10 @@ export default {
       })
         .then(res => {
           this.products = res.data.data
+        }).catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
         })
     },
     getStats () {

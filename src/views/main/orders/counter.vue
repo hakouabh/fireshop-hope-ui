@@ -153,7 +153,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products" :key="product.id" data-bs-dismiss="modal" @click="selectProduct(product.sku)">
+                        <tr v-for="product in products" :key="product.id" data-bs-dismiss="modal" @click="selectProduct(product.id)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.name}} </h6>
@@ -540,7 +540,11 @@ export default {
             this.total = this.orders.reduce((a, b) => a + b.order_detail.total_order, 0)
           }
         })
-        .catch()
+        .catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
+        })
     },
     addProduct () {
       if (this.sku != null) {

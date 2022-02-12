@@ -1,11 +1,17 @@
 {
   "name": "fireshop",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
+  "description": "Le système de gestion des stocks",
+  "author": {
+    "name": "Megherbi Abdelhak",
+    "email": "megherbi.abdelhak1@gmail.com"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "gh-publish": "vue-cli-service electron:build -p always",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
@@ -28,6 +34,7 @@
     "axios": "^0.22.0",
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
+    "electron-updater": "^4.3.1",
     "jquery": "^3.5.1",
     "leaflet": "^1.7.1",
     "moment": "^2.24.0",

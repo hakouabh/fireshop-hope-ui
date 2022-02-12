@@ -96,7 +96,7 @@ export default {
             timeout: 1500
 
           })
-          this.$router.push({ name: 'default.dashboard' })
+          this.$router.push({ name: 'default.counter' })
         })
         .catch(error => {
           if (error.response.status === 401) {

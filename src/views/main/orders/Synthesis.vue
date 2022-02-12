@@ -245,6 +245,10 @@ export default {
       })
         .then(res => {
           this.users = res.data
+        }).catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
         })
     },
     refresh () {
@@ -271,7 +275,11 @@ export default {
           this.totalpage1 = res.data.data.operations.last_page
           this.searchCharge()
         })
-        .catch()
+        .catch(error => {
+          if (error.response.status === 495) {
+            this.$router.push({ name: 'auth.maintenance' })
+          }
+        })
     },
     searchCharge (page = 1) {
       webServices.get('/charges?page=' + page, {
