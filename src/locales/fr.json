@@ -101,6 +101,7 @@
     "placeholder":{
       "email":"Entrer votre Email",
       "name":"Entrez votre nom",
+      "phone":"Numéro de Téléphone",
       "password":"Entrer un mot de passe",
       "password_confirmation":"Confirmez le mot de passe",
       "company_category":"catégorie d'entreprise",
@@ -352,6 +353,7 @@
     }
   },
   "settings":{
+    "certificat":"Vous devez renouveler votre abonnement pour continuer à utiliser",
     "autoUpdate":"Rechercher une mise à jour...",
     "title":"Paramètres",
     "theme":"thème",

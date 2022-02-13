@@ -101,6 +101,7 @@
     "placeholder":{
       "email":"أدخل بريدك الإلكتروني",
       "name":"أدخل أسمك",
+      "phone":"رقم الهاتف",
       "password":"أدخل كلمة المرور",
       "password_confirmation":"تأكيد كلمة السر",
       "company_category":"نوع الشركة",
@@ -352,6 +353,7 @@
     }
   },
   "settings":{
+    "certificat":"يجب عليك تجديد اشتراكك لمواصلة استخدام",
     "autoUpdate":"تحقق من وجود تحديث ...",
     "title":"الإعدادات",
     "theme":"سمة",

@@ -35,10 +35,16 @@
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{ errors.company[0] }} </small>
                                     </div>
                                  </div>
-                                 <div class="col-lg-12">
+                                 <div class="col-lg-6">
                                     <div class="form-group">
                                        <input type="text" class="form-control" id="last-name" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.email"> {{ errors.email[0] }} </small>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-6">
+                                    <div class="form-group">
+                                       <input type="text" class="form-control" id="last-name" v-model="form.phone" :placeholder="$t('signUpVue.placeholder.phone') ">
+                                       <small class="text-danger" id="Company-category-errors" v-if="errors.phone"> {{ errors.phone[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
@@ -133,6 +139,7 @@ export default {
       form: {
         name: '',
         email: '',
+        phone: '',
         password: '',
         password_confirmation: '',
         company: {

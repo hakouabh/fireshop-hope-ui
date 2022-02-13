@@ -218,9 +218,16 @@ export default {
     onFileSelected (e) {
       const formData = new FormData()
       formData.append('image', e.target.files[0])
-      webServices.post(`/products/${this.$route.params.id}/storeImage`, formData, {
+      formData.append('id', this.$route.params.id)
+      var reader = new FileReader()
+
+      reader.onload = (e) => {
+        this.form.image = e.target.result
+      }
+      reader.readAsDataURL(e.target.files[0])
+      webServices.post('/products/storeImage', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2),
+          'content-type': 'multipart/form-data',
           // eslint-disable-next-line quote-props
           'Authorization': User.ApiToken()
         }

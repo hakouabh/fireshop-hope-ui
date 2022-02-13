@@ -8,8 +8,7 @@
                 <div class="bg-primary" style="background: transparent; height: 320px;">
                     <div class="gradient-bottom">
                         <div class="bottom-text general-zindex">
-                            <h1 class="mb-2 text-white">Hang on! We are under maintenance</h1>
-                            <p>It will not take a long time till we get the error fiked. We wii live again in</p>
+                            <h1 class="mb-2 text-white">{{$t('settings.certificat')}} {{$t('app_name')}}</h1>
                             <ul class="countdown d-flex justify-content-center align-items-center list-inline" data-date="Feb 02 2022 20:20:22">
                                 <li>
                                     <span data-days>0</span>Days

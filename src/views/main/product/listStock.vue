@@ -47,6 +47,9 @@
                                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                               </svg>
                             </td>
+                            <td v-else>
+                                 <img :src="product.product.image" alt="product-img" class="rounded-pill avatar-40">
+                            </td>
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.product.name}} </h6>
