@@ -25,7 +25,7 @@ module.exports = {
           {
             provider: 'github',
             owner: 'hakouabh',
-            repo: 'fireshop-hope-ui',
+            repo: 'fireshop-landing',
             token: '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'
           }
         ],
