@@ -25,8 +25,8 @@ module.exports = {
           {
             provider: 'github',
             owner: 'hakouabh',
-            repo: 'fireshop-landing',
-            token: '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'
+            repo: 'fireshop-landing'
+            // token: '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'
           }
         ],
         directories: {

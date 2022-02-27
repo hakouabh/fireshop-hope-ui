@@ -112,6 +112,7 @@ export default {
       totalpage: 0,
       perpage: 15,
       form: {
+        user: null,
         type: null,
         date_range: {
           from: null,

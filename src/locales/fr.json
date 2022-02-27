@@ -1,4 +1,33 @@
 {
+  "pricing":{
+    "connecter":"vous avez commencé une période d'essai",
+    "free":{
+      "title":"Essai gratuit",
+      "stockage":"Stockage Limité",
+      "lifetime":"15 jours",
+      "server":"Serveur en Cloud",
+      "access":"Paramètres de profil",
+      "button":"Commencez Maintenant"
+    },
+    "offline":{
+      "title":"Mode Hors-Ligne",
+      "stockage":"Stockage Local",
+      "lifetime":"3 ans",
+      "server":"Serveur Local",
+      "access":"Paramètres de profil",
+      "popular":"Populaire",
+      "button":"Commandez"
+    },
+    "entreprise":{
+      "title":"Entreprise",
+      "access":"Paramètres de profil",
+      "server":"Serveur en Cloud",
+      "stockage":"Stockage de données en Cloud",
+      "lifetime":"Mois",
+      "button":"Commencez Maintenant"
+    }
+    
+  },
   "weeks":{
     "dimanche":"Dimanche",
     "lundi":"Lundi",

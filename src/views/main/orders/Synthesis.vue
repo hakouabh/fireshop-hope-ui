@@ -247,7 +247,7 @@ export default {
           this.users = res.data
         }).catch(error => {
           if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.maintenance' })
+            this.$router.push({ name: 'auth.pricing' })
           }
         })
     },
@@ -277,7 +277,7 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.maintenance' })
+            this.$router.push({ name: 'auth.pricing' })
           }
         })
     },

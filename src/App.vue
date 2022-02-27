@@ -14,8 +14,9 @@ import AppStorage from './helpers/AppStorage'
 
 export default {
   name: 'App',
-  created () {
-    Offline.options = { checks: { xhr: { url: 'http://fireshop.test/api' } } }
+  mounted () {
+    // Offline.options = { checks: { image: { url: process.env.VUE_APP_SERVER_URL }, active: 'image' } }
+    Offline.options = { checks: { image: { xhr: process.env.VUE_APP_SERVER_URL } } }
     Offline.check()
     const overlay = jQuery('.uk-overlay-default')
     Offline.on('confirmed-up', () => {

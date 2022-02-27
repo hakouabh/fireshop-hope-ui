@@ -531,7 +531,7 @@ export default {
           this.products = res.data.data
         }).catch(error => {
           if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.maintenance' })
+            this.$router.push({ name: 'auth.pricing' })
           }
         })
     },

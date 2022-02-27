@@ -330,7 +330,7 @@ export default {
       authentication: ['auth.signin', 'auth.signup', 'auth.confirmMail', 'auth.lockScreen', 'auth.recoverPassword'],
       user: ['user.UserProfile', 'user.UserAdd', 'user.UserList'],
       corbeille: ['product.deleted'],
-      utilities: ['auth.error404', 'auth.error500', 'auth.maintenance'],
+      utilities: ['auth.error404', 'auth.error500', 'auth.pricing'],
       specialpages: ['product.add', 'product.list', 'product.edit', 'product.search', 'product.stock', 'rtl.dashboardrtl'],
       customerpages: ['customer.add', 'customer.list', 'customer.edit', 'customer.search', 'rtl.dashboardrtl'],
       chargepages: ['charge.add', 'charge.list', 'charge.edit', 'charge.search', 'rtl.dashboardrtl'],

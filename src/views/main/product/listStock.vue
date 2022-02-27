@@ -14,7 +14,7 @@
                   <table id="basic-table" class="table table-striped  table-hover mb-0" role="grid">
                      <thead>
                         <tr>
-                           <th>
+                           <!-- <th>
                                <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -24,10 +24,10 @@
                                             d="M14.9248 3.12012H7.65704C4.6456 3.12012 2.77832 5.25284 2.77832 8.26428V16.3467C2.77832 19.3581 4.60898 21.4817 7.65704 21.4817H16.2612C19.2726 21.4817 21.1399 19.3581 21.1399 16.3467V9.30776"
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                           </th>
-                           <th>{{$t('stockVue.feilds.product')}}</th>
+                           </th> -->
+                           <!-- <th>{{$t('stockVue.feilds.product')}}</th>
                            <th>{{$t('stockVue.feilds.sku')}}</th>
-                           <th>{{$t('stockVue.feilds.type')}}</th>
+                           <th>{{$t('stockVue.feilds.type')}}</th> -->
                            <th>{{$t('stockVue.feilds.cost')}}</th>
                            <th>{{$t('stockVue.feilds.selling_price')}}</th>
                            <th>{{$t('stockVue.feilds.stock')}}</th>
@@ -36,7 +36,7 @@
                      </thead>
                      <tbody>
                         <tr v-for="product in products.data" :key="product.product_id" @click="goToedit(product.id)" >
-                            <td v-if="!product.product.image">
+                            <!-- <td v-if="!product.product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
                                           stroke-linecap="round" stroke-linejoin="round" />
@@ -46,11 +46,11 @@
                                           d="M14.9248 3.12012H7.65704C4.6456 3.12012 2.77832 5.25284 2.77832 8.26428V16.3467C2.77832 19.3581 4.60898 21.4817 7.65704 21.4817H16.2612C19.2726 21.4817 21.1399 19.3581 21.1399 16.3467V9.30776"
                                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                               </svg>
-                            </td>
-                            <td v-else>
+                            </td> -->
+                            <!-- <td v-else>
                                  <img :src="product.product.image" alt="product-img" class="rounded-pill avatar-40">
-                            </td>
-                           <td>
+                            </td> -->
+                           <!-- <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.product.name}} </h6>
                               </div>
@@ -64,7 +64,7 @@
                               <div class="d-flex align-items-center">
                                  <h6> {{product.product.type.name}} </h6>
                               </div>
-                           </td>
+                           </td> -->
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.cost}} {{$t('currency')}}</h6>

@@ -189,9 +189,9 @@ const authchildRoutes = (prop, mode = false) => [
     component: () => import('../views/Auth/RecoverPassword')
   },
   {
-    path: 'maintenance',
-    name: prop + '.maintenance',
-    component: () => import('../views/Auth/Maintenance')
+    path: 'pricing',
+    name: prop + '.pricing',
+    component: () => import('../views/Auth/Pricing')
   }
 ]
 
