@@ -383,7 +383,7 @@
   },
   "settings":{
     "certificat":"Vous devez renouveler votre abonnement pour continuer à utiliser",
-    "autoUpdate":"Rechercher une mise à jour...",
+    "autoUpdate":"Mise à jour...",
     "title":"Paramètres",
     "theme":"thème",
     "auto":"Auto",
