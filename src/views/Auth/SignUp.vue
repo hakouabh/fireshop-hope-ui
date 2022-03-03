@@ -31,19 +31,19 @@
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="company-name" v-model="companyName" :placeholder="$t('signUpVue.placeholder.company_name') ">
+                                       <input type="text" class="form-control" id="company-name" v-model="form.company.name" :placeholder="$t('signUpVue.placeholder.company_name') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{ errors.company[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="last-name" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
+                                       <input type="text" class="form-control" id="email" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.email"> {{ errors.email[0] }} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
                                     <div class="form-group">
-                                       <input type="text" class="form-control" id="last-name" v-model="form.phone" :placeholder="$t('signUpVue.placeholder.phone') ">
+                                       <input type="text" class="form-control" id="phone" v-model="form.phone" :placeholder="$t('signUpVue.placeholder.phone') ">
                                        <small class="text-danger" id="Company-category-errors" v-if="errors.phone"> {{ errors.phone[0] }} </small>
                                     </div>
                                  </div>
@@ -60,11 +60,11 @@
                                  </div>
                                  <div class="col-lg-8">
                                     <div class="form-group">
-                                       <select class="form-select" id="SelectCategory" v-model="category_id">
+                                       <select class="form-select" id="SelectCategory" v-model="form.company.type_id">
                                        <option selected disabled >{{$t('signUpVue.placeholder.company_category')}}</option>
                                        <option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
                                        </select>
-                                       <small class="text-danger" id="Company-category-errors" v-if="errors.category"> {{$t('signUpVue.required')}}</small>
+                                       <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{$t('signUpVue.required')}}</small>
                                     </div>
                                  </div>
                                  <div class="col-lg-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
@@ -104,7 +104,7 @@
                      <form>
                         <div class="col-lg-12">
                            <div class="form-group">
-                              <input type="text" class="form-control" id="Company-category" v-model="createdCompany" placeholder="Enter the Company name">
+                              <input type="text" class="form-control" id="Company-category" v-model="companyName" placeholder="Enter the Company name">
                               <small class="text-danger" id="Company-category-errors" v-if="errors.name"> {{ errors.name[0] }} </small>
                            </div>
                         </div>
@@ -132,87 +132,47 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { SIGN_UP, GET_COMPANY_TYPE, SET_COMPANY_TYPE } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SignUp',
   data () {
     return {
       form: {
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        password_confirmation: '',
+        name: null,
+        email: null,
+        phone: null,
+        password: null,
+        password_confirmation: null,
         company: {
-          type: {},
-          name: ''
+          name: null,
+          type_id: null
         }
       },
-      companyName: '',
-      category_id: null,
-      createdCompany: '',
-      categories: {},
+      companyName: null,
       errors: {}
     }
+  },
+  computed: {
+    ...mapGetters({
+      categories: 'getCompanyTypes'
+    })
   },
   created () {
     this.getCompanies()
   },
   methods: {
-    getCompanies () {
-      webServices.get('/companies/types')
-        .then(res => {
-          this.categories = res.data.data
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
-    },
+    ...mapActions({
+      getCompanies: GET_COMPANY_TYPE
+    }),
     CreateCategory () {
-      webServices.post('/companies/types/store', { name: this.createdCompany })
-        .then(() => {
-          this.getCompanies()
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          document.getElementById('close').click()
-          document.querySelector('#Company-category').value = ''
-          document.querySelector('#Company-category-errors').value = ''
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+      this.$store.dispatch(SET_COMPANY_TYPE, { name: this.companyName })
+      document.getElementById('close').click()
+      // document.querySelector('#Company-category').value = ''
+      // document.querySelector('#Company-category-errors').value = ''
     },
     signUp () {
-      if (this.category_id != null) {
-        webServices.get(`/companies/types/${this.category_id}`)
-          .then(res => {
-            this.form.company.type = res.data.data
-            this.form.company.name = this.companyName
-            webServices.post('auth/register', this.form)
-              .then(result => {
-                User.responseAfterLogin(result.data)
-                this.$notify({
-                  type: 'success',
-                  layout: 'topLeft',
-                  text: this.$t('signUpVue.created'),
-                  timeout: 1500
-
-                })
-                this.$router.push({ name: 'default.counter' })
-              })
-              .catch(error => {
-                this.errors = error.response.data.errors
-              })
-          })
-          .catch(error => {
-            this.errors = error.response.data.errors
-          })
-      } else {
-        this.errors.category = 'error'
-      }
+      this.$store.dispatch(SIGN_UP, this.form)
     }
   }
 }

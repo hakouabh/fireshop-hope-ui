@@ -73,6 +73,7 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { SIGN_IN } from '@/store/mutation-types'
 export default {
   name: 'SignIn',
   data () {
@@ -86,31 +87,7 @@ export default {
   },
   methods: {
     signIn () {
-      webServices.post('/auth/login', this.form)
-        .then(res => {
-          User.responseAfterLogin(res.data)
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('sognInVue.connecter'),
-            timeout: 1500
-
-          })
-          this.$router.push({ name: 'default.counter' })
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            this.$notify({
-              type: 'error',
-              layout: 'topLeft',
-              text: this.$t('sognInVue.invalid_credential'),
-              timeout: 1500
-
-            })
-          } else if (error.response.status === 422) {
-            this.errors = error.response.data.errors
-          }
-        })
+      this.$store.dispatch(SIGN_IN, this.form)
     }
   }
 }
