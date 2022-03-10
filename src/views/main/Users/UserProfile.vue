@@ -272,7 +272,7 @@ export default {
             text: this.$t('created'),
             timeout: 1500
           })
-          this.getUser()
+          //  this.getUser()
         })
     },
     getImage (path) {

@@ -63,6 +63,8 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { SET_CUSTOMER } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'createCustomer',
   data () {
@@ -75,9 +77,13 @@ export default {
         full_name: null,
         company_name: null,
         city: null
-      },
-      errors: {}
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      errors: 'customerErrors'
+    })
   },
   methods: {
     onFileSelected (e) {
@@ -105,23 +111,7 @@ export default {
           })
           .catch(error => { this.errors = error.response.data.errors })
       } else {
-        webServices.post('/customers/add', this.form, {
-          headers: {
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line quote-props
-            'Authorization': User.ApiToken()
-          }
-        })
-          .then(res => {
-            this.$notify({
-              type: 'success',
-              layout: 'topLeft',
-              text: this.$t('created'),
-              timeout: 1500
-            })
-            this.$router.go({ name: 'customer.add' })
-          })
-          .catch(error => { this.errors = error.response.data.errors })
+        this.$store.dispatch(SET_CUSTOMER, this.form)
       }
     }
   }

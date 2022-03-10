@@ -99,7 +99,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
+               <custompagination :totalpage="products.last_page" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
             </div>
          </div>
       </div>
@@ -108,51 +108,33 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { RESTORE_PRODUCT, GET_PRODUCTS_TRASH } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'BootstrapTable',
   data () {
     return {
-      products: {},
-      totalpage: 10,
       perpage: 15
     }
+  },
+  computed: {
+    ...mapGetters({
+      products: 'productsTrash'
+    })
   },
   created () {
     this.getProducts()
   },
   methods: {
     restore (id) {
-      webServices.get('/products/restore/' + id, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      }).then(() => {
-        this.$notify({
-          type: 'success',
-          layout: 'topLeft',
-          text: this.$t('restored'),
-          timeout: 1500
-        })
-        this.getProducts()
-      })
+      this.$store.dispatch(RESTORE_PRODUCT, id)
     },
     getProducts (page = 1) {
-      webServices.get('/products/deleted?page=' + page, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_PRODUCTS_TRASH, {
+        page: page,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.products = res.data
-          this.totalpage = res.data.last_page
-        })
     }
   }
 }

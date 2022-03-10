@@ -23,10 +23,10 @@
                         </div>
                         <div class="col-md-5 mb-2">
                            <label for="validationCustom04" class="form-label">{{$t('chargeVue.feilds.type')}} <small class="text-danger"> *</small></label>
-                           <select class="form-select" :class="`${errors.type ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.type" >
-                              <option v-for="type in chargesTypes" :value="type" :key="type.id">{{type.name}}</option>
+                           <select class="form-select" :class="`${errors.type_id ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.type_id" >
+                              <option v-for="type in chargesTypes" :value="type.id" :key="type.id">{{type.name}}</option>
                            </select>
-                           <small class="text-danger" v-if="errors.type"> {{$t('signUpVue.required')}} </small>
+                           <small class="text-danger" v-if="errors.type_id"> {{$t('signUpVue.required')}} </small>
                         </div>
                         <div class="col-lg-1 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                            <br>
@@ -81,81 +81,41 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { GET_CHARGE_TYPE, SET_CHARGE_TYPE, SET_CHARGE } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'CreateCharge',
   data () {
     return {
       form: {
         amount: null,
-        type: {},
+        type_id: null,
         description: null
       },
-      errors: {},
-      createdCompany: null,
-      chargesTypes: {}
+      createdCompany: null
     }
   },
-  created () {
+  mounted () {
     this.chargeCategory()
+  },
+  computed: {
+    ...mapGetters({
+      chargesTypes: 'getChargeTypes',
+      errors: 'chargeErrors'
+    })
   },
   methods: {
     createCharge () {
-      webServices.post('/charges/add', this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          this.$router.go({ name: 'charge.add' })
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+      this.$store.dispatch(SET_CHARGE, this.form)
     },
     CreateCategory () {
-      webServices.post('/charges/types/store', { name: this.createdCompany }, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.chargeCategory()
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          document.querySelector('#Company-category').value = null
-          document.querySelector('#Company-category-errors').value = null
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+      this.$store.dispatch(SET_CHARGE_TYPE, { name: this.createdCompany })
+      document.querySelector('#Company-category').value = null
+      // document.querySelector('#Company-category-errors').value = null
     },
-    chargeCategory () {
-      webServices.get('/charges/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.chargesTypes = res.data.data
-        })
-        .catch(error => { this.errors = error.response.data.errors })
-    }
+    ...mapActions({
+      chargeCategory: GET_CHARGE_TYPE
+    })
   }
 }
 

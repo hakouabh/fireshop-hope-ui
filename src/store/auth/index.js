@@ -7,10 +7,10 @@ import { notify } from '@kyvg/vue3-notification'
 const { t } = i18n.global
 
 const state = {
-
+  errors: {}
 }
 const getters = {
-
+  authErrors: state => { return state.errors }
 }
 const actions = {
   [SIGN_IN] (context, payload) {
@@ -55,6 +55,7 @@ const mutations = {
     router.push({ name: 'default.counter' })
   },
   [SIGN_IN_FAILED] (state, error) {
+    state.errors = error.response.data.errors
     if (error.response.status === 401) {
       notify({
         type: 'error',
@@ -63,12 +64,10 @@ const mutations = {
         timeout: 1500
 
       })
-    } else if (error.response.status === 422) {
-      // this.errors = error.response.data.errors
     }
   },
   [SIGN_UP_FAILED] (state, error) {
-    // this.errors = error.response.data.errors
+    state.errors = error.response.data.errors
   }
 }
 export default {

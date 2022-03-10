@@ -47,7 +47,7 @@
                            </div>
                            <div class="col-lg-6">
                               <div class="form-group">
-                                 <input type="text" class="form-control" id="last-name" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
+                                 <input type="email" class="form-control" id="last-name" v-model="form.email" :placeholder="$t('signUpVue.placeholder.email') ">
                                  <small class="text-danger" id="Company-category-errors" v-if="errors.email"> {{ errors.email[0] }} </small>
                               </div>
                            </div>
@@ -74,6 +74,10 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
+
+import { SET_USER } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'UserAdd',
   data () {
@@ -86,9 +90,13 @@ export default {
         image: null,
         password: null,
         password_confirmation: null
-      },
-      errors: {}
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      errors: 'userErrors'
+    })
   },
   methods: {
     AddImage () {
@@ -111,37 +119,12 @@ export default {
     AddUser () {
       const formData = new FormData()
       formData.append('role', this.form.role)
-      formData.append('name', this.form.name)
-      formData.append('email', this.form.email)
       formData.append('image', this.form.image)
-      formData.append('password', this.form.password)
-      formData.append('password_confirmation', this.form.password_confirmation)
-
-      webServices.post('/auth/addUser', formData, {
-        headers: {
-          'content-type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          this.$router.push({ name: 'user.UserList' })
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-          this.$notify({
-            type: 'error',
-            layout: 'topLeft',
-            text: 'error',
-            timeout: 1500
-          })
-        })
+      this.form.name ? formData.append('name', this.form.name) : false
+      this.form.email ? formData.append('email', this.form.email) : false
+      this.form.password ? formData.append('password', this.form.password) : false
+      this.form.password_confirmation ? formData.append('password_confirmation', this.form.password_confirmation) : false
+      this.$store.dispatch(SET_USER, formData)
     }
   }
 }

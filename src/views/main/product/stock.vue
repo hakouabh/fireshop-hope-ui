@@ -138,6 +138,8 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { GET_PRODUCTS, SET_STOCK } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'createStock',
   data () {
@@ -150,8 +152,6 @@ export default {
         is_defect: false,
         update_price: false
       },
-      products: {},
-      errors: {},
       formProduct: {
         name: null,
         type: null,
@@ -163,56 +163,33 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters({
+      errors: 'stockErrors',
+      products: 'products'
+    })
+  },
   created () {
-    this.getProduct()
+    this.$store.dispatch(GET_PRODUCTS, {
+      page: 1,
+      filter: null,
+      perpage: 10
+    })
   },
   methods: {
     selectProduct (product) {
       this.form.product = product
       this.addProduct()
     },
-    getProduct (page = 1) {
-      webServices.get('/products/', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: 10
-        }
-      })
-        .then(res => {
-          this.products = res.data.data
-        })
-    },
     CreateStock () {
-      webServices.post('/products/stock', this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.$router.go({ name: 'product.stock' })
-        })
-        .catch(error => { this.errors = error.response.data.errors })
+      this.$store.dispatch(SET_STOCK, this.form)
     },
     findProduct () {
-      webServices.get('/products/', {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.formProduct
-        }
+      this.$store.dispatch(GET_PRODUCTS, {
+        page: 1,
+        filter: this.formProduct,
+        perpage: 10
       })
-        .then(res => {
-          this.products = res.data.data
-        })
     }
   }
 }

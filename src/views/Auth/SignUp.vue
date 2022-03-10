@@ -32,7 +32,7 @@
                                  <div class="col-lg-6">
                                     <div class="form-group">
                                        <input type="text" class="form-control" id="company-name" v-model="form.company.name" :placeholder="$t('signUpVue.placeholder.company_name') ">
-                                       <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{ errors.company[0] }} </small>
+                                       <small class="text-danger" id="Company-category-errors" v-if="`company.name` in errors"> {{$t('signUpVue.required')}} </small>
                                     </div>
                                  </div>
                                  <div class="col-lg-6">
@@ -64,7 +64,7 @@
                                        <option selected disabled >{{$t('signUpVue.placeholder.company_category')}}</option>
                                        <option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
                                        </select>
-                                       <small class="text-danger" id="Company-category-errors" v-if="errors.company"> {{$t('signUpVue.required')}}</small>
+                                       <small class="text-danger" id="Company-category-errors" v-if="`company.type_id` in errors"> {{$t('signUpVue.required')}}</small>
                                     </div>
                                  </div>
                                  <div class="col-lg-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
@@ -98,7 +98,7 @@
                </div>
                <modal mainClass="fade" :tabindex="-1" id="exampleModal1" ariaLabelled="exampleModalLabel" :ariaHidden="true" style="display: none;">
                   <model-header :dismissable="true">
-                     <h5 class="modal-title" id="exampleModalLabel">Create new Category</h5>
+                     <h5 class="modal-title" id="exampleModalLabel">{{$t('signUpVue.placeholder.company_category')}}</h5>
                   </model-header>
                   <model-body>
                      <form>
@@ -149,13 +149,13 @@ export default {
           type_id: null
         }
       },
-      companyName: null,
-      errors: {}
+      companyName: null
     }
   },
   computed: {
     ...mapGetters({
-      categories: 'getCompanyTypes'
+      categories: 'getCompanyTypes',
+      errors: 'authErrors'
     })
   },
   created () {
@@ -168,8 +168,8 @@ export default {
     CreateCategory () {
       this.$store.dispatch(SET_COMPANY_TYPE, { name: this.companyName })
       document.getElementById('close').click()
-      // document.querySelector('#Company-category').value = ''
-      // document.querySelector('#Company-category-errors').value = ''
+      document.querySelector('#Company-category').value = ''
+      document.querySelector('#Company-category-errors').value = ''
     },
     signUp () {
       this.$store.dispatch(SIGN_UP, this.form)

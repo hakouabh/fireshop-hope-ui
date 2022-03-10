@@ -91,7 +91,7 @@
    <form>
       <div class="col-lg-12">
          <div class="form-group">
-            <input type="text" class="form-control" id="Company-category" v-model="createdCompany" :placeholder="$t('productVue.feilds.category')">
+            <input type="text" class="form-control" id="Company-category" v-model="products_type" :placeholder="$t('productVue.feilds.category')">
             <small class="text-danger" id="Company-category-errors" v-if="errors.name"> {{ errors.name[0] }} </small>
          </div>
       </div>
@@ -105,6 +105,8 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { GET_PRODUCT_TYPE, SET_PRODUCT_TYPE, SET_PRODUCT } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'createProduct',
   data () {
@@ -119,40 +121,28 @@ export default {
         selling_price: null,
         description: null
       },
-      errors: {},
-      productsTypes: {},
-      createdCompany: null
+      products_type: null
     }
   },
-  created () {
-    this.productCategory()
+  computed: {
+    ...mapGetters({
+      errors: 'productErrors',
+      productsTypes: 'getProductTypes'
+    })
+  },
+  mounted () {
+    this.ProductTypes()
   },
   methods: {
+    ...mapActions({
+      ProductTypes: GET_PRODUCT_TYPE
+    }),
     onFileSelected (e) {
       this.import_file = e.target.files[0]
     },
     CreateCategory () {
-      webServices.post('/products/types/store', { name: this.createdCompany }, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.productCategory()
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          document.querySelector('#Company-category').value = null
-          document.querySelector('#Company-category-errors').value = null
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+      this.$store.dispatch(SET_PRODUCT_TYPE, { name: this.products_type })
+      document.querySelector('#Company-category').value = null
     },
     CreateProduct () {
       if (this.import_file) {
@@ -178,39 +168,8 @@ export default {
             this.errors = error.response.data.errors
           })
       } else {
-        webServices.post('/products/add', this.form, {
-          headers: {
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line quote-props
-            'Authorization': User.ApiToken()
-          }
-        })
-          .then(() => {
-            this.$notify({
-              type: 'success',
-              layout: 'topLeft',
-              text: this.$t('created'),
-              timeout: 1500
-            })
-            this.$router.go({ name: 'product.add' })
-          })
-          .catch(error => {
-            this.errors = error.response.data.errors
-          })
+        this.$store.dispatch(SET_PRODUCT, this.form)
       }
-    },
-    productCategory () {
-      webServices.get('/products/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.productsTypes = res.data.data
-        })
-        .catch(error => { this.errors = error.response.data.errors })
     }
   }
 }

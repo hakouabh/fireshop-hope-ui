@@ -74,6 +74,7 @@
 <script>
 /* eslint-disable no-undef */
 import { SIGN_IN } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'SignIn',
   data () {
@@ -81,14 +82,18 @@ export default {
       form: {
         email: '',
         password: ''
-      },
-      errors: {}
+      }
     }
   },
   methods: {
     signIn () {
       this.$store.dispatch(SIGN_IN, this.form)
     }
+  },
+  computed: {
+    ...mapGetters({
+      errors: 'authErrors'
+    })
   }
 }
 </script>

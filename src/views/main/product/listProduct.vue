@@ -115,7 +115,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
+               <custompagination :totalpage="products.last_page" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
             </div>
          </div>
       </div>
@@ -125,16 +125,21 @@
 <script>
 /* eslint-disable no-undef */
 import { Solidicons } from '@/icondata/iconsolid.js'
+import { GET_PRODUCTS } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'BootstrapTable',
   data () {
     return {
       createicon: Solidicons[74].svgicons,
       searchicon: Solidicons[77].svgicons,
-      products: {},
-      totalpage: 10,
       perpage: 15
     }
+  },
+  computed: {
+    ...mapGetters({
+      products: 'products'
+    })
   },
   created () {
     this.getProducts()
@@ -144,20 +149,11 @@ export default {
       this.$router.push({ name: 'product.edit', params: { id: id } })
     },
     getProducts (page = 1) {
-      webServices.get('/products?page=' + page, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_PRODUCTS, {
+        page: page,
+        filter: null,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.products = res.data.data
-          this.totalpage = res.data.data.last_page
-        })
     }
   }
 }

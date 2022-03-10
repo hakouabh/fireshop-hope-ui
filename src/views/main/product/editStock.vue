@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-2">
                            <label for="validationCustom04" class="form-label">{{$t('editStockVue.feilds.product')}} <small class="text-danger"> *</small></label>
-                           <input type="text" disabled class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.product_name" >
+                           <input type="text" disabled v-if="form.product" class="form-control" :class="`${errors.stock ? 'is-invalid' : ''}`" id="validationCustom03" v-model="form.product.name" >
                         </div>
                         <div></div>
                         <div class="col-md-4 mb-2">
@@ -63,23 +63,19 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { EDIT_STOCK, INDEX_STOCK, DELETE_STOCK } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'editStock',
-  data () {
-    return {
-      form: {
-        id: this.$route.params.id,
-        product_id: this.$route.params.product_id,
-        product_name: null,
-        quantity: null,
-        cost: null,
-        selling_price: null
-      },
-      errors: {}
-    }
+  computed: {
+    ...mapGetters({
+      form: 'stock',
+      errors: 'stockErrors'
+    })
   },
   created () {
-    this.findStock()
+    this.$store.dispatch(INDEX_STOCK, this.$route.params.id)
   },
   methods: {
     DeleteStock () {
@@ -93,51 +89,18 @@ export default {
         confirmButtonText: this.$t('swal.yes')
       }).then((result) => {
         if (result.isConfirmed) {
-          webServices.delete(`/products/${this.$route.params.id}/delete/stock`, {
-            headers: {
-              'Content-Type': 'application/json',
-              // eslint-disable-next-line quote-props
-              'Authorization': User.ApiToken()
-            }
+          this.$store.dispatch(DELETE_STOCK, {
+            id: this.$route.params.id,
+            product_id: this.form.product_id
           })
-            .then(() => {
-              Swal.fire(
-                this.$t('swal.deleted'),
-                this.$t('swal.deleted-success'),
-                'success'
-              )
-              this.$router.push({ name: 'product.edit', params: { id: this.form.product_id } })
-            })
         }
       })
     },
     EditStock () {
-      webServices.post('/products/stock/update', this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
+      this.$store.dispatch(EDIT_STOCK, {
+        id: this.form.product_id,
+        form: this.form
       })
-        .then(res => {
-          this.$router.go({ name: 'product.edit', params: { id: this.form.product_id } })
-        })
-        .catch(error => { this.errors = error.response.data.errors })
-    },
-    findStock () {
-      webServices.get('/products/stock/find/' + this.form.id, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.form.product_name = res.data.product.name
-          this.form.quantity = res.data.quantity
-          this.form.cost = res.data.cost
-          this.form.selling_price = res.data.selling_price
-        })
     }
   }
 }

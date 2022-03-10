@@ -147,7 +147,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchProduct(val2)}" @Paginate="searchProduct"/>
+               <custompagination :totalpage="products.last_page" @PerPage="(val,val2)=>{perpage=val; searchProduct(val2)}" @Paginate="searchProduct"/>
             </div>
          </div>
       </div>
@@ -157,11 +157,12 @@
 
 <script>
 /* eslint-disable no-undef */
+import { mapGetters, mapActions } from 'vuex'
+import { GET_PRODUCTS, GET_PRODUCT_TYPE } from '@/store/mutation-types'
 export default {
   name: 'searchProduct',
   data () {
     return {
-      totalpage: 0,
       perpage: 15,
       form: {
         name: null,
@@ -171,17 +172,24 @@ export default {
           to: null
         },
         sku: null
-      },
-      productsTypes: {},
-      errors: {},
-      products: {}
+      }
     }
   },
   created () {
     this.productCategory()
     this.searchProduct()
   },
+  computed: {
+    ...mapGetters({
+      products: 'products',
+      productsTypes: 'getProductTypes',
+      errors: 'productErrors'
+    })
+  },
   methods: {
+    ...mapActions({
+      productCategory: GET_PRODUCT_TYPE
+    }),
     exportExcel () {
       webServices.get('/products/export',
         {
@@ -208,37 +216,12 @@ export default {
       this.$router.push({ name: 'product.edit', params: { id: id } })
     },
     searchProduct (page = 1) {
-      webServices.get('/products?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_PRODUCTS, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.products = res.data.data
-          this.totalpage = res.data.data.last_page
-        })
-    },
-    productCategory () {
-      webServices.get('/products/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.productsTypes = res.data.data
-        })
-        .catch()
     }
-
   }
-
 }
 </script>

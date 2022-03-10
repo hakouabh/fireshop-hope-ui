@@ -74,7 +74,7 @@
                         </tr>
                      </tbody>
                   </table>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getCharges(val2)}" @Paginate="getCharges"/>
+               <custompagination :totalpage="charges.last_page" @PerPage="(val,val2)=>{perpage=val; getCharges(val2)}" @Paginate="getCharges"/>
                </div>
             </div>
          </div>
@@ -85,16 +85,21 @@
 <script>
 /* eslint-disable no-undef */
 import { Solidicons } from '@/icondata/iconsolid.js'
+import { mapGetters } from 'vuex'
+import { GET_CHARGES } from '@/store/mutation-types'
 export default {
   name: 'BootstrapTable',
   data () {
     return {
-      totalpage: 0,
       perpage: 15,
       createicon: Solidicons[74].svgicons,
-      searchicon: Solidicons[77].svgicons,
-      charges: {}
+      searchicon: Solidicons[77].svgicons
     }
+  },
+  computed: {
+    ...mapGetters({
+      charges: 'charges'
+    })
   },
   created () {
     this.getCharges()
@@ -104,20 +109,11 @@ export default {
       this.$router.push({ name: 'charge.edit', params: { id: id } })
     },
     getCharges (page = 1) {
-      webServices.get('/charges?page=' + page, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_CHARGES, {
+        page: page,
+        filter: null,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.charges = res.data.data.charges
-          this.totalpage = res.data.data.charges.last_page
-        })
     }
   }
 }

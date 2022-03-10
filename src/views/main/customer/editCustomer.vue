@@ -74,7 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="operation in operations" :key="operation.id" @click="viewOperation(operation.id)">
+                                <tr v-for="operation in form.operations" :key="operation.id" @click="viewOperation(operation.id)">
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <h6> {{form.full_name}} </h6>
@@ -112,58 +112,28 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { INDEX_CUSTOMER, EDIT_CUSTOMER } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   name: 'createCustomer',
-  data () {
-    return {
-      form: {
-        email: null,
-        phone: null,
-        address: null,
-        full_name: null,
-        company_name: null,
-        city: null
-      },
-      operations: {},
-      errors: {}
-    }
+  computed: {
+    ...mapGetters({
+      form: 'customer',
+      errors: 'customerErrors'
+    })
   },
   created () {
-    const id = this.$route.params.id
-    webServices.get('customers/' + id, {
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line quote-props
-        'Authorization': User.ApiToken()
-      }
-    })
-      .then(res => {
-        this.form = res.data.data
-        this.operations = res.data.data.operations
-      })
+    this.$store.dispatch(INDEX_CUSTOMER, this.$route.params.id)
   },
   methods: {
     viewOperation (id) {
       this.$router.push({ name: 'operations.view', params: { id: id } })
     },
     EditCustomer () {
-      webServices.put(`/customers/${this.$route.params.id}/update`, this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
+      this.$store.dispatch(EDIT_CUSTOMER, {
+        id: this.$route.params.id,
+        form: this.form
       })
-        .then(res => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          this.$router.go({ name: 'customer.edit', params: { id: this.$route.params.id } })
-        })
-        .catch(error => { this.errors = error.response.data.errors })
     }
   }
 }

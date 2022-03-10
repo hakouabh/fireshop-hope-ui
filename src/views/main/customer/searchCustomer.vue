@@ -115,7 +115,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchCustomer(val2)}" @Paginate="searchCustomer"/>
+               <custompagination :totalpage="customers.last_page" @PerPage="(val,val2)=>{perpage=val; searchCustomer(val2)}" @Paginate="searchCustomer"/>
             </div>
          </div>
       </div>
@@ -125,11 +125,12 @@
 
 <script>
 /* eslint-disable no-undef */
+import { mapGetters } from 'vuex'
+import { GET_CUSTOMERS } from '@/store/mutation-types'
 export default {
   name: 'searchCustomer',
   data () {
     return {
-      totalpage: 0,
       perpage: 15,
       form: {
         name: null,
@@ -140,13 +141,17 @@ export default {
           from: null,
           to: null
         }
-      },
-      errors: {},
-      customers: {}
+      }
     }
   },
   created () {
     this.searchCustomer()
+  },
+  computed: {
+    ...mapGetters({
+      customers: 'customers',
+      errors: 'customerErrors'
+    })
   },
   methods: {
     exportExcel () {
@@ -175,21 +180,11 @@ export default {
       this.$router.push({ name: 'customer.edit', params: { id: id } })
     },
     searchCustomer (page = 1) {
-      webServices.get('/customers?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_CUSTOMERS, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.customers = res.data.data
-          this.totalpage = res.data.data.last_page
-        })
     }
   }
 

@@ -86,7 +86,7 @@
                         </tr>
                      </tbody>
                   </table>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getCustomers(val2)}" @Paginate="getCustomers"/>
+               <custompagination :totalpage="customers.last_page" @PerPage="(val,val2)=>{perpage=val; getCustomers(val2)}" @Paginate="getCustomers"/>
                </div>
             </div>
          </div>
@@ -97,16 +97,21 @@
 <script>
 /* eslint-disable no-undef */
 import { Solidicons } from '@/icondata/iconsolid.js'
+import { mapGetters } from 'vuex'
+import { GET_CUSTOMERS } from '@/store/mutation-types'
 export default {
   name: 'ClientTable',
   data () {
     return {
-      totalpage: 0,
       perpage: 15,
       createicon: Solidicons[74].svgicons,
-      searchicon: Solidicons[77].svgicons,
-      customers: {}
+      searchicon: Solidicons[77].svgicons
     }
+  },
+  computed: {
+    ...mapGetters({
+      customers: 'customers'
+    })
   },
   created () {
     this.getCustomers()
@@ -116,20 +121,11 @@ export default {
       this.$router.push({ name: 'customer.edit', params: { id: id } })
     },
     getCustomers (page = 1) {
-      webServices.get('/customers?page=' + page, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_CUSTOMERS, {
+        page: page,
+        filter: null,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.customers = res.data.data
-          this.totalpage = res.data.data.last_page
-        })
     }
   }
 }

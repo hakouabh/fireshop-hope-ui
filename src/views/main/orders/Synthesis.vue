@@ -64,7 +64,7 @@
                      </div>
                      <div class="text-end">
                         {{$t('SynthesisVue.box')}}
-                          <h5> <Vue3autocounter  ref='counter' :startAmount='0' :endAmount="(stats.box)"/> {{$t('currency1')}}</h5>
+                          <h5> <Vue3autocounter  ref='counter' :startAmount='0' :endAmount="(inbox)"/> {{$t('currency1')}}</h5>
                      </div>
                   </div>
                </div>
@@ -145,7 +145,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                      <custompagination :totalpage="totalpage1" @PerPage="(val,val2)=>{perpage1=val; searchOperations(val2)}" @Paginate="searchOperations"/>
+                      <custompagination :totalpage="operations.last_page" @PerPage="(val,val2)=>{perpage1=val; searchOperations(val2)}" @Paginate="searchOperations"/>
                     </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <custompagination :totalpage="totalcharges" @Paginate="searchCharge"/>
+                    <custompagination :totalpage="charges.last_page" @Paginate="searchCharge"/>
                     </div>
                 </div>
             </div>
@@ -192,6 +192,8 @@
 
 <script>
 /* eslint-disable no-undef */
+import { GET_USERS, GET_OPERATIONS, GET_CHARGES } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 import Vue3autocounter from 'vue3-autocounter'
 export default {
   name: 'Synthesis',
@@ -202,18 +204,7 @@ export default {
     return {
       perpagecharge: 5,
       perpage1: 15,
-      totalcharges: 0,
-      totalpage1: 0,
-      stats: {
-        total: 0,
-        discount: 0,
-        benefit: 0,
-        box: 0,
-        totalCharge: 0
-      },
-      charges: {},
       errors: {},
-      operations: {},
       form: {
         type: null,
         customer: null,
@@ -223,8 +214,7 @@ export default {
           to: null
         },
         user: null
-      },
-      users: {}
+      }
     }
   },
   created () {
@@ -233,24 +223,24 @@ export default {
     this.form.date_range.from = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     this.form.date_range.to = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     this.searchOperations()
+    this.searchCharge()
+  },
+  computed: {
+    ...mapGetters({
+      users: 'users',
+      operations: 'operations',
+      charges: 'charges',
+      stats: 'stats',
+      total_charges: 'total_charges'
+    }),
+    inbox () {
+      return this.stats.total - this.total_charges
+    }
   },
   methods: {
-    getUsers () {
-      webServices.get('/auth/users', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.users = res.data
-        }).catch(error => {
-          if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.pricing' })
-          }
-        })
-    },
+    ...mapActions({
+      getUsers: GET_USERS
+    }),
     refresh () {
       this.searchOperations()
     },
@@ -258,47 +248,18 @@ export default {
       this.$router.push({ name: 'operations.view', params: { id: id } })
     },
     searchOperations (page = 1) {
-      webServices.get('/operations?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpage1
-        }
+      this.$store.dispatch(GET_OPERATIONS, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpage1
       })
-        .then(res => {
-          this.stats = res.data.data.stats
-          this.operations = res.data.data.operations
-          this.totalpage1 = res.data.data.operations.last_page
-          this.searchCharge()
-        })
-        .catch(error => {
-          if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.pricing' })
-          }
-        })
     },
     searchCharge (page = 1) {
-      webServices.get('/charges?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpagecharge
-        }
+      this.$store.dispatch(GET_CHARGES, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpagecharge
       })
-        .then(res => {
-          this.charges = res.data.data.charges
-          this.stats.totalCharge = res.data.data.total_charge
-          this.stats.box = this.stats.total - this.stats.totalCharge + 1
-          this.totalcharges = res.data.data.charges.last_page
-        })
     }
   }
 }

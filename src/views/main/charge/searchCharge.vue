@@ -95,7 +95,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchCharge(val2)}" @Paginate="searchCharge"/>
+               <custompagination :totalpage="charges.last_page" @PerPage="(val,val2)=>{perpage=val; searchCharge(val2)}" @Paginate="searchCharge"/>
             </div>
          </div>
       </div>
@@ -105,11 +105,12 @@
 
 <script>
 /* eslint-disable no-undef */
+import { mapGetters, mapActions } from 'vuex'
+import { GET_CHARGES, GET_CHARGE_TYPE } from '@/store/mutation-types'
 export default {
   name: 'searchCharges',
   data () {
     return {
-      totalpage: 0,
       perpage: 15,
       form: {
         user: null,
@@ -118,15 +119,19 @@ export default {
           from: null,
           to: null
         }
-      },
-      chargesTypes: {},
-      errors: {},
-      charges: {}
+      }
     }
   },
   created () {
     this.chargeCategory()
     this.searchCharge()
+  },
+  computed: {
+    ...mapGetters({
+      charges: 'charges',
+      chargesTypes: 'getChargeTypes',
+      errors: 'chargeErrors'
+    })
   },
   methods: {
     exportExcel () {
@@ -155,36 +160,15 @@ export default {
       this.$router.push({ name: 'charge.edit', params: { id: id } })
     },
     searchCharge (page = 1) {
-      webServices.get('/charges?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_CHARGES, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.charges = res.data.data.charges
-          this.totalpage = res.data.data.charges.last_page
-        })
     },
-    chargeCategory () {
-      webServices.get('/charges/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.chargesTypes = res.data.data
-        })
-        .catch()
-    }
-
+    ...mapActions({
+      chargeCategory: GET_CHARGE_TYPE
+    })
   }
 
 }

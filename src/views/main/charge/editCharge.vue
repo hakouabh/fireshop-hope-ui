@@ -14,7 +14,7 @@
                      </div>
                   </div>
                   <div class="card-body">
-                    <form @submit.prevent="EditProduct" enctype="multipart/form-data">
+                    <form @submit.prevent="EditCharge" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-6 mb-2">
                            <label for="charge01" class="form-label">{{$t('chargeVue.feilds.amount')}} <small class="text-danger"> *</small></label>
@@ -67,7 +67,7 @@
    <form>
       <div class="col-lg-12">
          <div class="form-group">
-            <input type="text" class="form-control" id="Company-category" v-model="createdCompany" :placeholder="$t('chargeVue.feilds.type')">
+            <input type="text" class="form-control" id="Company-category" v-model="charge_type_id" :placeholder="$t('chargeVue.feilds.type')">
             <small class="text-danger" id="Company-category-errors" v-if="errors.name"> {{ errors.name[0] }} </small>
          </div>
       </div>
@@ -81,90 +81,41 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { GET_CHARGE_TYPE, SET_CHARGE_TYPE, INDEX_CHARGE, EDIT_CHARGE } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'CreateCharge',
+  name: 'EditCharge',
   data () {
     return {
-      form: {
-        amount: null,
-        type: {},
-        description: null
-      },
-      errors: {},
-      createdCompany: null,
-      chargesTypes: {}
+      charge_type_id: null
     }
+  },
+  computed: {
+    ...mapGetters({
+      chargesTypes: 'getChargeTypes',
+      errors: 'chargeErrors',
+      form: 'charge'
+    })
   },
   created () {
     this.chargeCategory()
-    const id = this.$route.params.id
-    webServices.get('charges/' + id, {
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line quote-props
-        'Authorization': User.ApiToken()
-      }
-    })
-      .then(res => {
-        this.form = res.data.data
-      })
+    this.$store.dispatch(INDEX_CHARGE, this.$route.params.id)
   },
   methods: {
-    EditProduct () {
-      webServices.put(`/charges/${this.$route.params.id}/update`, this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
+    EditCharge () {
+      this.$store.dispatch(EDIT_CHARGE, {
+        id: this.$route.params.id,
+        form: this.form
       })
-        .then(res => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          this.$router.go({ name: 'charge.edit', params: { id: this.$route.params.id } })
-        })
-        .catch(error => { this.errors = error.response.data.errors })
     },
     CreateCategory () {
-      webServices.post('/charges/types/store', { name: this.createdCompany }, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.chargeCategory()
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          document.querySelector('#Company-category').value = null
-          document.querySelector('#Company-category-errors').value = null
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors
-        })
+      this.$store.dispatch(SET_CHARGE_TYPE, { name: this.charge_type_id })
+      document.querySelector('#Company-category').value = null
+      // document.querySelector('#Company-category-errors').value = null
     },
-    chargeCategory () {
-      webServices.get('/charges/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.chargesTypes = res.data.data
-        })
-        .catch(error => { this.errors = error.response.data.errors })
-    }
+    ...mapActions({
+      chargeCategory: GET_CHARGE_TYPE
+    })
   }
 }
 

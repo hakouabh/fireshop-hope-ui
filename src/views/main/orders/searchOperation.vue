@@ -79,7 +79,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="operation in operations.data" :key="operation.id" @click="viewOperation(operation.id)">
+                        <tr v-for="operation in operations" :key="operation.id" @click="viewOperation(operation.id)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6 v-if="operation.customer"> {{operation.customer.full_name}} </h6>
@@ -110,7 +110,7 @@
                      </tbody>
                   </table>
                </div>
-               <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; searchOperations(val2)}" @Paginate="searchOperations"/>
+               <custompagination :totalpage="operations.last_page" @PerPage="(val,val2)=>{perpage=val; searchOperations(val2)}" @Paginate="searchOperations"/>
             </div>
          </div>
       </div>
@@ -120,12 +120,13 @@
 
 <script>
 /* eslint-disable no-undef */
+import { mapGetters, mapActions } from 'vuex'
+import { GET_USERS, GET_OPERATIONS } from '@/store/mutation-types'
 export default {
   name: 'searchOperation',
   data () {
     return {
       perpage: 15,
-      totalpage: 0,
       form: {
         customer: null,
         phone: null,
@@ -135,28 +136,23 @@ export default {
         },
         user: null
       },
-      users: {},
-      errors: {},
-      operations: {}
+      errors: {}
     }
   },
-  created () {
+  mounted () {
     this.getUsers()
     this.searchOperations()
   },
+  computed: {
+    ...mapGetters({
+      users: 'users',
+      operations: 'operations'
+    })
+  },
   methods: {
-    getUsers () {
-      webServices.get('/auth/users', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.users = res.data
-        })
-    },
+    ...mapActions({
+      getUsers: GET_USERS
+    }),
     exportExcel () {
       webServices.get('/operations/export',
         {
@@ -187,26 +183,11 @@ export default {
       this.$router.push({ name: 'operations.view', params: { id: id } })
     },
     searchOperations (page = 1) {
-      webServices.get('/operations?page=' + page, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.form,
-          perpage: this.perpage
-        }
+      this.$store.dispatch(GET_OPERATIONS, {
+        page: page,
+        filter: this.form,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.operations = res.data.data.operations
-          this.totalpage = res.data.data.operations.last_page
-        })
-        .catch(error => {
-          if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.pricing' })
-          }
-        })
     }
   }
 

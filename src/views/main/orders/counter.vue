@@ -153,7 +153,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products" :key="product.id" data-bs-dismiss="modal" @click="selectProduct(product.id)">
+                        <tr v-for="product in products.data" :key="product.id" data-bs-dismiss="modal" @click="selectProduct(product.id)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{product.name}} </h6>
@@ -211,7 +211,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="customer in customers" :key="customer.id" data-bs-dismiss="modal" @click="selectClient(customer)">
+                        <tr v-for="customer in customers.data" :key="customer.id" data-bs-dismiss="modal" @click="selectClient(customer)">
                            <td>
                               <div class="d-flex align-items-center">
                                  <h6> {{customer.full_name}} </h6>
@@ -293,8 +293,14 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import {
+  GET_CUSTOMERS, DISCOUNT, VALIDATE_OPERATION,
+  SET_QUANTITY, GET_ORDERS, DELETE_ORDERS, GET_PRODUCTS,
+  REMOVE_ITEM, RETURN_ITEM, ADD_ITEM
+} from '@/store/mutation-types'
 import SubHeader from './SubHeader'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Counter',
   components: {
@@ -302,7 +308,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      stateNavbarStyle: 'subnavbarstyle'
+      stateNavbarStyle: 'subnavbarstyle',
+      orders: 'orders',
+      products: 'products',
+      customers: 'customers'
     })
   },
   data () {
@@ -322,16 +331,10 @@ export default {
       customer: null,
       errors: false,
       success: false,
-      orders: {},
-      products: {},
-      customers: {},
       formProduct: {
         name: null,
         type: null,
-        date_range: {
-          from: null,
-          to: null
-        },
+        date_range: null,
         sku: null
       },
       formCustomer: {
@@ -339,10 +342,7 @@ export default {
         company: null,
         email: null,
         phone: null,
-        date_range: {
-          from: null,
-          to: null
-        }
+        date_range: null
       }
     }
   },
@@ -377,61 +377,23 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getOrders: GET_ORDERS,
+      DeleteAll: DELETE_ORDERS
+    }),
     updateQuantity (id, update) {
-      webServices.get('/ordersV2/quantity', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          order_id: id,
-          update: update
-        }
+      this.$store.dispatch(SET_QUANTITY, {
+        order_id: id,
+        update: update
       })
-        .then(() => {
-          this.getOrders()
-        })
-    },
-    DeleteAll () {
-      webServices.get('/ordersV2/deleteAll', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.getOrders()
-        })
-        .catch()
     },
     validateOperation () {
       if (this.payement >= this.total) {
-        webServices.get('/operations/validateOperation', {
-          headers: {
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line quote-props
-            'Authorization': User.ApiToken()
-          },
-          params: {
-            customer: this.customer,
-            payement: this.payement,
-            type: this.type
-          }
+        this.$store.dispatch(VALIDATE_OPERATION, {
+          customer: this.customer,
+          payement: this.payement,
+          type: this.type
         })
-          .then(() => {
-            this.total = 0
-            this.oldtotal = 0
-            this.$notify({
-              type: 'success',
-              layout: 'topLeft',
-              text: this.$t('validate_operation'),
-              timeout: 1500
-            })
-            this.$router.go({ name: 'default.counter' })
-          })
-          .catch()
       } else {
         this.$notify({
           type: 'error',
@@ -443,55 +405,28 @@ export default {
     },
     Discount () {
       if (this.discount > 0) {
-        webServices.post('/ordersV2/discount', {
-          discount: this.discount,
-          order_id: this.order_id
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line quote-props
-            'Authorization': User.ApiToken()
-          }
-        })
-          .then(() => {
-            this.getOrders()
-            this.discount = null
-            document.getElementById('closeDiscount').click()
+        this.$store.dispatch(DISCOUNT,
+          {
+            discount: this.discount,
+            order_id: this.order_id
           })
-          .catch()
+        this.discount = null
+        document.getElementById('closeDiscount').click()
       }
     },
     findProduct () {
-      webServices.get('/products?page=1', {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.formProduct,
-          perpage: 10
-        }
+      this.$store.dispatch(GET_PRODUCTS, {
+        page: 1,
+        filter: this.formProduct,
+        perpage: 10
       })
-        .then(res => {
-          this.products = res.data.data.data
-        })
     },
     findCustomer () {
-      webServices.get('/customers?page=1', {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          filter: this.formCustomer,
-          perpage: 10
-        }
+      this.$store.dispatch(GET_CUSTOMERS, {
+        page: 1,
+        filter: this.formCustomer,
+        perpage: 10
       })
-        .then(res => {
-          this.customers = res.data.data.data
-        })
     },
     selectProduct (sku) {
       this.sku = sku
@@ -503,86 +438,15 @@ export default {
     },
     deleteProduct (id, price) {
       this.oldtotal = price
-      webServices.get('/ordersV2/delete/' + id, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.getOrders()
-        })
+      this.$store.dispatch(REMOVE_ITEM, id)
     },
     returnProduct (id) {
-      webServices.get('/ordersV2/return/' + id, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(() => {
-          this.getOrders()
-        })
-    },
-    getOrders () {
-      webServices.get('/ordersV2/get', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.orders = res.data
-          if (this.orders) {
-            this.total = this.orders.reduce((a, b) => a + b.order_detail.total_order, 0)
-          }
-        })
-        .catch(error => {
-          if (error.response.status === 495) {
-            this.$router.push({ name: 'auth.pricing' })
-          }
-        })
+      this.$store.dispatch(RETURN_ITEM, id)
     },
     addProduct () {
       if (this.sku != null) {
-        webServices.post('/ordersV2/add', { sku: this.sku }, {
-          headers: {
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line quote-props
-            'Authorization': User.ApiToken()
-          }
-        })
-          .then(res => {
-            this.getOrders()
-            this.oldtotal = res.data.selling_price
-            this.$notify({
-              type: 'success',
-              layout: 'topLeft',
-              text: this.$t('added'),
-              timeout: 1500
-            })
-            this.success = true
-            setTimeout(() => {
-              this.sku = null
-              this.success = false
-            }, 50)
-          })
-          .catch(() => {
-            this.$notify({
-              type: 'error',
-              layout: 'topLeft',
-              text: this.$t('not_found'),
-              timeout: 1500
-            })
-            this.errors = true
-            setTimeout(() => {
-              this.sku = null
-              this.errors = false
-            }, 1500)
-          })
+        this.$store.dispatch(ADD_ITEM, this.sku)
+        this.sku = null
       }
     }
   }

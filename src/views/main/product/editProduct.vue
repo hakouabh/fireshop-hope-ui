@@ -9,7 +9,7 @@
                                     <div class="fs-italic">
                                         <h1> {{form.name}}</h1>
                                         <div class="text-black-50 mb-1">
-                                            <small>{{form.type.name}}</small>
+                                            <small v-if="form.type">{{form.type.name}}</small>
                                         </div>
                                     </div>
                                     <div class="text-black-50 text-warning">
@@ -93,8 +93,8 @@
                         </div>
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom04" class="form-label">{{$t('productVue.feilds.type')}}</label>
-                           <select class="form-select" :class="`${errors.type ? 'is-invalid' : ''}`" id="validationCustom04" v-model="category_id" >
-                              <option v-for="type in productsTypes" :value="type.id" :key="type.id">{{type.name}}</option>
+                           <select class="form-select" :class="`${errors.type ? 'is-invalid' : ''}`" id="validationCustom04" v-model="form.type" >
+                              <option v-for="type in productsTypes" :value="type" :key="type.id">{{type.name}}</option>
                            </select>
                            <small class="text-danger" v-if="errors.type"> {{$t('signUpVue.required')}}</small>
                         </div>
@@ -147,13 +147,13 @@
     </div>
 <modal mainClass="fade" :tabindex="-1" id="exampleModal1" ariaLabelled="exampleModalLabel" :ariaHidden="true" style="display: none;">
 <model-header :dismissable="true">
-   <h5 class="modal-title" id="exampleModalLabel">Create new Category</h5>
+   <h5 class="modal-title" id="exampleModalLabel">{{$t('productVue.feilds.category')}}</h5>
 </model-header>
 <model-body>
    <form>
       <div class="col-lg-12">
          <div class="form-group">
-            <input type="text" class="form-control" id="Company-category" v-model="createdCompany" :placeholder="$t('productVue.feilds.category')">
+            <input type="text" class="form-control" id="Company-category" v-model="product_type_id" :placeholder="$t('productVue.feilds.category')">
             <small class="text-danger" id="Company-category-errors" v-if="errors.name"> {{ errors.name[0] }} </small>
          </div>
       </div>
@@ -170,6 +170,8 @@
 import Vue3autocounter from 'vue3-autocounter'
 import ListStock from './listStock'
 import CircleProgress from '@/components/custom/progressbar/Circleprogressbar'
+import { GET_PRODUCT_TYPE, INDEX_PRODUCT, SET_PRODUCT_TYPE, EDIT_PRODUCT, DELETE_PRODUCT, SET_PRODUCT_IMAGE } from '@/store/mutation-types'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     ListStock,
@@ -180,22 +182,7 @@ export default {
   data () {
     return {
       sold: 0,
-      form: {
-        image: '',
-        name: '',
-        sku: '',
-        type: {
-          id: ''
-        },
-        stock: '',
-        cost: '',
-        selling_price: '',
-        description: ''
-      },
-      category_id: '',
-      errors: {},
-      productsTypes: {},
-      createdCompany: ''
+      product_type_id: null
     }
   },
   computed: {
@@ -208,13 +195,25 @@ export default {
         return (this.sold * 100 / this.form.stock)
       }
       return sum
-    }
+    },
+    ...mapGetters({
+      errors: 'productErrors',
+      productsTypes: 'getProductTypes',
+      form: 'product'
+    })
   },
-  created () {
-    this.productCategory()
-    this.getProduct()
+  mounted () {
+    this.ProductTypes()
+    this.$store.dispatch(INDEX_PRODUCT, this.$route.params.id)
   },
   methods: {
+    CreateCategory () {
+      this.$store.dispatch(SET_PRODUCT_TYPE, { name: this.product_type_id })
+      document.querySelector('#Company-category').value = null
+    },
+    ...mapActions({
+      ProductTypes: GET_PRODUCT_TYPE
+    }),
     onFileSelected (e) {
       const formData = new FormData()
       formData.append('image', e.target.files[0])
@@ -225,13 +224,7 @@ export default {
         this.form.image = e.target.result
       }
       reader.readAsDataURL(e.target.files[0])
-      webServices.post('/products/storeImage', formData, {
-        headers: {
-          'content-type': 'multipart/form-data',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
+      this.$store.dispatch(SET_PRODUCT_IMAGE, formData)
     },
     AddImage () {
       document.getElementById('customFile').click()
@@ -247,71 +240,15 @@ export default {
         confirmButtonText: this.$t('swal.yes')
       }).then((result) => {
         if (result.isConfirmed) {
-          webServices.delete(`/products/${this.$route.params.id}/delete`, {
-            headers: {
-              'Content-Type': 'application/json',
-              // eslint-disable-next-line quote-props
-              'Authorization': User.ApiToken()
-            }
-          })
-            .then(() => {
-              Swal.fire(
-                this.$t('swal.deleted'),
-                this.$t('swal.deleted-success'),
-                'success'
-              )
-              this.$router.push({ name: 'product.list' })
-            })
+          this.$store.dispatch(DELETE_PRODUCT, this.$route.params.id)
         }
       })
-    },
-    getProduct () {
-      const id = this.$route.params.id
-      webServices.get('products/' + id, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          if (res.data.data.sold != null) {
-            this.sold = res.data.data.sold.amount
-          }
-          this.form = res.data.data
-          this.category_id = res.data.data.type.id
-        })
     },
     EditProduct () {
-      webServices.put(`/products/${this.$route.params.id}/update`, this.form, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
+      this.$store.dispatch(EDIT_PRODUCT, {
+        id: this.$route.params.id,
+        form: this.form
       })
-        .then(res => {
-          this.$notify({
-            type: 'success',
-            layout: 'topLeft',
-            text: this.$t('created'),
-            timeout: 1500
-          })
-          this.$router.go({ name: 'product.edit', params: { id: this.$route.params.id } })
-        })
-        .catch(error => { this.errors = error.response.data.errors })
-    },
-    productCategory () {
-      webServices.get('/products/types', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.productsTypes = res.data.data
-        })
     }
   }
 

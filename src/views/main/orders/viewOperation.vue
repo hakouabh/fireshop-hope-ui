@@ -37,7 +37,7 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr v-for="order in orders" :key="order.id">
+                                 <tr v-for="order in operation.order" :key="order.id">
                                     <td>
                                        <h6 class="mb-0">{{order.order_detail.product.name}}</h6>
                                     </td>
@@ -100,36 +100,21 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { INDEX_OPERATION } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 import Vue3autocounter from 'vue3-autocounter'
 export default {
   name: 'viewOperation',
   components: {
     Vue3autocounter
   },
-  data () {
-    return {
-      operation: {},
-      orders: {},
-      order_details: {}
-    }
+  computed: {
+    ...mapGetters({
+      operation: 'operation'
+    })
   },
-  created () {
-    this.viewOperation()
-  },
-  methods: {
-    viewOperation () {
-      webServices.get(`/operations/view/${this.$route.params.id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.operation = res.data
-          this.orders = this.operation.order
-        })
-    }
+  mounted () {
+    this.$store.dispatch(INDEX_OPERATION, this.$route.params.id)
   }
 }
 </script>

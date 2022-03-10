@@ -35,7 +35,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr v-for="product in products.data" :key="product.product_id" @click="goToedit(product.id)" >
+                        <tr v-for="product in stocks.data" :key="product.product_id" @click="goToedit(product.id)" >
                             <!-- <td v-if="!product.product.image">
                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M7.24512 14.7815L10.2383 10.8914L13.6524 13.5733L16.5815 9.79297" stroke="currentColor" stroke-width="1.5"
@@ -90,7 +90,7 @@
                         </tr>
                      </tbody>
                   </table>
-                  <custompagination :totalpage="totalpage" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
+                  <custompagination :totalpage="stocks.last_page" @PerPage="(val,val2)=>{perpage=val; getProducts(val2)}" @Paginate="getProducts"/>
                </div>
             </div>
          </div>
@@ -100,6 +100,8 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { GET_STOCKS } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 import { Solidicons } from '@/icondata/iconsolid.js'
 export default {
   name: 'ListStock',
@@ -108,12 +110,15 @@ export default {
   },
   data () {
     return {
-      totalpage: 10,
       perpage: 15,
       createicon: Solidicons[74].svgicons,
-      searchicon: Solidicons[77].svgicons,
-      products: {}
+      searchicon: Solidicons[77].svgicons
     }
+  },
+  computed: {
+    ...mapGetters({
+      stocks: 'stocks'
+    })
   },
   created () {
     this.getProducts()
@@ -123,21 +128,11 @@ export default {
       this.$router.push({ name: 'product.editStock', params: { id: id, product_id: this.product_id } })
     },
     getProducts (page = 1) {
-      webServices.get('/products/stock/get?page=' + page, {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        },
-        params: {
-          perpage: this.perpage,
-          product_id: this.product_id
-        }
+      this.$store.dispatch(GET_STOCKS, {
+        page: page,
+        product_id: this.product_id,
+        perpage: this.perpage
       })
-        .then(res => {
-          this.products = res.data
-          this.totalpage = res.data.last_page
-        })
     }
   }
 }

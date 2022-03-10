@@ -76,17 +76,22 @@
 </template>
 <script>
 /* eslint-disable no-undef */
+import { mapGetters, mapActions } from 'vuex'
+import { GET_USERS } from '@/store/mutation-types'
 export default {
   name: 'UserList',
-  data () {
-    return {
-      users: {}
-    }
-  },
-  created () {
+  mounted () {
     this.getUsers()
   },
+  computed: {
+    ...mapGetters({
+      users: 'users'
+    })
+  },
   methods: {
+    ...mapActions({
+      getUsers: GET_USERS
+    }),
     Role (role) {
       switch (role) {
         case 0:
@@ -99,18 +104,6 @@ export default {
     },
     Goto (id) {
       this.$router.push({ name: 'user.UserProfile', params: { id: id } })
-    },
-    getUsers () {
-      webServices.get('/auth/users', {
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line quote-props
-          'Authorization': User.ApiToken()
-        }
-      })
-        .then(res => {
-          this.users = res.data
-        })
     }
   }
 }
