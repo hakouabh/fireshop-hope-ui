@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="d-flex justify-content-center align-items-center flex-wrap">
                     <div>
-                        <h1 class="display-1 mt-3"><Vue3autocounter  ref='counter' :startAmount='(total*4/5)' :endAmount="(total)"/></h1>
+                        <h1 class="display-1 mt-3"><Vue3autocounter  ref='counter' :startAmount='(total*4/5)' :duration='1' :endAmount="(total)"/></h1>
                     </div>
                      <div>
                         <h1 class="mt-4">&nbsp;{{$t('currency')}} </h1>

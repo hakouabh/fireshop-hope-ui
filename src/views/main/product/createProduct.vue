@@ -16,10 +16,10 @@
                   <div class="card-body">
                     <form @submit.prevent="CreateProduct" enctype="multipart/form-data">
                     <div class="row">
-                        <div class="col-lg-12 mb-2 col-md-6">
+                        <!-- <div class="col-lg-12 mb-2 col-md-6">
                            <label for="customFile" class="form-label custom-file-input">{{$t('customerVue.feilds.import_file')}}</label>
                            <input class="form-control" @change="onFileSelected" type="file" id="customFile">
-                        </div>
+                        </div> -->
                         <div class="col-md-4 mb-2">
                            <label for="validationCustom01" class="form-label">{{$t('productVue.feilds.product_name')}} <small class="text-danger"> *</small></label>
                            <input type="text" :disabled="import_file != null" :class="`${errors.name ? 'is-invalid' : ''}`" class="form-control" id="validationCustom01" v-model="form.name">

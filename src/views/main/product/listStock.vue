@@ -77,7 +77,7 @@
                            </td>
                            <td>
                               <div class="d-flex align-items-center">
-                                 <h6> {{product.quantity}} </h6>
+                                 <h6> {{product.is_defect ? -product.quantity : product.quantity}} </h6>
                               </div>
                            </td>
                            <td v-if="product.stock > 0"><div class="text-success">{{$t('stockVue.available')}}</div></td>
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     goToedit (id) {
-      this.$router.push({ name: 'product.editStock', params: { id: id, product_id: this.product_id } })
+      this.$router.push({ name: 'product.editStock', params: { id: id } })
     },
     getProducts (page = 1) {
       this.$store.dispatch(GET_STOCKS, {

@@ -10,10 +10,12 @@ import router from '@/router'
 const { t } = i18n.global
 
 const state = {
-  orders: {}
+  orders: {},
+  subTotal: 0
 }
 const getters = {
-  orders: state => { return state.orders }
+  orders: state => { return state.orders },
+  subTotal: state => { return state.subTotal }
 }
 const actions = {
   [SET_QUANTITY] (context, payload) {
@@ -24,7 +26,7 @@ const actions = {
         'Authorization': User.ApiToken()
       },
       params: {
-        order_id: payload.id,
+        order_id: payload.order_id,
         update: payload.update
       }
     })
@@ -100,8 +102,8 @@ const actions = {
         context.dispatch(GET_ORDERS)
       })
   },
-  [ADD_ITEM] (context, sku) {
-    webServices.post('/ordersV2/add', sku, {
+  [ADD_ITEM] (context, payload) {
+    webServices.post('/ordersV2/add', payload, {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line quote-props
@@ -129,6 +131,7 @@ const actions = {
 }
 const mutations = {
   [GET_ORDERS_SUCCESS] (state, data) {
+    state.subTotal = data.reduce((a, b) => a + b.order_detail.total_order, 0)
     state.orders = data
   }
 }

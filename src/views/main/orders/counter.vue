@@ -311,14 +311,14 @@ export default {
       stateNavbarStyle: 'subnavbarstyle',
       orders: 'orders',
       products: 'products',
-      customers: 'customers'
+      customers: 'customers',
+      total: 'subTotal'
     })
   },
   data () {
     return {
       payement: null,
       reste: 0,
-      total: 0,
       autorisations: null,
       oldtotal: 0,
       order_id: null,
@@ -445,7 +445,9 @@ export default {
     },
     addProduct () {
       if (this.sku != null) {
-        this.$store.dispatch(ADD_ITEM, this.sku)
+        this.$store.dispatch(ADD_ITEM, {
+          sku: this.sku
+        })
         this.sku = null
       }
     }
